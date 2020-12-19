@@ -1,35 +1,45 @@
-.navbar-nav{
+.navbar-nav {
   margin-left: auto;
 }
-.gymlogo >img{
-  height: 10em;
-  width: 10em;
+.gymlogo > img {
+  height: 9em;
+  width: 9em;
   border-radius: 5px;
   /* margin-top: 2rem; */
   margin-left: 5rem;
 }
-.mnuItem{
+/* .gymlogo >img:hover{
+  color: #caced1af !important ;
+} */
+.mnuItem {
   font-size: 1.5rem;
   margin-left: 1rem;
+  color: rgb(235, 235, 235);
 }
-.mnuItem>a:hover, .dropdown>button:hover, .dropdown-content>a:hover{
-  background-color:#007bff ;
-  color: white;
+.mnuItem>text{
+  color:  rgb(214, 205, 205);
+}
+.mnuItem > a:hover,
+.dropdown > button:hover,
+.dropdown-content > a:hover {
+  background-color: #007bff;
+  color: rgb(235, 235, 235);
   border-radius: 50%;
   text-align: center;
+
 }
 .dropbtn {
-  color:#007bff ;
+  color: #007bff;
   border: none;
   background-color: inherit;
   padding-top: 0.5rem;
   padding-bottom: 0.5rem;
 }
-.dropdown{
+.dropdown {
   position: relative;
   display: inline-block;
 }
-.dropdown-content{
+.dropdown-content {
   display: none;
   position: absolute;
 }
@@ -41,5 +51,37 @@
 }
 .dropdown:hover .dropdown-content {
   display: block;
+
 }
 
+.dropItem{
+  background-color: #343a40;
+  font-size: 1.5rem;
+  color: #caced1 !important ;
+}
+.dropItem :hover{
+  /* color: black; */
+  color: #caced1af !important ;
+  background-color: #343a40;
+}
+.nav-link{
+  color: #caced1!important;
+}
+.nav-link:hover{
+  color: #caced1af !important ;
+}
+@media only screen and (max-width:600px){
+  /* .navbar{
+     position: absolute;
+    margin-right: auto;
+    margin-left: auto;
+  }
+  .gymlogo > img{
+    max-width: auto;
+    max-height: auto;
+  }
+  .nav{
+    display: flex;
+    flex-direction: row;
+  } */
+}

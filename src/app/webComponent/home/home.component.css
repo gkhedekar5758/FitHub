@@ -1,0 +1,83 @@
+.content {
+  display: flex;
+  flex-direction: row;
+  justify-content: space-around;
+}
+@media only screen and (max-width:600px){
+  .content{
+    flex-direction: column;
+    align-items: center;
+  }
+  div.box >span{
+    display: none;
+
+  }
+}
+.outerHeading {
+  text-align: center;
+  font-size: 4vh;
+  font-weight: bolder;
+  background-image: linear-gradient(
+    to right,
+    rgba(120, 120, 144, 0.815),
+    rgba(173, 173, 180, 0.63),
+    rgba(120, 120, 144, 0.815)
+  );
+  padding-top: 0.4rem;
+  padding-bottom: 0.4rem;
+  border-radius: 1rem;
+}
+
+.animatedDiv {
+  font-size: 2rem!important;
+  animation: exampleani;
+  animation-duration: 20s;
+  animation-direction: normal;
+  position: relative;
+  animation-timing-function: linear;
+  animation-iteration-count: infinite;
+}
+@keyframes exampleani{
+  0% {color:red;}
+  25%{color:green;}
+  50%{color: yellow;}
+  75%{color: blue;}
+  100%{color: brown;}
+
+}
+.box{
+
+  height: 80px;
+  width: 25%;
+  /* border-color: #9a9c9eaf !important ;; */
+  /* border-width: 2px;
+  border-style: none; */
+
+  margin: 5vh;
+  /* background-color: #caced1!important; */
+}
+.innerImage{
+  height: 7em ;
+  width: 7em ;
+  border-style: solid;
+  border-radius:10px;
+  border-color: #9a9c9eaf;
+  background-color: #caced1;
+  padding: 1em;
+
+}
+.innerImage:hover{
+
+  border-style: solid;
+  border-radius:10px;
+  border-color: #4b4c4daf;
+}
+.box >span{
+  font-size: 1.5rem;
+  position: relative;
+  top: 80px;
+  left: -110px;
+  font-weight: bold;
+  font-family: cursive;
+  text-shadow:3px 3px 8px blue;
+}
