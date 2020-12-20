@@ -3,16 +3,7 @@
   flex-direction: row;
   justify-content: space-around;
 }
-@media only screen and (max-width:600px){
-  .content{
-    flex-direction: column;
-    align-items: center;
-  }
-  div.box >span{
-    display: none;
 
-  }
-}
 .outerHeading {
   text-align: center;
   font-size: 4vh;
@@ -80,4 +71,47 @@
   font-weight: bold;
   font-family: cursive;
   text-shadow:3px 3px 8px blue;
+}
+.bmiarea{
+  margin-top: 15vh;
+
+}
+.bmiCalc{
+  border-style: solid;
+  border-color: black;
+
+  width: 500px;
+  height: 430px;
+}
+.bmiarea::after{
+content: "";
+display: table;
+clear: both;
+}
+.column{
+  float: left;
+  width: 50%;
+  padding-left: 1rem;
+  padding-right: 1rem;
+}
+
+
+
+/* if the screen becomes less than 600px */
+
+@media only screen and (max-width:600px){
+  .content{
+    flex-direction: column;
+    align-items: center;
+  }
+  div.box >span{
+    display: none;
+
+  }
+  .column{
+    width: 100%;
+  }
+  .bmiimage{
+    display: none;
+  }
 }

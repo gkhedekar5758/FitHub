@@ -97,7 +97,6 @@
     <img src="assets/images/icon6.png" class="innerImage" alt="icon" /><span
       >WORK HARD</span
     >
-
   </div>
   <div class="box">
     <img src="assets/images/icon7.png" class="innerImage" alt="icon" /><span
@@ -112,5 +111,79 @@
 </div>
 
 <!-- processes -->
-<iframe src="https://www.mealpro.net/bmi/?color=232323" frameborder="0" width="500" height="360" style="max-width: 100%"></iframe>
 
+<!-- bmi calculator -->
+<div class="bmiarea">
+  <div class="column">
+    <div class="bmiimage">
+      <img class="w-100" src="assets/images/pexels.jpeg" />
+    </div>
+  </div>
+  <div class="column">
+    <div class="bmiCalc">
+      <iframe
+        src="https://www.mealpro.net/bmi/?color=232323"
+        frameborder="0"
+        width="700"
+        height="360"
+        style="max-width: 100%"
+      ></iframe>
+      <!-- Modal dialogue -->
+
+      <button
+        type="button"
+        class="btn btn-secondary"
+        data-toggle="modal"
+        data-target="#exampleModalCenter"
+        style="margin-left: 1vw;"
+      >
+        Check what your BMI tells you?
+      </button>
+      <!-- Modal -->
+      <div
+        class="modal fade"
+        id="exampleModalCenter"
+        tabindex="-1"
+        role="dialog"
+        aria-labelledby="exampleModalCenterTitle"
+        aria-hidden="true"
+      >
+        <div class="modal-dialog modal-dialog-centered" role="document">
+          <div class="modal-content">
+            <div class="modal-header">
+              <h5 class="modal-title" id="exampleModalCenterTitle">
+                BMI classes
+              </h5>
+              <button
+                type="button"
+                class="close"
+                data-dismiss="modal"
+                aria-label="Close"
+              >
+                <span aria-hidden="true">&times;</span>
+              </button>
+            </div>
+            <div class="modal-body">
+              <img src="assets/images/BMI-Widget-Chart.jpeg" alt="BMI chart" class="img-fluid">
+            </div>
+            <div class="modal-footer">
+              <button
+                type="button"
+                class="btn btn-secondary"
+                data-dismiss="modal"
+              >
+                Close
+              </button>
+            </div>
+          </div>
+        </div>
+      </div>
+      <!-- Modal dialogue -->
+    </div>
+  </div>
+</div>
+
+<!-- bmi calculator -->
+
+<!-- testimonials -->
+<!-- testimonials -->
