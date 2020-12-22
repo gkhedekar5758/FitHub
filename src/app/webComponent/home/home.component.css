@@ -106,13 +106,16 @@ clear: both;
   margin-top: 5vh;
   margin-left: 3vw;
 }
-.corousel-main-container > h4 {
+/* .corousel-main-container > h4 {
   position: relative;
   margin-top: 18vh;
   justify-content: left;
   display: flex;
-}
+} */
+.name{
+  position: relative;
 
+}
 
 .section-title {
 	font-size: 28px;
