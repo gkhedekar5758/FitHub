@@ -7,13 +7,15 @@ import { NavbarComponent } from './Common/navbar/navbar.component';
 import { FooterComponent } from './Common/footer/footer.component';
 import { FormsModule } from '@angular/forms';
 import { HomeComponent } from './webComponent/home/home.component';
+import { ClassesComponent } from './webComponent/classes/classes.component';
 
 @NgModule({
   declarations: [
     AppComponent,
     NavbarComponent,
     FooterComponent,
-    HomeComponent
+    HomeComponent,
+    ClassesComponent
   ],
   imports: [
     BrowserModule,
