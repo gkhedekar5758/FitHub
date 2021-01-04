@@ -68,6 +68,7 @@
   position: absolute;
   top: 110px;
   left: -10px;
+  text-align: center;
   font-weight: bold;
   font-family: cursive;
   text-shadow:3px 3px 8px blue;
@@ -144,6 +145,19 @@ clear: both;
 	bottom: -6px;
 	z-index: 9;
 	border-radius: 50%;
+}
+.corousel-main-container{
+  display: flex;
+  flex-wrap: wrap;
+}
+.corousel-main-container >p{
+  font-family: cursive;
+  font-size: 1.1rem;
+}
+.corousel-main-container>p>strong{
+  font-family: monospace;
+  font-size: x-large;
+  font-weight: bolder;
 }
 /* if the screen becomes less than 600px */
 
