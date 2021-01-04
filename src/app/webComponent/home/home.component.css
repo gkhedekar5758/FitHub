@@ -3,7 +3,10 @@
   flex-direction: row;
   justify-content: space-around;
 }
-
+.limited{
+  max-width: 1280px;
+  margin: auto;
+}
 .outerHeading {
   text-align: center;
   font-size: 4vh;
@@ -40,12 +43,9 @@
 
   height: 80px;
   width: 25%;
-  /* border-color: #9a9c9eaf !important ;; */
-  /* border-width: 2px;
-  border-style: none; */
-
+  flex-basis: 25%;
   margin: 5vh;
-  /* background-color: #caced1!important; */
+  position: relative;
 }
 .innerImage{
   height: 7em ;
@@ -65,9 +65,9 @@
 }
 .box >span{
   font-size: 1.5rem;
-  position: relative;
-  top: 80px;
-  left: -110px;
+  position: absolute;
+  top: 110px;
+  left: -10px;
   font-weight: bold;
   font-family: cursive;
   text-shadow:3px 3px 8px blue;
@@ -79,9 +79,9 @@
 .bmiCalc{
   border-style: solid;
   border-color: black;
-
-  width: 500px;
-  height: 430px;
+display: block;
+  width: 100%;
+  height: 100%;
 }
 .bmiarea::after{
 content: "";
@@ -106,12 +106,7 @@ clear: both;
   margin-top: 5vh;
   margin-left: 3vw;
 }
-/* .corousel-main-container > h4 {
-  position: relative;
-  margin-top: 18vh;
-  justify-content: left;
-  display: flex;
-} */
+
 .name{
   position: relative;
 
@@ -157,10 +152,10 @@ clear: both;
     flex-direction: column;
     align-items: center;
   }
-  div.box >span{
+  /* div.box >span{
     display: none;
 
-  }
+  } */
   .column{
     width: 100%;
   }
