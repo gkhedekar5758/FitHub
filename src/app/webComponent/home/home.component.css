@@ -159,6 +159,19 @@ clear: both;
   font-size: x-large;
   font-weight: bolder;
 }
+.inner-image{
+
+  border-radius: 5px;
+
+}
+.whyImage{
+  height: 60px;
+  width: 60px;
+}
+.sideHead{
+  display: flex;
+  flex-direction: row;
+}
 /* if the screen becomes less than 600px */
 
 @media only screen and (max-width:600px){
@@ -166,15 +179,21 @@ clear: both;
     flex-direction: column;
     align-items: center;
   }
-  /* div.box >span{
-    display: none;
 
-  } */
   .column{
     width: 100%;
   }
   .bmiimage{
     display: none;
   }
+  /*  check why this is not working*/
 
+}
+/* if screen is more than 600px */
+@media only screen and (min-width:600px){
+  .col-6{
+    -ms-flex: 0 0 50%;
+    flex: 0 0 50%;
+    max-width: 50%;
+  }
 }
