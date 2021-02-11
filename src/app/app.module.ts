@@ -8,6 +8,7 @@ import { FooterComponent } from './Common/footer/footer.component';
 import { FormsModule } from '@angular/forms';
 import { HomeComponent } from './webComponent/home/home.component';
 import { ClassesComponent } from './webComponent/classes/classes.component';
+import { ClassDetailComponent } from './webComponent/classes/class-detail.component';
 
 @NgModule({
   declarations: [
@@ -15,7 +16,8 @@ import { ClassesComponent } from './webComponent/classes/classes.component';
     NavbarComponent,
     FooterComponent,
     HomeComponent,
-    ClassesComponent
+    ClassesComponent,
+    ClassDetailComponent
   ],
   imports: [
     BrowserModule,
