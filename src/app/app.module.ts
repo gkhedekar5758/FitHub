@@ -9,6 +9,7 @@ import { FormsModule } from '@angular/forms';
 import { HomeComponent } from './webComponent/home/home.component';
 import { ClassesComponent } from './webComponent/classes/classes.component';
 import { ClassDetailComponent } from './webComponent/classes/class-detail.component';
+import { MassageComponent } from './webComponent/massage/massage.component';
 
 @NgModule({
   declarations: [
@@ -17,7 +18,8 @@ import { ClassDetailComponent } from './webComponent/classes/class-detail.compon
     FooterComponent,
     HomeComponent,
     ClassesComponent,
-    ClassDetailComponent
+    ClassDetailComponent,
+    MassageComponent
   ],
   imports: [
     BrowserModule,
