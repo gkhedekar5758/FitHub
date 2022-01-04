@@ -10,6 +10,10 @@ import { HomeComponent } from './webComponent/home/home.component';
 import { ClassesComponent } from './webComponent/classes/classes.component';
 import { ClassDetailComponent } from './webComponent/classes/class-detail.component';
 import { MassageComponent } from './webComponent/massage/massage.component';
+import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
+
+
+
 
 @NgModule({
   declarations: [
@@ -24,7 +28,9 @@ import { MassageComponent } from './webComponent/massage/massage.component';
   imports: [
     BrowserModule,
     AppRoutingModule,
-    FormsModule
+    FormsModule,
+    BrowserAnimationsModule,
+
   ],
   providers: [],
   bootstrap: [AppComponent]
