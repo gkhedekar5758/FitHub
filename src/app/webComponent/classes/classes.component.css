@@ -1,0 +1,79 @@
+.topHeading {
+  text-align: center;
+  font-size: 4vh;
+  font-weight: bolder;
+  background-image: linear-gradient(
+    to right,
+    rgba(120, 120, 144, 0.815),
+    rgba(173, 173, 180, 0.63),
+    rgba(120, 120, 144, 0.815)
+  );
+  padding-top: 0.4rem;
+  padding-bottom: 0.4rem;
+  border-radius: 1rem;
+}
+.limited {
+  max-width: 1280px;
+  margin: auto;
+}
+/* hide it when screen is less */
+.largeText {
+  display: none;
+}
+
+.labelled{
+  position: relative;
+}
+.labelled h5,.labelled a{
+  position: absolute;
+    background-color: rgba(255,255,255,.7);
+    margin: 0;
+    width: 100%;
+    padding: .3rem 1rem;
+}
+.labelled a{
+  bottom: 0;
+}
+
+.highlight{
+  border-top: solid;
+  border-bottom: solid;
+  /* border-style: solid; */
+  border-width: 2px;
+  border-color:rgba(120, 120, 144, 0.815) ;
+  border-radius: 5px;
+}
+/* if screen is more than 600px */
+@media only screen and (min-width: 600px) {
+  .col-4 {
+    -ms-flex: 0 0 33.333333%;
+    flex: 0 0 33.333333%;
+    max-width: 33.333333%;
+  }
+  /* show it when screen is more */
+  .largeText {
+    display: block;
+  }
+  /* do not show this if we are not in mobile */
+  .labelled h5, .labelled a{
+    display: none;
+  }
+
+  .info{
+    position: relative;
+  }
+  .info>h3 {
+    text-align: center;
+    font-family: cursive;
+    font-weight: 700;
+  }
+  .info >p {
+    font-size: larger;
+  }
+  .info >button {
+    transition: transform .7s;
+  }
+  .info >button:hover {
+    transform: rotateX(360deg);
+  }
+}
