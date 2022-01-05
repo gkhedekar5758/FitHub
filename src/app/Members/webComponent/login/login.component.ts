@@ -1,5 +1,5 @@
 import { Component, OnInit } from '@angular/core';
-import {FormControl,Validator, Validators} from '@angular/forms'
+import { FormControl, Validator, Validators } from '@angular/forms'
 
 @Component({
   selector: 'FH-login',
@@ -8,11 +8,18 @@ import {FormControl,Validator, Validators} from '@angular/forms'
 })
 export class LoginComponent implements OnInit {
 
-  emailFormControl=new FormControl('',[Validators.required,Validators.email]);
+email:string;
+password:string;
+
+
   constructor() { }
 
   ngOnInit(): void {
 
+  }
+  Login(){
+
+    // console.log(formLogin.controls)
   }
 
 }
