@@ -11,6 +11,7 @@ import { ClassesComponent } from './webComponent/classes/classes.component';
 import { ClassDetailComponent } from './webComponent/classes/class-detail.component';
 import { MassageComponent } from './webComponent/massage/massage.component';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
+import { HttpClientModule } from '@angular/common/http';
 
 
 
@@ -31,7 +32,7 @@ import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
     FormsModule,
     ReactiveFormsModule,
     BrowserAnimationsModule,
-
+    HttpClientModule
   ],
   providers: [],
   bootstrap: [AppComponent]

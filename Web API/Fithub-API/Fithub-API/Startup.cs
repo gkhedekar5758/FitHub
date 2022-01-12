@@ -6,6 +6,8 @@ using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
 using Microsoft.Extensions.Logging;
 using Microsoft.OpenApi.Models;
+using Fithub_API.Extensions;
+using Fithub_API.JWTFeature;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -23,10 +25,13 @@ namespace Fithub_API
         public IConfiguration Configuration { get; }
 
         // This method gets called by the runtime. Use this method to add services to the container.
+        //SERVICE PIPELINE
         public void ConfigureServices(IServiceCollection services)
         {
-
+            services.ConfigureJWTDefaults(Configuration);
+            services.ConfigureCORS();
             services.AddControllers();
+            services.AddScoped<JWTHelper>();
             services.AddSwaggerGen(c =>
             {
                 c.SwaggerDoc("v1", new OpenApiInfo { Title = "Fithub_API", Version = "v1" });
@@ -34,6 +39,7 @@ namespace Fithub_API
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
+        //MIDDLEWARE PIPELINE
         public void Configure(IApplicationBuilder app, IWebHostEnvironment env)
         {
             if (env.IsDevelopment())
@@ -44,7 +50,8 @@ namespace Fithub_API
             }
 
             app.UseRouting();
-
+            app.UseCors("EnableCORS");
+            app.UseAuthentication();
             app.UseAuthorization();
 
             app.UseEndpoints(endpoints =>

@@ -2,7 +2,7 @@
   <div class="limited">
     <div class="container white-transparent mb-3">
       <h2 class="label-mat p-2 text-center">Sign In</h2>
-      <form #formLogin="ngForm" class="p-3" (ngSubmit)="Login()" novalidate>
+      <form #formLogin="ngForm" class="p-3" (ngSubmit)="Login(formLogin.value)" novalidate>
         <div class="form-group">
           <em class="float-right" *ngIf="formLogin.controls.email?.invalid && formLogin.controls.email?.touched && formLogin.controls.email?.errors.required"
             style="color: red;">*Required</em>
@@ -26,13 +26,12 @@
 
 
       </form>
-      <pre class="label-mat">Valid? {{formLogin.controls.email?.valid}}</pre>
-      <pre class="label-mat">touched? {{formLogin.form.controls.email?.touched}}</pre>
-      <pre class="label-mat">dirty? {{formLogin.form.controls.email?.dirty}}</pre>
+<!-- <pre>{{formLogin.value|json}}</pre> -->
+
       <h4 class="label-mat p-2 text-center">OR</h4>
 
       <div class="p-3">
-        <a class="label-mat text-decoration-none" id="googleLogin" role="button" style="text-transform:none">
+        <a class="label-mat text-decoration-none font-weight-bolder"  id="googleLogin" role="button" style="text-transform:none; font-size: 1.2rem;">
 
           <img src="https://img.icons8.com/color/48/000000/google-logo.png" />
           Login with Google
