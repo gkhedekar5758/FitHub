@@ -21,13 +21,15 @@
       <li class="nav-item">
         <a class="nav-link" href="#">Contact Us</a>
       </li>
-      <li class="nav-item dropdown" style="align-content: flex-end;">
+      <li class="nav-item">
+        <a href=""  *ngIf="this.authService.isUserAuthenticated()" (click)="logout()" class="nav-link">Logout</a>
+      </li>
+      <li *ngIf="!this.authService.isUserAuthenticated()" class="nav-item dropdown" style="align-content: flex-end;">
         <a class="nav-link dropdown-toggle" href="#" id="navbarDropdown" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
           Members Arena
         </a>
         <div class="dropdown-menu dropItem" aria-labelledby="navbarDropdown">
-          <a class="dropdown-item nav-link" *ngIf="!this.authService.isUserAuthenticated()" [routerLink]="['members/login']" routerLinkActive="router-link-active"  >Login</a>
-          <a class="dropdown-item nav-link" *ngIf="this.authService.isUserAuthenticated()"  (click)="logout()"  >Logout</a>
+          <a class="dropdown-item nav-link"  [routerLink]="['members/login']" routerLinkActive="router-link-active"  >Login</a>
           <a class="dropdown-item nav-link" [routerLink]="['members/register']" routerLinkActive="router-link-active" >Registration</a>
 
         </div>

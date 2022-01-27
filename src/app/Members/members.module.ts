@@ -1,4 +1,4 @@
-import { NgModule } from '@angular/core';
+import {  NgModule } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { LoginComponent } from './webComponent/login/login.component';
 import { Routes, RouterModule } from '@angular/router';
@@ -19,9 +19,13 @@ const userRoot: Routes = [
 
 
     FormsModule,
-    ReactiveFormsModule
+    ReactiveFormsModule,
+
   ],
+
 })
 
 //if user interact with members arena then only activate this
-export class MembersModule { }
+export class MembersModule {
+
+}

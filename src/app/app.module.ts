@@ -12,9 +12,13 @@ import { ClassDetailComponent } from './webComponent/classes/class-detail.compon
 import { MassageComponent } from './webComponent/massage/massage.component';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { HttpClientModule } from '@angular/common/http';
+import{JwtHelperService,JwtModule} from '@auth0/angular-jwt';
 
 
 
+export function getJWTToken(){
+  return localStorage.getItem("JWTToken");
+}
 
 @NgModule({
   declarations: [
@@ -32,7 +36,15 @@ import { HttpClientModule } from '@angular/common/http';
     FormsModule,
     ReactiveFormsModule,
     BrowserAnimationsModule,
-    HttpClientModule
+    HttpClientModule,
+    JwtModule.forRoot({
+      config:{
+        tokenGetter:getJWTToken,
+        allowedDomains:["localhost:5000"],
+        disallowedRoutes:[]
+      }
+    })
+
   ],
   providers: [],
   bootstrap: [AppComponent]

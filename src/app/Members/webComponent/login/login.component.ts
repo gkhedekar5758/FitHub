@@ -22,7 +22,7 @@ password:string;
   }
   Login(formValue){
     //console.log(formValue);
-    const login={...formValue};
+
     const user:IUser={
       email:formValue.email,
       password:formValue.password

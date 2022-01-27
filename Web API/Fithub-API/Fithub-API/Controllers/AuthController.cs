@@ -34,7 +34,7 @@ namespace Fithub_API.Controllers
         //hardcoding as of now
         if (user.Email == "guk@guk.com" && user.Password == "abc")
         {
-          var token = _jWTHelper.GenerateToken(user);
+          var token =  _jWTHelper.GenerateToken(user);
           return Ok(new { Token = token });
 
 
