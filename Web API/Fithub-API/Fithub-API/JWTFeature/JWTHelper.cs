@@ -1,4 +1,6 @@
+using Fithub_Data.DTO;
 using Fithub_Data.Models;
+using Google.Apis.Auth;
 using Microsoft.Extensions.Configuration;
 using Microsoft.IdentityModel.Tokens;
 using System;
@@ -15,10 +17,12 @@ namespace Fithub_API.JWTFeature
   {
     private readonly IConfiguration _configuration;
     private readonly IConfigurationSection _jwtSection;
+    private readonly IConfigurationSection _googleAuthSetting;
     public JWTHelper(IConfiguration configuration)
     {
       _configuration = configuration;
       _jwtSection = configuration.GetSection("JWTSettings");
+      _googleAuthSetting = configuration.GetSection("GoogleAuthSetting");
     }
 
     /// <summary>
@@ -26,7 +30,7 @@ namespace Fithub_API.JWTFeature
     /// </summary>
     /// <param name="user"> User who want to login</param>
     /// <returns></returns>
-    public async Task<string> GenerateToken(UserModel user)
+    public async Task<string> GenerateToken(User user)
     {
       var signInCredetials = GetSignInCredentials();
       var roles = await GetRoles(user);
@@ -37,7 +41,7 @@ namespace Fithub_API.JWTFeature
       return token;
     }
 
-    private async Task<List<Claim>> GetRoles(UserModel user)
+    private async Task<List<Claim>> GetRoles(User user)
     {
       //TODO: implemnent to bring the roles from the User
       return null;
@@ -58,6 +62,31 @@ namespace Fithub_API.JWTFeature
     {
       var secretKey = new SymmetricSecurityKey(Encoding.UTF8.GetBytes(_jwtSection.GetSection("securityKey").ToString()));
       return new SigningCredentials(secretKey, SecurityAlgorithms.HmacSha256);
+    }
+
+    public GoogleJsonWebSignature.Payload VerifyGoogleToken(ExternalAuthDTO externalAuthDTO)
+    {
+      try
+      {
+        var setting = new GoogleJsonWebSignature.ValidationSettings()
+        {
+          Audience = new List<string>()
+          {
+            _googleAuthSetting.GetSection("clientID").Value
+          }
+        };
+
+        var payload =  GoogleJsonWebSignature.ValidateAsync(externalAuthDTO.idToken, setting).Result;
+        return payload;
+
+      }
+      catch (Exception e)
+      {
+        return null;
+        
+      }
+
+      
     }
   }
 }

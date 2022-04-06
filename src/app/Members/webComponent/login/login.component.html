@@ -2,7 +2,7 @@
   <div class="limited">
     <div class="container white-transparent mb-3">
       <h2 class="label-mat p-2 text-center">Sign In</h2>
-      <form #formLogin="ngForm" class="p-3" (ngSubmit)="Login(formLogin.value)" novalidate>
+      <form #formLogin="ngForm" class="p-3" (ngSubmit)="Login(formLogin)" novalidate>
         <div class="form-group">
           <em class="float-right" *ngIf="formLogin.controls.email?.invalid && formLogin.controls.email?.touched && formLogin.controls.email?.errors.required"
             style="color: red;">*Required</em>
@@ -10,7 +10,7 @@
             style="color: red;">*Enter a valid Email</em>
           <label for="email" class="label-mat">Email address</label>
           <input type="email" class="form-control" name="email" id="email"  ngModel [(ngModel)]="email" pattern="[^ @]*@[^ @]*"
-            placeholder="ex: someone@example.com" required>
+            placeholder="ex: someone@example.com"  required>
 
         </div>
         <div class="form-group">
@@ -24,14 +24,22 @@
 
         <button type="submit" class="btn btn-primary">Submit</button>
 
+        <div *ngIf="isErrored" class="alert alert-danger mt-3">
+        <div [innerHTML]="errorMessage"></div>
+
+        </div>
 
       </form>
-<!-- <pre>{{formLogin.value|json}}</pre> -->
+<!-- <pre>{{formLogin.value|json}}
+  {{formLogin.controls.email?.invalid}}
+  {{formLogin.controls.email?.touched}}
+</pre> -->
 
       <h4 class="label-mat p-2 text-center">OR</h4>
 
       <div class="p-3">
-        <a class="label-mat text-decoration-none font-weight-bolder"  id="googleLogin" role="button" style="text-transform:none; font-size: 1.2rem;">
+        <a class="label-mat text-decoration-none font-weight-bolder"
+        id="googleLogin" role="button" style="text-transform:none; font-size: 1.2rem;" (click)="LoginExternalGoogle()">
 
           <img src="https://img.icons8.com/color/48/000000/google-logo.png" />
           Login with Google

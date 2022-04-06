@@ -8,6 +8,8 @@ using Microsoft.Extensions.Logging;
 using Microsoft.OpenApi.Models;
 using Fithub_API.Extensions;
 using Fithub_API.JWTFeature;
+using Fithub_BL;
+using Fithub_DL;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -36,6 +38,8 @@ namespace Fithub_API
             {
                 c.SwaggerDoc("v1", new OpenApiInfo { Title = "Fithub_API", Version = "v1" });
             });
+            services.AddBLServices();
+            services.AddDLServices();
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.

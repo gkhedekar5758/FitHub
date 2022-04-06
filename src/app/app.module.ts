@@ -13,6 +13,7 @@ import { MassageComponent } from './webComponent/massage/massage.component';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { HttpClientModule } from '@angular/common/http';
 import{JwtHelperService,JwtModule} from '@auth0/angular-jwt';
+import { GoogleLoginProvider,  SocialLoginModule,SocialAuthServiceConfig } from 'angularx-social-login';
 
 
 
@@ -28,7 +29,8 @@ export function getJWTToken(){
     HomeComponent,
     ClassesComponent,
     ClassDetailComponent,
-    MassageComponent
+    MassageComponent,
+    //FieldMatcherDirective
   ],
   imports: [
     BrowserModule,
@@ -43,10 +45,25 @@ export function getJWTToken(){
         allowedDomains:["localhost:5000"],
         disallowedRoutes:[]
       }
-    })
+    }),
+    SocialLoginModule
 
   ],
-  providers: [],
+  providers: [
+    //SocialAuthService
+    {
+      provide:'SocialAuthServiceConfig',
+      useValue:{
+        autologin:false,
+        providers:[
+          {
+            id:GoogleLoginProvider.PROVIDER_ID,
+            provider:new GoogleLoginProvider('415339241205-os8kum8al4q1r5csp0gpcq110vcjnv44.apps.googleusercontent.com')
+          },
+        ],
+      } as SocialAuthServiceConfig
+    }
+  ],
   bootstrap: [AppComponent]
 })
 export class AppModule { }
