@@ -33,25 +33,30 @@ namespace Fithub_API.JWTFeature
     public async Task<string> GenerateToken(User user)
     {
       var signInCredetials = GetSignInCredentials();
-      var roles = await GetRoles(user);
-      var tokenOptions = GetTokenOption(signInCredetials);
+      var claims =  GetRoles(user);
+      var tokenOptions = GetTokenOption(signInCredetials,claims);
       var token = new JwtSecurityTokenHandler().WriteToken(tokenOptions);
 
 
       return token;
     }
 
-    private async Task<List<Claim>> GetRoles(User user)
+    private List<Claim> GetRoles(User user)
     {
       //TODO: implemnent to bring the roles from the User
-      return null;
+      var claims = new List<Claim>
+      {
+        new Claim(ClaimTypes.Name,user.Email),
+        new Claim(ClaimTypes.Role,user.Role.NormalisedName)
+      };
+      return claims;
     }
 
-    private JwtSecurityToken GetTokenOption(SigningCredentials signInCredetials)
+    private JwtSecurityToken GetTokenOption(SigningCredentials signInCredetials,List<Claim> claims)
     {
       var option = new JwtSecurityToken(issuer: _jwtSection.GetSection("validIssuer").Value,
         audience: _jwtSection.GetSection("validAudience").Value,
-        claims: null, //claim- NULL at this point //TODO- add proper claim here
+        claims: claims, 
         expires: DateTime.Now.AddMinutes(Convert.ToDouble(_jwtSection.GetSection("lifeTimeOfToken").Value)),
         signingCredentials: signInCredetials);
 

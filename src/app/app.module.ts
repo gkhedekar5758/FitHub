@@ -14,6 +14,8 @@ import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { HttpClientModule } from '@angular/common/http';
 import{JwtHelperService,JwtModule} from '@auth0/angular-jwt';
 import { GoogleLoginProvider,  SocialLoginModule,SocialAuthServiceConfig } from 'angularx-social-login';
+import { CoachComponent } from './webComponent/classes/coach.component';
+import { RatingComponent } from './Common/rating/rating.component';
 
 
 
@@ -30,6 +32,8 @@ export function getJWTToken(){
     ClassesComponent,
     ClassDetailComponent,
     MassageComponent,
+    CoachComponent,
+    RatingComponent,
     //FieldMatcherDirective
   ],
   imports: [

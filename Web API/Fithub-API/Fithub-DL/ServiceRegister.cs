@@ -21,6 +21,8 @@ namespace Fithub_DL
     {
       services.AddScoped<IReadUser, ReadUser>();
       services.AddScoped<IWriteUser, WriteUser>();
+      services.AddScoped<IReadClass, ReadClass>();
+      services.AddScoped<IReadCoach, ReadCoach>();
     }
   }
 }

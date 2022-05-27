@@ -21,6 +21,8 @@ namespace Fithub_BL
     {
       services.AddScoped<IQueryUser, QueryUser>();
       services.AddScoped<IUpdateUser, UpdateUser>();
+      services.AddScoped<IQueryClass, QueryClasss>();
+      services.AddScoped<IQueryCoach, QueryCoach>();
     }
   }
 }

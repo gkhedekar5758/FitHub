@@ -9,6 +9,7 @@ namespace Fithub_Data.Models
 {
   public class User
   {
+    public int UserID { get; set; }
 
     [Required(ErrorMessage = "Email is required.")]
     public string Email { get; set; }
@@ -24,6 +25,8 @@ namespace Fithub_Data.Models
     public string ExternalProviderKey { get; set; }
     public bool IsExternalProvider { get; set; }
     public bool IsActive { get; set; }
+
+    public UserRole Role { get; set; }
 
   }
 }

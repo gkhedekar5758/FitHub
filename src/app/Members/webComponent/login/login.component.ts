@@ -1,7 +1,7 @@
 import { error } from '@angular/compiler/src/util';
 import { Component, OnInit } from '@angular/core';
 import { Form, FormControl, NgForm, Validator, Validators } from '@angular/forms'
-import { Router } from '@angular/router';
+import { ActivatedRoute, Router } from '@angular/router';
 import { AuthRequestDTO } from '../../Models/DTO/AuthRequestDTO';
 import {ExternalAuthDTO} from '../../Models/DTO/ExternalAuthDTO'
 import {AuthService} from '../../Services/auth.service';
@@ -18,12 +18,15 @@ password:string;
 isErrored:boolean=false;
 errorMessage:string='';
 
+_returnURL:string;
 
 
-  constructor(private authService:AuthService,private routerService:Router) { }
+
+  constructor(private authService:AuthService,private routerService:Router,private activatedRoute:ActivatedRoute) { }
 
   ngOnInit(): void {
     //console.log("init fired");
+    this._returnURL= this.activatedRoute.snapshot.queryParams['returnUrl']||'/';
 
   }
   public Login=(formValue:NgForm)=>{
@@ -38,7 +41,7 @@ errorMessage:string='';
         const JWTToken=(<any>response).token;
         //console.log(JWTToken.result);
         localStorage.setItem("JWTToken",JWTToken.result);
-        this.routerService.navigate(['/classes'])
+        this.routerService.navigate([this._returnURL]);
       },
       error=>{
 
@@ -77,6 +80,7 @@ private  validateExternalAuthentication = (externalAuthDTO:ExternalAuthDTO)=>{
     const JWTToken=(<any>response).token;
         //console.log(JWTToken.result);
     localStorage.setItem("JWTToken",JWTToken.result);
+    this.routerService.navigate(['/classes'])
   }, error =>{
     this.isErrored=true;
     this.errorMessage=error.error.errorMessage;

@@ -33,6 +33,8 @@ export class AuthService {
   // if needed in future will create it
   public isUserAuthenticated = (): boolean => {
     const JWTToken: string = localStorage.getItem("JWTToken");
+    //console.log(this._jwtService.decodeToken(JWTToken));
+
     return !!JWTToken && !this._jwtService.isTokenExpired(JWTToken);
   }
 

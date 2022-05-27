@@ -10,6 +10,7 @@ using System.Net;
 using Fithub_BL.Interfaces;
 using Fithub_Data.DTO;
 using Google.Apis.Auth;
+using Fithub_Data.DTO.ResponseDTO;
 
 namespace Fithub_API.Controllers
 {
@@ -53,7 +54,7 @@ namespace Fithub_API.Controllers
         
        
         var token =  _jWTHelper.GenerateToken(user);
-        return Ok(new { Token = token });
+        return Ok(new AuthResponseDTO { User = user, Token = token });
 
 
        
@@ -69,7 +70,7 @@ namespace Fithub_API.Controllers
 
     [HttpGet]
     [Route("getUserIdByEmail")]
-    public IActionResult getUserIdByEmail([FromQuery]string email)
+    public IActionResult GetUserIdByEmail([FromQuery]string email)
     {
       if (email == null)
         return BadRequest("Email is not supplied");
@@ -91,7 +92,7 @@ namespace Fithub_API.Controllers
 
     [HttpPost]
     [Route("resetUserPassword")]
-    public IActionResult resetUserPassword([FromBody]ResetPasswordDTO resetPasswordDto)
+    public IActionResult ResetUserPassword([FromBody]ResetPasswordDTO resetPasswordDto)
     {
       if (resetPasswordDto == null)
         return BadRequest("Information was not supplied");
@@ -109,7 +110,7 @@ namespace Fithub_API.Controllers
 
     [HttpPost]
     [Route("externalGoogleLogin")]
-    public IActionResult externalLogin([FromBody]ExternalAuthDTO externalAuthDTO)
+    public IActionResult ExternalLogin([FromBody]ExternalAuthDTO externalAuthDTO)
     {
       if (externalAuthDTO == null)
         return BadRequest("Information was not supplied");

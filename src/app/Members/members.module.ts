@@ -9,7 +9,7 @@ import { FieldMatcherDirective } from '../Common/field-matcher.directive';
 
 const userRoot: Routes = [
   { path: 'login', component: LoginComponent },
-  {path:'forgotPassword',component:ForgotPasswordComponent}
+  { path: 'forgotPassword', component: ForgotPasswordComponent }
 ];
 
 @NgModule({
@@ -26,13 +26,13 @@ const userRoot: Routes = [
     ReactiveFormsModule,
     //SocialLoginModule
   ],
-  providers:[
+  providers: [
 
   ],
-  exports:[
+  exports: [
     //SocialLoginModule
   ]
 })
 
 //if user interact with members arena then only activate this
-export class MembersModule {}
+export class MembersModule { }

@@ -22,13 +22,12 @@ namespace Fithub_DL
         using (SqlConnection connection = new SqlConnection(connectionString))
         {
           connection.Open();
-          //TODO: change to SP
-          string sqlQuery= "Select Email" +
-            ",Password,FirstName" +
-            ",LastName,DateOfBirth," +
-            "ExternalLoginProvider,ExternalLoginProviderName,ExternalProviderKey,IsExternalProvider,IsActive" +
-            " from[dbo].[User] where email = '" + emailID + "'";
-          SqlCommand sqlCommand = new SqlCommand(sqlQuery, connection);
+          
+          string sqlSP= "dbo.uspReadUser";
+          SqlParameter sqlParameter = new SqlParameter("@EmailID", emailID);// { ParameterName:"EmailID"}
+          SqlCommand sqlCommand = new SqlCommand(sqlSP, connection);
+          sqlCommand.CommandType = System.Data.CommandType.StoredProcedure;
+          sqlCommand.Parameters.Add(sqlParameter);
           var result = sqlCommand.ExecuteReader();
           User returUser = null;
           if (result!= null)
@@ -37,7 +36,11 @@ namespace Fithub_DL
             if(result.Read())
             {
               returUser = new User();
+              var userRolea = new UserRole();
+              userRolea.Name = result["Name"].ToString();
+              userRolea.NormalisedName = result["NormalisedName"].ToString();
 
+              returUser.UserID = Convert.ToInt32(result["UserID"]);
               returUser.Email = result["Email"].ToString();
               returUser.Password = result["Password"].ToString();
               returUser.FirstName = result["FirstName"].ToString();
@@ -48,6 +51,7 @@ namespace Fithub_DL
               returUser.ExternalProviderKey = result["ExternalProviderKey"].ToString();
               returUser.IsExternalProvider = Convert.ToBoolean(result["IsExternalProvider"]);
               returUser.IsActive = Convert.ToBoolean(result["IsActive"]);
+              returUser.Role = userRolea;
             }
 
           }
