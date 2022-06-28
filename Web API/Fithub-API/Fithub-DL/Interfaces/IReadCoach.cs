@@ -12,5 +12,6 @@ namespace Fithub_DL.Interfaces
   {
     public IEnumerable<Coach> GetCoachesByClassID(int classID);
     public CoachClassResponseDTO GetCoachByCoachID(int coachID);
+    public Rating GetCoachRatingByUser(int coachID, int userID);
   }
 }

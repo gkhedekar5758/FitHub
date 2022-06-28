@@ -26,5 +26,12 @@ namespace Fithub_BL.Interfaces
     /// <param name="coachID"></param>
     /// <returns></returns>
     public CoachClassResponseDTO QueryCoachByCoachID(int coachID);
+    /// <summary>
+    /// contract to fetch coach rating by user
+    /// </summary>
+    /// <param name="coachID"></param>
+    /// <param name="userID"></param>
+    /// <returns></returns>
+    public Rating QueryCoachRatingByUserID(int coachID, int userID);
   }
 }

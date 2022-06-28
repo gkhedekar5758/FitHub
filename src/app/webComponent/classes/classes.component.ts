@@ -30,11 +30,5 @@ export class ClassesComponent implements OnInit {
 
   }
 
-  //this method will send the data to detail component
-  //so that we need not to load classByID and send a request to API, it will use
-  //this same object
-  public passDataToClassDetailComp =(className:string) =>{
-    //console.log(className);
-    this._router.navigateByUrl(`/classes/${className}`,{state:this.classes})
-  }
+
 }

@@ -22,8 +22,8 @@
         <h3 class="mb-4 mt-3">Meet our {{classDetail?.className}} coaches</h3></div>
 
       <div class="col-3 col-12 text-center" *ngFor="let coach of coaches">
-        <img src="{{coach.photoURL}}" class="img-fluid rounded-circle mb-3" style="cursor: pointer;"  alt="coach image" [routerLink]="['/coach',coach.coachID]" routerLinkActive="router-link-active"  >
-        <p class="center-block text-center">{{coach.coachName}}</p>
+        <img src="{{coach?.photoURL}}" class="img-fluid rounded-circle mb-3" style="cursor: pointer;"  alt="coach image" [routerLink]="['/coach',coach.coachID]" routerLinkActive="router-link-active"  >
+        <p class="center-block text-center">{{coach?.coachName}}</p>
       </div>
       <!-- <div class="col-3 col-12">
         <img src="https://via.placeholder.com/150" class="img-fluid rounded-circle mb-3"  alt="coach image">

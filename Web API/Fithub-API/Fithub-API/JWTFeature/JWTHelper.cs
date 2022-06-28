@@ -65,7 +65,7 @@ namespace Fithub_API.JWTFeature
 
     private SigningCredentials GetSignInCredentials()
     {
-      var secretKey = new SymmetricSecurityKey(Encoding.UTF8.GetBytes(_jwtSection.GetSection("securityKey").ToString()));
+      var secretKey = new SymmetricSecurityKey(Encoding.UTF8.GetBytes(_jwtSection.GetSection("securityKey").Value));
       return new SigningCredentials(secretKey, SecurityAlgorithms.HmacSha256);
     }
 

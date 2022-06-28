@@ -77,6 +77,15 @@ RatingValue INT,
 CoachID INT FOREIGN KEY REFERENCES [dbo].[Coach](CoachID),
 UserID INT FOREIGN KEY REFERENCES [dbo].[User](UserID)
 )
+
+GO
+CREATE TABLE [dbo].[Testimony]
+(
+TestimonyID INT PRIMARY KEY IDENTITY(1,1),
+Testimony VARCHAR(MAX),
+Approved BIT DEFAULT 0,
+UserID INT FOREIGN KEY REFERENCES [dbo].[User](UserID)
+)
 --============================
 -- SP creation
 --============================
@@ -122,5 +131,59 @@ BEGIN
   COA.CoachID=CC.CoachID INNER JOIN [dbo].[Class] CLA ON
   CLA.ClassID=CC.ClassID
   WHERE COA.CoachID=@CoachID
+  
+END
+
+GO
+CREATE PROCEDURE dbo.uspReadCoachRatingByCoachIDUserID
+@CoachID int,
+@UserID int
+AS
+BEGIN
+  SELECT RatingID,CoachID,UserID,RatingValue FROM dbo.Rating WHERE CoachID=@CoachID AND UserID=@UserID
+END
+
+GO
+CREATE PROCEDURE dbo.uspInsertTestimony
+@Testimony VARCHAR(MAX),
+@UserID int
+AS
+BEGIN
+  INSERT INTO [dbo].[Testimony]
+  (Testimony,UserID)
+  VALUES
+  (@Testimony,@UserID)
+END
+
+
+GO
+CREATE PROCEDURE dbo.uspReadUserTestimony
+@UserID int
+AS
+BEGIN
+  SELECT COALESCE(Testimony,'') FROM [dbo].[Testimony] WHERE UserID=@UserID
+END
+GO
+
+
+CREATE PROCEDURE dbo.uspAddCoachRating
+@UserID int,
+@CoachID int,
+@Rating int
+AS
+BEGIN
+  INSERT INTO Rating (RatingValue,UserID,CoachID)
+  VALUES (@Rating,@UserID,@CoachID)
+END
+
+GO
+CREATE PROCEDURE dbo.uspUpdateCoachRating
+@UserID int,
+@CoachID int,
+@Rating int
+AS
+BEGIN
+  Update Rating set RatingValue=@Rating
+  where CoachID=@CoachID and UserID=@UserID
   
 END

@@ -2,11 +2,11 @@ import { Injectable } from '@angular/core';
 import { HttpClient, HttpHeaders, HttpParams } from '@angular/common/http';
 import { AuthRequestDTO } from '../Models/DTO/AuthRequestDTO';
 import { JwtHelperService } from '@auth0/angular-jwt';
-import { UrlSerializer } from '@angular/router';
 import { ResetPasswordDTO } from '../Models/DTO/ResetPasswordDTO';
 import {SocialAuthService} from 'angularx-social-login';
 import {GoogleLoginProvider} from 'angularx-social-login';
 import { ExternalAuthDTO } from '../Models/DTO/ExternalAuthDTO';
+import {AuthResponseDTO} from '../Models/DTO/ResponseDTO/AuthResponseDTO';
 
 //@Injectable()
 
@@ -21,7 +21,7 @@ export class AuthService {
 
   //internal login using email and password
   public login = (user: AuthRequestDTO): any => {
-    return this._http.post(this.BASE_URL + 'login', user, {
+    return this._http.post<AuthResponseDTO>(this.BASE_URL + 'login', user, {
       headers: new HttpHeaders({
         "Content-type": "application/json"
       })
@@ -32,15 +32,15 @@ export class AuthService {
   //NOTE: as per the post I am not creaeting the observable as of now
   // if needed in future will create it
   public isUserAuthenticated = (): boolean => {
-    const JWTToken: string = localStorage.getItem("JWTToken");
+    const JWTToken = JSON.parse(localStorage.getItem("JWTToken"));
     //console.log(this._jwtService.decodeToken(JWTToken));
-
-    return !!JWTToken && !this._jwtService.isTokenExpired(JWTToken);
+    return JWTToken && !this._jwtService.isTokenExpired(JWTToken);
   }
 
   //logout from the application
   public logout = () => {
     localStorage.removeItem("JWTToken");
+    localStorage.removeItem("User");
   }
   ///get the user id using email for password reset
   public getUserIdByEmail=(user:AuthRequestDTO):any=>{
@@ -68,5 +68,9 @@ export class AuthService {
 
   public validateExternalLogin = (externalAuthDTO:ExternalAuthDTO) =>{
     return this._http.post(this.BASE_URL+'externalGoogleLogin',externalAuthDTO)
+  }
+
+  public getCurrentLoggedInUser = () =>{
+    return JSON.parse(localStorage.getItem("User"));
   }
 }

@@ -1,4 +1,4 @@
-import { Component,  OnInit  } from '@angular/core';
+import { Component,  EventEmitter,  Input,  OnInit, Output  } from '@angular/core';
 //import * as $ from 'jquery';
 
 @Component({
@@ -8,18 +8,21 @@ import { Component,  OnInit  } from '@angular/core';
 })
 export class RatingComponent implements OnInit {
 
-  starrating='3';
+  @Input() starrating:string;
+  @Output() rated=new EventEmitter<string>();
+
+  //starrating='3';
 
   constructor() { }
 
 
   ngOnInit(): void {
-
     
+
   }
 
   onRatingChange = (val)=>{
-    console.log(val);
+    this.rated.emit(val);
   }
 
 

@@ -93,5 +93,47 @@ namespace Fithub_DL
         throw;
       }
     }
+
+    public Rating GetCoachRatingByUser(int coachID, int userID)
+    {
+      try
+      {
+        using (SqlConnection sqlConnection = new SqlConnection(connectionString))
+        {
+          sqlConnection.Open();
+          var sqlSP = "dbo.uspReadCoachRatingByCoachIDUserID";
+
+          SqlCommand sqlCommand = new(sqlSP, sqlConnection)
+          {
+            CommandType = System.Data.CommandType.StoredProcedure
+          };
+          sqlCommand.Parameters.AddWithValue("@CoachID", coachID);
+          sqlCommand.Parameters.AddWithValue("@UserID", userID);
+        var result = sqlCommand.ExecuteReader();
+                Rating rating = null;
+        if(result!=null)
+        {
+            rating = new Rating();
+            while (result.Read())
+            {
+                rating.RatingID = Convert.ToInt32(result["RatingID"]);
+                rating.CoachID = Convert.ToInt32(result["CoachID"]);
+                rating.UserID = Convert.ToInt32(result["UserID"]);
+                rating.RatingValue = Convert.ToString(result["RatingValue"]);
+                            
+            }
+
+        }
+            return rating;
+          
+
+        }
+      }
+      catch (Exception e)
+      {
+
+        throw;
+      }
+    }
   }
 }

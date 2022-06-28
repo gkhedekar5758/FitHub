@@ -20,7 +20,8 @@ import { RatingComponent } from './Common/rating/rating.component';
 
 
 export function getJWTToken(){
-  return localStorage.getItem("JWTToken");
+
+  return localStorage.getItem("JWTToken")?.slice(1,-1); // this needs to be done token was going with " at start and end
 }
 
 @NgModule({

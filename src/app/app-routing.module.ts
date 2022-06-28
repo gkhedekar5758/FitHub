@@ -12,7 +12,7 @@ const routes: Routes = [
   { path: 'classes', component: ClassesComponent },
   { path: 'classes/:name', component: ClassDetailComponent },
   { path: 'massage', component: MassageComponent },
-  {path:'coach/:id',component:CoachComponent},//,canActivate:[AuthGuard]},
+  {path:'coach/:id',component:CoachComponent,canActivate:[AuthGuard]},
   {
     path: 'members',
     loadChildren: () =>

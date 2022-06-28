@@ -21,8 +21,8 @@
       <li class="nav-item">
         <a class="nav-link" href="#">Contact Us</a>
       </li>
-      <li class="nav-item">
-        <a href=""  *ngIf="this.authService.isUserAuthenticated()" (click)="logout()" class="nav-link">Logout</a>
+      <li class="nav-item" *ngIf="this.authService.isUserAuthenticated()">
+        <a href=""   (click)="logout()" class="nav-link">Logout</a>
       </li>
       <li *ngIf="!this.authService.isUserAuthenticated()" class="nav-item dropdown" style="align-content: flex-end;">
         <a class="nav-link dropdown-toggle" href="#" id="navbarDropdown" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
@@ -41,9 +41,9 @@
     </ul>
 
   </div>
-<!-- <div *ngIf="this.authService.isUserAuthenticated()" style="color: #212529; font-weight: bold;" class="mr-sm-2">
-he
-</div> -->
+<div *ngIf="this.authService.isUserAuthenticated()" style="color: #e1eaf3;font-size: larger; font-weight: bold;" >
+Hello {{this.authService.getCurrentLoggedInUser()?.firstName}}
+</div>
 </nav>
 
 <!-- ====================================================================

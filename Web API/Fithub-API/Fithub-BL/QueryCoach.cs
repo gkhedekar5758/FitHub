@@ -31,5 +31,10 @@ namespace Fithub_BL
     {
       return _readCoach.GetCoachesByClassID(classID);
     }
+
+    public Rating QueryCoachRatingByUserID(int coachID, int userID)
+    {
+      return _readCoach.GetCoachRatingByUser(coachID, userID);
+    }
   }
 }

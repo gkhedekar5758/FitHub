@@ -4,6 +4,7 @@ import { Form, FormControl, NgForm, Validator, Validators } from '@angular/forms
 import { ActivatedRoute, Router } from '@angular/router';
 import { AuthRequestDTO } from '../../Models/DTO/AuthRequestDTO';
 import {ExternalAuthDTO} from '../../Models/DTO/ExternalAuthDTO'
+import { AuthResponseDTO } from '../../Models/DTO/ResponseDTO/AuthResponseDTO';
 import {AuthService} from '../../Services/auth.service';
 
 @Component({
@@ -38,9 +39,11 @@ _returnURL:string;
     }
     this.authService.login(user)
       .subscribe( response => {
-        const JWTToken=(<any>response).token;
-        //console.log(JWTToken.result);
-        localStorage.setItem("JWTToken",JWTToken.result);
+        let apiResponse=<AuthResponseDTO>response;
+        const JWTToken= <any>apiResponse.token;
+
+        localStorage.setItem("JWTToken",JSON.stringify(JWTToken.result));
+        localStorage.setItem("User",JSON.stringify(apiResponse.user));
         this.routerService.navigate([this._returnURL]);
       },
       error=>{
@@ -77,9 +80,11 @@ public  LoginExternalGoogle=()=> {
 private  validateExternalAuthentication = (externalAuthDTO:ExternalAuthDTO)=>{
   this.authService.validateExternalLogin(externalAuthDTO)
   .subscribe( response =>{
-    const JWTToken=(<any>response).token;
+    let apiResponse= <AuthResponseDTO>response;
+    const JWTToken=<any>apiResponse.token;
         //console.log(JWTToken.result);
     localStorage.setItem("JWTToken",JWTToken.result);
+    localStorage.setItem("User",JSON.stringify(apiResponse.user));
     this.routerService.navigate(['/classes'])
   }, error =>{
     this.isErrored=true;

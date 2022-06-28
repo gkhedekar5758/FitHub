@@ -35,9 +35,9 @@ namespace Fithub_API.Extensions
           ValidateIssuerSigningKey = true,
 
 
-          ValidIssuer = configuration.GetSection("JWTSettings").GetChildren().Select(x => x.Key.Equals("validIssuer")).ToString(),
-          ValidAudience = configuration.GetSection("JWTSettings").GetChildren().Select(x => x.Key.Equals("validAudience")).ToString(),
-          IssuerSigningKey = new SymmetricSecurityKey(Encoding.UTF8.GetBytes(configuration.GetSection("JWTSettings").GetChildren().Select(x => x.Key.Equals("securityKey")).ToString()))
+          ValidIssuer = configuration.GetSection("JWTSettings:validIssuer").Value,//   GetChildren().Select(x => x.Key.Equals("validIssuer")).ToString(),
+          ValidAudience = configuration.GetSection("JWTSettings:validAudience").Value,// .GetChildren().Select(x => x.Key.Equals("validAudience")).ToString(),
+          IssuerSigningKey = new SymmetricSecurityKey(Encoding.UTF8.GetBytes(configuration.GetSection("JWTSettings:securityKey").Value))//.GetChildren().Select(x => x.Key.Equals("securityKey")).ToString()))
 
         };
       });

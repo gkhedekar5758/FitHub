@@ -3,28 +3,28 @@
   <div class="container">
     <div class="row mb-4 mt-4 highlight" *ngFor="let class of classes; odd as isOdd; even as isEven;">
       <div class="col-12 col-4 labelled" *ngIf="isOdd">
-        <h5>{{class.className}}</h5>
-        <img class="d-block w-100 h-auto" src={{class.photoURL}} alt="group doing zumba dance" width="1140" height="561" />
-        <a href="#"  [routerLink]="['/classes',class.className]" >Know More</a>
+        <h5>{{class?.className}}</h5>
+        <img class="d-block w-100 h-auto" src={{class?.photoURL}} alt="group doing zumba dance" width="1140" height="561" />
+        <a href="#"  [routerLink]="['/classes',class?.className]" >Know More</a>
       </div>
       <div class="col-8 largeText" *ngIf="isOdd">
         <section class="info">
-          <h3>{{class.className}}</h3>
-          <p>{{class.classShortDescription}}...</p>
-          <button class="btn btn-secondary" [routerLink]="['/classes',class.className]" >Know More</button>
+          <h3>{{class?.className}}</h3>
+          <p>{{class?.classShortDescription}}...</p>
+          <button class="btn btn-secondary" [routerLink]="['/classes',class?.className]" >Know More</button>
         </section>
       </div>
       <div class="col-8 largeText" *ngIf="isEven">
         <section class="info">
-        <h3>{{class.className}}</h3>
-        <p>{{class.classShortDescription}}...</p>
-        <button class="btn btn-secondary" [routerLink]="['/classes',class.className]"  >Know More</button>
+        <h3>{{class?.className}}</h3>
+        <p>{{class?.classShortDescription}}...</p>
+        <button class="btn btn-secondary" [routerLink]="['/classes',class?.className]"  >Know More</button>
       </section>
       </div>
       <div class="col-12 col-4 labelled" *ngIf="isEven">
-        <h5>{{class.className}}</h5>
-        <img class="d-block w-100 h-auto" src={{class.photoURL}} alt="girl doing boxing with gloves" width="1140" height="561" />
-        <a href="#" [routerLink]="['/classes',class.className]"  >Know More</a>
+        <h5>{{class?.className}}</h5>
+        <img class="d-block w-100 h-auto" src={{class?.photoURL}} alt="girl doing boxing with gloves" width="1140" height="561" />
+        <a href="#" [routerLink]="['/classes',class?.className]"  >Know More</a>
       </div>
     </div>
     <!-- <div class="row mb-4 mt-4 highlight">
