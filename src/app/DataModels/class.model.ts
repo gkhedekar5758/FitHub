@@ -1,5 +1,7 @@
 export interface IClass{
-  name:string
-  picture:string
-  description:string
+  classID:number
+  className:string
+  classDescription:string
+  classShortDescription:string
+  photoURL:string
 }
