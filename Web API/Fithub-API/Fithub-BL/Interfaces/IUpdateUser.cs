@@ -1,3 +1,4 @@
+using Fithub_Data.Models;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -12,5 +13,7 @@ namespace Fithub_BL.Interfaces
   public interface IUpdateUser
   {
     public int ResetUserPassword(int userId, string password);
+
+        public int RegisterUser(User user);
   }
 }

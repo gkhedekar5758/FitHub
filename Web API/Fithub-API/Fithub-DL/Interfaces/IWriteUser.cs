@@ -1,3 +1,4 @@
+using Fithub_Data.Models;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -12,5 +13,8 @@ namespace Fithub_DL.Interfaces
   public interface IWriteUser
   {
     public int UpdateUserPassword(int userId, string password);
+        public int WriteUserInDB(User user);
+        
+        public int WriteUserInfoInDB(UserInfo userInfo, int UserID);
   }
 }

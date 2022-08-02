@@ -19,7 +19,7 @@ namespace Fithub_Data.Models
     public string FirstName { get; set; }
     [Required(ErrorMessage ="Last Name is required")]
     public string LastName { get; set; }
-    public DateTime DateOfBirth { get; set; }
+    
     public string ExternalLoginProvider { get; set; }
     public string ExternalLoginProviderName { get; set; }
     public string ExternalProviderKey { get; set; }
@@ -28,5 +28,7 @@ namespace Fithub_Data.Models
 
     public UserRole Role { get; set; }
 
-  }
+        public UserInfo UserInfo { get; set; }
+
+    }
 }

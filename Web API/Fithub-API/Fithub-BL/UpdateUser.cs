@@ -1,4 +1,5 @@
 using Fithub_BL.Interfaces;
+using Fithub_Data.Models;
 using Fithub_DL.Interfaces;
 using System;
 using System.Collections.Generic;
@@ -15,12 +16,25 @@ namespace Fithub_BL
     {
       _writeUser = writeUser ?? throw new ArgumentNullException(nameof(_writeUser));
     }
-    /// <summary>
-    /// reset user password in DB
-    /// </summary>
-    /// <param name="userId">user id of the user</param>
-    /// <param name="password">password of the user</param>
-    /// <returns></returns>
+
+        public int RegisterUser(User user)
+        {
+            int userInfoResult = -1;
+            int userResult = _writeUser.WriteUserInDB(user);
+
+            if (userResult >= 0)
+                userInfoResult = _writeUser.WriteUserInfoInDB(user.UserInfo, user.UserID);
+
+
+            return userInfoResult;
+        }
+
+        /// <summary>
+        /// reset user password in DB
+        /// </summary>
+        /// <param name="userId">user id of the user</param>
+        /// <param name="password">password of the user</param>
+        /// <returns></returns>
     public int ResetUserPassword(int userId, string password)
     {
       return _writeUser.UpdateUserPassword(userId, password);

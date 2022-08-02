@@ -130,6 +130,24 @@ namespace Fithub_API.Controllers
         return StatusCode((int)HttpStatusCode.InternalServerError, "Something bad happened - " + e.Message);
       }
     }
+        [HttpPost]
+        [Route("registerUser")]
+        public IActionResult RegisterUser(User user)
+        {
+            if (user == null)
+                return BadRequest("User not supplied");
+
+            try
+            {
+                int result = _updateUser.RegisterUser(user);
+                return Ok(result);
+            }
+            catch (Exception e)
+            {
+
+                return StatusCode((int)HttpStatusCode.InternalServerError, "Something bad happened - " + e.Message);
+            }
+        }
 
   }
 }

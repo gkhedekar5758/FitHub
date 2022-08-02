@@ -5,18 +5,20 @@ import { Routes, RouterModule } from '@angular/router';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { ForgotPasswordComponent } from './webComponent/forgot-password/forgot-password.component';
 import { FieldMatcherDirective } from '../Common/field-matcher.directive';
-
+import { RegistrationComponent } from './registration/registration.component';
 
 const userRoot: Routes = [
   { path: 'login', component: LoginComponent },
-  { path: 'forgotPassword', component: ForgotPasswordComponent }
+  { path: 'forgotPassword', component: ForgotPasswordComponent },
+  { path: 'register', component: RegistrationComponent },
 ];
 
 @NgModule({
   declarations: [
     LoginComponent,
     ForgotPasswordComponent,
-    FieldMatcherDirective
+    FieldMatcherDirective,
+    RegistrationComponent,
   ],
   imports: [
     CommonModule,
@@ -26,13 +28,11 @@ const userRoot: Routes = [
     ReactiveFormsModule,
     //SocialLoginModule
   ],
-  providers: [
-
-  ],
+  providers: [],
   exports: [
     //SocialLoginModule
-  ]
+  ],
 })
 
 //if user interact with members arena then only activate this
-export class MembersModule { }
+export class MembersModule {}

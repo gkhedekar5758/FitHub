@@ -16,7 +16,6 @@ CREATE TABLE [dbo].[User]
 [Password] varchar(50),
 [FirstName] varchar(30) not null,
 [LastName] varchar(30) not null,
-[DateOfBirth] datetime,
 [ExternalLoginProvider] varchar(30),
 [ExternalLoginProviderName] varchar(30),
 [ExternalProviderKey] varchar(50),
@@ -86,6 +85,19 @@ Testimony VARCHAR(MAX),
 Approved BIT DEFAULT 0,
 UserID INT FOREIGN KEY REFERENCES [dbo].[User](UserID)
 )
+
+GO
+
+CREATE TABLE [dbo].[UserInfo]
+(
+UserInfoID INT PRIMARY KEY IDENTITY(1,1),
+[Height] int not null,
+[Weight] int not null,
+BMI int,
+MobileNo int,
+EmergencyMobileNo int not null,
+[UserID] int FOREIGN KEY REFERENCES [dbo].[User](UserID)
+)
 --============================
 -- SP creation
 --============================
@@ -98,7 +110,7 @@ Read the user from DB with his roles
 AS
 BEGIN
 	SELECT US.UserID, US.Email,US.Password,FirstName
-            ,LastName,DateOfBirth,
+            ,LastName,
             ExternalLoginProvider,ExternalLoginProviderName,
 			ExternalProviderKey,IsExternalProvider,IsActive,
 			USR.Name,USR.NormalisedName
@@ -187,3 +199,44 @@ BEGIN
   where CoachID=@CoachID and UserID=@UserID
   
 END
+GO
+
+CREATE PROCEDURE dbo.uspUserInsert
+@email varchar(50),
+@password varchar(50),
+@firstname varchar(50),
+@lastname varchar(50),
+@externalloginprovider varchar(50)=null,
+@externalloginprovidername varchar(50)=null,
+@externalproviderkey varchar(50)=null,
+@isexternalprovider bit=0,
+@isactive bit=1,
+@RoleID int=1,
+@ID_OUT INT OUTPUT
+AS
+BEGIN
+DECLARE @out TABLE (tableID INT)  
+
+	INSERT INTO [dbo].[User] (Email,Password,FirstName,LastName,ExternalLoginProvider,ExternalLoginProviderName,ExternalProviderKey,IsExternalProvider,IsActive,RoleID)
+	OUTPUT INSERTED.$IDENTITY INTO @out  
+	VALUES
+	(@email,@password,@firstname,@lastname,@externalloginprovider,@externalloginprovidername,@externalproviderkey,@isexternalprovider,@isactive,@RoleID)
+
+	SET @ID_OUT = (SELECT tableID FROM @out)  
+END
+
+GO
+ CREATE PROCEDURE dbo.uspUserInfoInsert
+ @weight int,
+ @height int,
+ @BMI int,
+ @mobileNo varchar(10),
+ @emergencyNo varchar(10),
+ @userId int
+ AS
+ BEGIN
+	INSERT INTO dbo.UserInfo 
+	(Height,Weight,BMI,MobileNo,EmergencyMobileNo,UserID)
+	VALUES 
+	(@height,@weight,@BMI,@mobileNo,@emergencyNo,@userId)
+ END

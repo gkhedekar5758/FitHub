@@ -45,7 +45,7 @@ namespace Fithub_DL
               returUser.Password = result["Password"].ToString();
               returUser.FirstName = result["FirstName"].ToString();
               returUser.LastName = result["LastName"].ToString();
-              returUser.DateOfBirth = Convert.ToDateTime(result["DateOfBirth"]);
+              
               returUser.ExternalLoginProvider = result["ExternalLoginProvider"].ToString();
               returUser.ExternalLoginProviderName = result["ExternalLoginProviderName"].ToString();
               returUser.ExternalProviderKey = result["ExternalProviderKey"].ToString();

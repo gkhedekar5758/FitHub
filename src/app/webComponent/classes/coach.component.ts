@@ -75,14 +75,25 @@ export class CoachComponent implements OnInit {
         (error) => console.log(error)
       );
     } else if (this.ratingResponse.ratingID > 0) {
-      //TODO- PUT request here
+      this.coachService
+        .updateCoachRatingByUser(
+          this.coachID,
+          this.currentLoggedUser.userID,
+          rating
+        )
+        .subscribe(
+          () => {
+            alert('rating updated succesfully');
+          },
+          (error) => console.log(error)
+        );
     }
   };
 
-  SubmitReviewandTestimony = () => {
-    //https://cassiomolin.com/2021/07/29/should-http-put-create-a-resource-if-it-does-not-exist/
-    //https://stackoverflow.com/questions/56240547/should-http-put-create-a-resource-if-it-does-not-exist
-    // the resource identifier is creted by server so i should create the resource with POST
-    // and update with PUT
-  };
+  // SubmitReviewandTestimony = () => {
+  //   //https://cassiomolin.com/2021/07/29/should-http-put-create-a-resource-if-it-does-not-exist/
+  //   //https://stackoverflow.com/questions/56240547/should-http-put-create-a-resource-if-it-does-not-exist
+  //   // the resource identifier is creted by server so i should create the resource with POST
+  //   // and update with PUT
+  // };
 }

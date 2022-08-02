@@ -1,3 +1,4 @@
+using Fithub_Data.Models;
 using Fithub_DL.Interfaces;
 using System;
 using System.Collections.Generic;
@@ -33,5 +34,76 @@ namespace Fithub_DL
         throw;
       }
     }
-  }
+
+        public int WriteUserInfoInDB(UserInfo userInfo, int UserID)
+        {
+            try
+            {
+                using (SqlConnection sqlConnection = new SqlConnection(connectionString))
+                {
+                    sqlConnection.Open();
+                    List<SqlParameter> sqlParameters = new List<SqlParameter>();
+                    
+                    string sp = "dbo.uspUserInfoInsert";
+
+                    SqlCommand sqlCommand = new SqlCommand(sp, sqlConnection) { CommandType = System.Data.CommandType.StoredProcedure };
+                    sqlCommand.Parameters.Add(new SqlParameter("@weight", userInfo.Weight));
+                    sqlCommand.Parameters.Add(new SqlParameter("@height", userInfo.Height));
+                    sqlCommand.Parameters.Add(new SqlParameter("@BMI", userInfo.BMI));
+                    sqlCommand.Parameters.Add(new SqlParameter("@mobileNo", userInfo.MobileNo));
+                    sqlCommand.Parameters.Add(new SqlParameter("@emergencymobileNo", userInfo.EmergencyMobileNo));
+                    sqlCommand.Parameters.Add(new SqlParameter("@userID", UserID));
+                    
+
+                    return sqlCommand.ExecuteNonQuery();
+                    
+
+                    
+                }
+            }
+            catch (Exception e)
+            {
+
+                throw;
+            }
+        }
+
+
+
+        public int WriteUserInDB(User user)
+        {
+            try
+            {
+                using(SqlConnection sqlConnection=new SqlConnection(connectionString))
+                {
+                    sqlConnection.Open();
+                    List<SqlParameter> sqlParameters = new List<SqlParameter>();
+                    SqlParameter idOutParam = new SqlParameter("@ID_OUT",DBNull.Value) { Direction = System.Data.ParameterDirection.Output,SqlDbType=System.Data.SqlDbType.Int };
+                    string sp = "dbo.uspUserInsert";
+                    
+                    SqlCommand sqlCommand = new SqlCommand(sp, sqlConnection) { CommandType=System.Data.CommandType.StoredProcedure};
+                    sqlCommand.Parameters.Add(new SqlParameter("@email", user.Email));
+                    sqlCommand.Parameters.Add(new SqlParameter("@password", user.Password));
+                    sqlCommand.Parameters.Add(new SqlParameter("@firstname", user.FirstName));
+                    sqlCommand.Parameters.Add(new SqlParameter("@lastname", user.LastName));
+                    sqlCommand.Parameters.Add(new SqlParameter("@externalloginprovider", user.ExternalLoginProvider));
+                    sqlCommand.Parameters.Add(new SqlParameter("@externalloginprovidername", user.ExternalLoginProviderName));
+                    sqlCommand.Parameters.Add(new SqlParameter("@externalproviderkey", user.ExternalProviderKey));
+                    sqlCommand.Parameters.Add(new SqlParameter("@isactive", 1));
+                    sqlCommand.Parameters.Add(idOutParam);
+
+                    int result = sqlCommand.ExecuteNonQuery();
+                    if (result >= 0)
+                        user.UserID = Convert.ToInt32(idOutParam.Value);
+
+                    return result;
+                }
+            }
+            catch (Exception e)
+            {
+
+                throw;
+            }
+        }
+    }
 }
