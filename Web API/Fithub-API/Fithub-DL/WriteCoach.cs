@@ -11,12 +11,12 @@ namespace Fithub_DL
 {
     public class WriteCoach : IWriteCoach
     {
-        private readonly string connectionString = "server=g708915-w101;database=Fithub;Trusted_Connection=true";
-        public int AddCoachRatingByUser(Rating rating)
+        private readonly string connection = "server=g708915-w101;database=Fithub;Trusted_Connection=true";
+        public int AddCoachRatingByUser(string connection, Rating rating)
         {
             try
             {
-                using (SqlConnection sqlConnection = new SqlConnection(connectionString))
+                using (SqlConnection sqlConnection = new SqlConnection(connection))
                 {
                     sqlConnection.Open();
                     var sqlSP = "dbo.uspAddCoachRating";
@@ -40,11 +40,11 @@ namespace Fithub_DL
             }
         }
 
-        public int UpdateCoachRatingByUser(int CoachID, int UserID, Rating rating)
+        public int UpdateCoachRatingByUser(string connection, int CoachID, int UserID, Rating rating)
         {
             try
             {
-                using (SqlConnection sqlConnection = new SqlConnection(connectionString))
+                using (SqlConnection sqlConnection = new SqlConnection(connection))
                 {
                     sqlConnection.Open();
                     var sqlSP = "dbo.uspUpdateCoachRating";

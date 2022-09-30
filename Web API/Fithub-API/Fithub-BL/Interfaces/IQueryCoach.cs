@@ -18,20 +18,20 @@ namespace Fithub_BL.Interfaces
     /// </summary>
     /// <param name="classID"></param>
     /// <returns></returns>
-    public IEnumerable<Coach> QueryCoachesByClassID(int classID);
+    public IEnumerable<Coach> QueryCoachesByClassID(string connection,int classID);
 
     /// <summary>
     /// contract to fetch a coach from his ID
     /// </summary>
     /// <param name="coachID"></param>
     /// <returns></returns>
-    public CoachClassResponseDTO QueryCoachByCoachID(int coachID);
+    public CoachClassResponseDTO QueryCoachByCoachID(string connection,int coachID);
     /// <summary>
     /// contract to fetch coach rating by user
     /// </summary>
     /// <param name="coachID"></param>
     /// <param name="userID"></param>
     /// <returns></returns>
-    public Rating QueryCoachRatingByUserID(int coachID, int userID);
+    public Rating QueryCoachRatingByUserID(string connection,int coachID, int userID);
   }
 }

@@ -9,7 +9,7 @@ namespace Fithub_BL.Interfaces
 {
     public interface IUpdateCoach
     {
-        public int AddCoachRating(Rating rating);
-        public int UpdateCoachRating(int CoachID, int UserID, Rating rating);
+        public int AddCoachRating(string connection,Rating rating);
+        public int UpdateCoachRating(string connection,int CoachID, int UserID, Rating rating);
     }
 }

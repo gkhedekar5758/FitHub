@@ -16,9 +16,9 @@ namespace Fithub_BL
         {
             _readTestimony = readTestimony?? throw new ArgumentNullException(nameof(readTestimony));
         }
-        public string QueryTestimonyByUser(int UserID)
+        public string QueryTestimonyByUser(string connection,int UserID)
         {
-            return _readTestimony.ReadTestimonyByUser(UserID);
+            return _readTestimony.ReadTestimonyByUser(connection,UserID);
         }
     }
 }

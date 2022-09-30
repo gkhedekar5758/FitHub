@@ -15,11 +15,11 @@ namespace Fithub_DL
   public class WriteUser : IWriteUser
   {
     const string connectionString = "server=g708915-w101;database=Fithub;Trusted_Connection=true";
-    public int UpdateUserPassword(int userId, string password)
+    public int UpdateUserPassword(string connection, int userId, string password)
     {
       try
       {
-        using(SqlConnection sqlConnection=new SqlConnection(connectionString) )
+        using(SqlConnection sqlConnection=new SqlConnection(connection) )
         {
           sqlConnection.Open();
           string query = "Update [dbo].[User] set Password = '" + password +"'"+ " where userId =" + Convert.ToString(userId);
@@ -35,11 +35,11 @@ namespace Fithub_DL
       }
     }
 
-        public int WriteUserInfoInDB(UserInfo userInfo, int UserID)
+        public int WriteUserInfoInDB(string connection, UserInfo userInfo, int UserID)
         {
             try
             {
-                using (SqlConnection sqlConnection = new SqlConnection(connectionString))
+                using (SqlConnection sqlConnection = new SqlConnection(connection))
                 {
                     sqlConnection.Open();
                     List<SqlParameter> sqlParameters = new List<SqlParameter>();
@@ -51,7 +51,7 @@ namespace Fithub_DL
                     sqlCommand.Parameters.Add(new SqlParameter("@height", userInfo.Height));
                     sqlCommand.Parameters.Add(new SqlParameter("@BMI", userInfo.BMI));
                     sqlCommand.Parameters.Add(new SqlParameter("@mobileNo", userInfo.MobileNo));
-                    sqlCommand.Parameters.Add(new SqlParameter("@emergencymobileNo", userInfo.EmergencyMobileNo));
+                    sqlCommand.Parameters.Add(new SqlParameter("@emergencyNo", userInfo.EmergencyMobileNo));
                     sqlCommand.Parameters.Add(new SqlParameter("@userID", UserID));
                     
 
@@ -70,11 +70,11 @@ namespace Fithub_DL
 
 
 
-        public int WriteUserInDB(User user)
+        public int WriteUserInDB(string connection, User user)
         {
             try
             {
-                using(SqlConnection sqlConnection=new SqlConnection(connectionString))
+                using(SqlConnection sqlConnection=new SqlConnection(connection))
                 {
                     sqlConnection.Open();
                     List<SqlParameter> sqlParameters = new List<SqlParameter>();
@@ -89,6 +89,7 @@ namespace Fithub_DL
                     sqlCommand.Parameters.Add(new SqlParameter("@externalloginprovider", user.ExternalLoginProvider));
                     sqlCommand.Parameters.Add(new SqlParameter("@externalloginprovidername", user.ExternalLoginProviderName));
                     sqlCommand.Parameters.Add(new SqlParameter("@externalproviderkey", user.ExternalProviderKey));
+                    sqlCommand.Parameters.Add(new SqlParameter("@IsExternalProvider", user.IsExternalProvider));
                     sqlCommand.Parameters.Add(new SqlParameter("@isactive", 1));
                     sqlCommand.Parameters.Add(idOutParam);
 

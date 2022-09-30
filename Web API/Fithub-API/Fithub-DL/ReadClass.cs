@@ -12,11 +12,11 @@ namespace Fithub_DL
   public class ReadClass : IReadClass
   {
     const string connectionString = "server=g708915-w101;database=Fithub;Trusted_Connection=true";
-    public IEnumerable<Class> ReadClasses()
+    public IEnumerable<Class> ReadClasses(string connection)
     {
       try
       {
-        using(SqlConnection sqlConnection=new SqlConnection(connectionString))
+        using(SqlConnection sqlConnection=new SqlConnection(connection))
         {
           sqlConnection.Open();
           string sqlQuery = "Select ClassID, ClassName,ClassDescription,PhotoURL,classShortDescription from [dbo].[Class]";

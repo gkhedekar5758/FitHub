@@ -9,6 +9,6 @@ namespace Fithub_DL.Interfaces
 {
   public interface IReadClass
   {
-    public IEnumerable<Class> ReadClasses();
+    public IEnumerable<Class> ReadClasses(string connection);
   }
 }

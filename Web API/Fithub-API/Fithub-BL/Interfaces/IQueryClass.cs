@@ -9,6 +9,6 @@ namespace Fithub_BL.Interfaces
 {
   public interface IQueryClass
   {
-    public IEnumerable<Class> QueryClasses();
+    public IEnumerable<Class> QueryClasses(string connection);
   }
 }

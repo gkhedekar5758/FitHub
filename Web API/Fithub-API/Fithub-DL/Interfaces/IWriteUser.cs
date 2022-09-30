@@ -12,9 +12,9 @@ namespace Fithub_DL.Interfaces
   /// </summary>
   public interface IWriteUser
   {
-    public int UpdateUserPassword(int userId, string password);
-        public int WriteUserInDB(User user);
+    public int UpdateUserPassword(string connection,int userId, string password);
+        public int WriteUserInDB(string connection,User user);
         
-        public int WriteUserInfoInDB(UserInfo userInfo, int UserID);
+        public int WriteUserInfoInDB(string connection,UserInfo userInfo, int UserID);
   }
 }

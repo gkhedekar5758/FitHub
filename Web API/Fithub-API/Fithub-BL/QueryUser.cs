@@ -23,9 +23,9 @@ namespace Fithub_BL
     /// </summary>
     /// <param name="email"></param>
     /// <returns>password of the user</returns>
-    public string CheckUserPassword(string email)
+    public string CheckUserPassword(string connection, string email)
     {
-      return _readUser.ReadUsersPassword(email);
+      return _readUser.ReadUsersPassword(connection, email);
     }
 
     /// <summary>
@@ -33,9 +33,9 @@ namespace Fithub_BL
     /// </summary>
     /// <param name="emailID"></param>
     /// <returns>UserID</returns>
-    public User QueryUserByEmail(string emailID)
+    public User QueryUserByEmail(string connection, string emailID)
     {
-      User user=_readUser.ReadUserByEmail(emailID);
+      User user=_readUser.ReadUserByEmail(connection, emailID);
 
       return user;
     }
@@ -45,9 +45,9 @@ namespace Fithub_BL
     /// </summary>
     /// <param name="email"></param>
     /// <returns></returns>
-    int IQueryUser.QueryUserIdByEmail(string email)
+    int IQueryUser.QueryUserIdByEmail(string connection, string email)
     {
-      return _readUser.ReadUserIdByEmail(email);
+      return _readUser.ReadUserIdByEmail(connection, email);
 
     }
   }

@@ -6,6 +6,7 @@ import { ResetPasswordDTO } from '../Models/DTO/ResetPasswordDTO';
 import {SocialAuthService} from 'angularx-social-login';
 import {GoogleLoginProvider} from 'angularx-social-login';
 import { ExternalAuthDTO } from '../Models/DTO/ExternalAuthDTO';
+import {RegisterUserDTO} from '../Models/DTO/RegisterUserDTO';
 import {AuthResponseDTO} from '../Models/DTO/ResponseDTO/AuthResponseDTO';
 
 //@Injectable()
@@ -72,5 +73,12 @@ export class AuthService {
 
   public getCurrentLoggedInUser = () =>{
     return JSON.parse(localStorage.getItem("User"));
+  }
+  public register=(user:RegisterUserDTO)=>{
+    return this._http.post(this.BASE_URL+'registerUser',user,{
+      headers:new HttpHeaders({
+        "Content-type":"application/json"
+      })
+    })
   }
 }

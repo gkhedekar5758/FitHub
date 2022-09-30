@@ -8,6 +8,6 @@ namespace Fithub_DL.Interfaces
 {
     public interface IReadTestimony
     {
-        public string ReadTestimonyByUser(int UserID);
+        public string ReadTestimonyByUser(string connection,int UserID);
     }
 }

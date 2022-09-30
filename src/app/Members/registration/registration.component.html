@@ -2,10 +2,10 @@
   <div class="limited">
     <div class="container white-transparent mb-3">
       <h2 class="label-mat p-2 text-center">Sign Up</h2>
-      <!--<div style="color: red;">{{registrationForm.value | json}} -->
+      <div style="color: red;">{{registrationForm.value | json}}
       <!-- {{mobileNo?.errors|json}} -->
       <!-- </div> -->
-      <form [formGroup]="registrationForm" class="p-3" [fHFieldMatcher]="['password', 'confirmPassword']">
+      <form [formGroup]="registrationForm" class="p-3" (ngSubmit)="Register(registrationForm.value)" [fHFieldMatcher]="['password', 'confirmPassword']">
         <div class="form-row">
           <div class="form-group col-md-6">
             <em class="float-right" *ngIf="

@@ -14,6 +14,7 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
+using Fithub_API.Helper;
 
 namespace Fithub_API
 {
@@ -34,6 +35,7 @@ namespace Fithub_API
             services.ConfigureCORS();
             services.AddControllers();
             services.AddScoped<JWTHelper>();
+            services.AddSingleton<IFithubConfigHelper, FithubConfigHelper>();
             services.AddSwaggerGen(c =>
             {
                 c.SwaggerDoc("v1", new OpenApiInfo { Title = "Fithub_API", Version = "v1" });

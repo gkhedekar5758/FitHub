@@ -22,19 +22,19 @@ namespace Fithub_BL
       _readCoach = readCoach??throw new ArgumentNullException(nameof(readCoach)) ;
     }
 
-    public CoachClassResponseDTO QueryCoachByCoachID(int coachID)
+    public CoachClassResponseDTO QueryCoachByCoachID(string connection, int coachID)
     {
-      return _readCoach.GetCoachByCoachID(coachID);
+      return _readCoach.GetCoachByCoachID(connection,coachID);
     }
 
-    public IEnumerable<Coach> QueryCoachesByClassID(int classID)
+    public IEnumerable<Coach> QueryCoachesByClassID(string connection, int classID)
     {
-      return _readCoach.GetCoachesByClassID(classID);
+      return _readCoach.GetCoachesByClassID(connection,classID);
     }
 
-    public Rating QueryCoachRatingByUserID(int coachID, int userID)
+    public Rating QueryCoachRatingByUserID(string connection, int coachID, int userID)
     {
-      return _readCoach.GetCoachRatingByUser(coachID, userID);
+      return _readCoach.GetCoachRatingByUser(connection,coachID, userID);
     }
   }
 }

@@ -17,13 +17,13 @@ namespace Fithub_BL
       _writeUser = writeUser ?? throw new ArgumentNullException(nameof(_writeUser));
     }
 
-        public int RegisterUser(User user)
+        public int RegisterUser(string connection, User user)
         {
             int userInfoResult = -1;
-            int userResult = _writeUser.WriteUserInDB(user);
+            int userResult = _writeUser.WriteUserInDB(connection, user);
 
             if (userResult >= 0)
-                userInfoResult = _writeUser.WriteUserInfoInDB(user.UserInfo, user.UserID);
+                userInfoResult = _writeUser.WriteUserInfoInDB(connection, user.UserInfo, user.UserID);
 
 
             return userInfoResult;
@@ -35,9 +35,9 @@ namespace Fithub_BL
         /// <param name="userId">user id of the user</param>
         /// <param name="password">password of the user</param>
         /// <returns></returns>
-    public int ResetUserPassword(int userId, string password)
+    public int ResetUserPassword(string connection, int userId, string password)
     {
-      return _writeUser.UpdateUserPassword(userId, password);
+      return _writeUser.UpdateUserPassword(connection,userId, password);
     }
   }
 }

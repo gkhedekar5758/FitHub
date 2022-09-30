@@ -8,23 +8,6 @@ GO
 --=======================
 -- Table
 --=======================
-GO
-CREATE TABLE [dbo].[User]
-(
-[UserID] int PRIMARY KEY IDENTITY(1,1),
-[Email] varchar(100),
-[Password] varchar(50),
-[FirstName] varchar(30) not null,
-[LastName] varchar(30) not null,
-[ExternalLoginProvider] varchar(30),
-[ExternalLoginProviderName] varchar(30),
-[ExternalProviderKey] varchar(50),
-[IsExternalProvider] bit,
-[IsActive] bit
-[RoleID] int FOREIGN KEY REFERENCES [dbo].[UserRoles]([RoleID])
-)
-
-GO
 
 CREATE TABLE [dbo].[UserRoles]
 (
@@ -39,6 +22,25 @@ INSERT INTO DBO.UserRoles (Name,NormalisedName) VALUES ('User','USER');
 INSERT INTO DBO.UserRoles (Name,NormalisedName) VALUES ('Administrator','ADMINISTRATOR');
 
 go
+GO
+CREATE TABLE [dbo].[User]
+(
+[UserID] int PRIMARY KEY IDENTITY(1,1),
+[Email] varchar(100),
+[Password] varchar(50),
+[FirstName] varchar(30) not null,
+[LastName] varchar(30) not null,
+[ExternalLoginProvider] varchar(30),
+[ExternalLoginProviderName] varchar(30),
+[ExternalProviderKey] varchar(50),
+[IsExternalProvider] bit,
+[IsActive] bit,
+[RoleID] int FOREIGN KEY REFERENCES [dbo].[UserRoles]([RoleID])
+)
+
+GO
+
+
 CREATE TABLE [dbo].[Class]
 (
 ClassID int PRIMARY KEY IDENTITY(1,1),

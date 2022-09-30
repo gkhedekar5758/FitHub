@@ -12,9 +12,9 @@ namespace Fithub_BL.Interfaces
   /// </summary>
   public interface IQueryUser
   {
-    public User QueryUserByEmail(string emailID);
-    public string CheckUserPassword(string email);
+    public User QueryUserByEmail(string connection,string emailID);
+    public string CheckUserPassword(string connection,string email);
 
-    public int QueryUserIdByEmail(string email);
+    public int QueryUserIdByEmail(string connection,string email);
   }
 }

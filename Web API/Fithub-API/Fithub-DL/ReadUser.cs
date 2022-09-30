@@ -15,17 +15,17 @@ namespace Fithub_DL
     /// </summary>
     /// <param name="emailID">email id</param>
     /// <returns>user id of the user</returns>
-    public User ReadUserByEmail(string emailID)
+    public User ReadUserByEmail(string connection, string emailID)
     {
       try
       {
-        using (SqlConnection connection = new SqlConnection(connectionString))
+        using (SqlConnection sqlConnection = new SqlConnection(connection))
         {
-          connection.Open();
+          sqlConnection.Open();
           
           string sqlSP= "dbo.uspReadUser";
           SqlParameter sqlParameter = new SqlParameter("@EmailID", emailID);// { ParameterName:"EmailID"}
-          SqlCommand sqlCommand = new SqlCommand(sqlSP, connection);
+          SqlCommand sqlCommand = new SqlCommand(sqlSP, sqlConnection);
           sqlCommand.CommandType = System.Data.CommandType.StoredProcedure;
           sqlCommand.Parameters.Add(sqlParameter);
           var result = sqlCommand.ExecuteReader();
@@ -71,14 +71,14 @@ namespace Fithub_DL
     /// </summary>
     /// <param name="email"></param>
     /// <returns></returns>
-    public string ReadUsersPassword(string email)
+    public string ReadUsersPassword(string connection, string email)
     {
       try
       {
-        using(SqlConnection connection=new SqlConnection(connectionString))
+        using(SqlConnection sqlConnection=new SqlConnection(connection))
         {
-          connection.Open();
-          SqlCommand sqlCommand = new SqlCommand("Select [Password] from [dbo].[User] where Email = " + email, connection);
+          sqlConnection.Open();
+          SqlCommand sqlCommand = new SqlCommand("Select [Password] from [dbo].[User] where Email = " + email, sqlConnection);
           var result = sqlCommand.ExecuteScalar();
           return Convert.ToString(result);
         }
@@ -95,14 +95,14 @@ namespace Fithub_DL
     /// </summary>
     /// <param name="email"></param>
     /// <returns></returns>
-    int IReadUser.ReadUserIdByEmail(string email)
+    int IReadUser.ReadUserIdByEmail(string connection, string email)
     {
       try
       {
-        using(SqlConnection connection=new SqlConnection(connectionString))
+        using(SqlConnection sqlConnection=new SqlConnection(connection))
         {
-          connection.Open();
-          SqlCommand sqlCommand = new SqlCommand("Select userID from [dbo].[User] where Email = '" + email+"'", connection);
+          sqlConnection.Open();
+          SqlCommand sqlCommand = new SqlCommand("Select userID from [dbo].[User] where Email = '" + email+"'", sqlConnection);
           //var id
           return Convert.ToInt32(sqlCommand.ExecuteScalar());
         }

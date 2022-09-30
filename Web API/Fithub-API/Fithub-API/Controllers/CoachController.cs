@@ -1,3 +1,4 @@
+using Fithub_API.Helper;
 using Fithub_BL.Interfaces;
 using Fithub_Data.Models;
 using Microsoft.AspNetCore.Authorization;
@@ -18,12 +19,14 @@ namespace Fithub_API.Controllers
     private readonly IQueryCoach _queryCoach;
         private readonly IUpdateCoach _updateCoach;
         private readonly LinkGenerator _linkGenerator;
+        private readonly IFithubConfigHelper _fithubConfigHelper;
 
-        public CoachController(IQueryCoach queryCoach,IUpdateCoach updateCoach,LinkGenerator linkGenerator)
+        public CoachController(IQueryCoach queryCoach,IUpdateCoach updateCoach,LinkGenerator linkGenerator,IFithubConfigHelper fithubConfigHelper)
         {
             _queryCoach = queryCoach??throw new ArgumentNullException(nameof(queryCoach));
             _updateCoach = updateCoach??throw new ArgumentNullException(nameof(updateCoach));
             _linkGenerator = linkGenerator?? throw new ArgumentNullException(nameof(linkGenerator));
+            this._fithubConfigHelper = fithubConfigHelper;
         }
 
     [HttpGet]
@@ -32,7 +35,7 @@ namespace Fithub_API.Controllers
     {
       try
       {
-        var listOfCoaches = _queryCoach.QueryCoachesByClassID(classID);
+        var listOfCoaches = _queryCoach.QueryCoachesByClassID(_fithubConfigHelper.FithubConnectionString, classID);
         return Ok(listOfCoaches);
       }
       catch (Exception exception)
@@ -49,7 +52,7 @@ namespace Fithub_API.Controllers
     {
       try
       {
-        var coach = _queryCoach.QueryCoachByCoachID(CoachID);
+        var coach = _queryCoach.QueryCoachByCoachID(_fithubConfigHelper.FithubConnectionString, CoachID);
         return Ok(coach);
       }
       catch (Exception exception)
@@ -66,7 +69,7 @@ namespace Fithub_API.Controllers
     {
       try
       {
-        return Ok(_queryCoach.QueryCoachRatingByUserID(CoachID, UserID));
+        return Ok(_queryCoach.QueryCoachRatingByUserID(_fithubConfigHelper.FithubConnectionString, CoachID, UserID));
       }
       catch (Exception exception)
       {
@@ -82,7 +85,7 @@ namespace Fithub_API.Controllers
         {
             try
             {
-                var result = _updateCoach.AddCoachRating(rating);
+                var result = _updateCoach.AddCoachRating(_fithubConfigHelper.FithubConnectionString, rating);
                 if(result >0)
                 {
                     var location = _linkGenerator.GetPathByAction("GetCoachRatingByUserID", "Coach",
@@ -114,7 +117,7 @@ namespace Fithub_API.Controllers
         {
             try
             {
-                var result = _updateCoach.UpdateCoachRating(CoachID,UserID,rating);
+                var result = _updateCoach.UpdateCoachRating(_fithubConfigHelper.FithubConnectionString, CoachID,UserID,rating);
                 if (result > 0)
                 {
                     var location = _linkGenerator.GetPathByAction("GetCoachRatingByUserID", "Coach",

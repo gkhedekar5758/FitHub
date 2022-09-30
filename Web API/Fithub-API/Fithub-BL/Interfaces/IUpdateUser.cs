@@ -12,8 +12,8 @@ namespace Fithub_BL.Interfaces
   /// </summary>
   public interface IUpdateUser
   {
-    public int ResetUserPassword(int userId, string password);
+    public int ResetUserPassword(string connection,int userId, string password);
 
-        public int RegisterUser(User user);
+        public int RegisterUser(string connection,User user);
   }
 }

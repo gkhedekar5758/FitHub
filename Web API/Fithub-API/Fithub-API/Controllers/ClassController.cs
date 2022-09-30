@@ -1,5 +1,7 @@
+using Fithub_API.Helper;
 using Fithub_BL.Interfaces;
 using Microsoft.AspNetCore.Mvc;
+using Microsoft.Extensions.Configuration;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -13,10 +15,13 @@ namespace Fithub_API.Controllers
   public class ClassController : ControllerBase
   {
     private readonly IQueryClass _queryClass;
-    public ClassController(IQueryClass queryClass)
+        private readonly IFithubConfigHelper _fithubConfigHelper;
+
+        public ClassController(IQueryClass queryClass,IFithubConfigHelper fithubConfigHelper)
     {
       _queryClass = queryClass ?? throw new ArgumentNullException(nameof(queryClass));
-    }
+            this._fithubConfigHelper = fithubConfigHelper?? throw new ArgumentNullException(nameof(fithubConfigHelper));
+        }
 
     [HttpGet]
     [Route("getClasses")]
@@ -24,7 +29,7 @@ namespace Fithub_API.Controllers
     {
       try
       {
-        var listOfClass = _queryClass.QueryClasses();
+        var listOfClass = _queryClass.QueryClasses(_fithubConfigHelper.FithubConnectionString);
         return Ok(listOfClass);
 
       }

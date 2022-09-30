@@ -12,9 +12,9 @@ namespace Fithub_DL.Interfaces
   /// </summary>
   public interface IReadUser
   {
-    public User ReadUserByEmail(string emailID);
+    public User ReadUserByEmail(string connection,string emailID);
 
-    public string ReadUsersPassword(string email);
-    public int ReadUserIdByEmail(string email);
+    public string ReadUsersPassword(string connection,string email);
+    public int ReadUserIdByEmail(string connection,string email);
   }
 }

@@ -1,3 +1,4 @@
+using Fithub_API.Helper;
 using Fithub_BL.Interfaces;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
@@ -14,10 +15,12 @@ namespace Fithub_API.Controllers
   public class TestimonyController : ControllerBase
   {
         private readonly IQueryTestimony _queryTestimony;
+        private readonly IFithubConfigHelper _fithubConfigHelper;
 
-        public TestimonyController(IQueryTestimony queryTestimony)
+        public TestimonyController(IQueryTestimony queryTestimony,IFithubConfigHelper fithubConfigHelper)
         {
             _queryTestimony = queryTestimony?? throw new ArgumentNullException(nameof(queryTestimony));
+            this._fithubConfigHelper = fithubConfigHelper;
         }
 
         [HttpGet]
@@ -27,7 +30,7 @@ namespace Fithub_API.Controllers
         {
             try
             {
-                var result = _queryTestimony.QueryTestimonyByUser(UserID);
+                var result = _queryTestimony.QueryTestimonyByUser(_fithubConfigHelper.FithubConnectionString, UserID);
                 return Ok(result);
             }
             catch (Exception exception)

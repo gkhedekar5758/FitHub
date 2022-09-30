@@ -14,12 +14,12 @@ namespace Fithub_DL
   {
     private readonly string connectionString = "server=g708915-w101;database=Fithub;Trusted_Connection=true";
 
-    public CoachClassResponseDTO GetCoachByCoachID(int coachID)
+    public CoachClassResponseDTO GetCoachByCoachID(string connection, int coachID)
     {
       try
       {
 
-        using(SqlConnection sqlConnection=new SqlConnection(connectionString))
+        using(SqlConnection sqlConnection=new SqlConnection(connection))
         {
           sqlConnection.Open();
           var sqlSP = "dbo.uspReadCoachByCoachID";
@@ -55,11 +55,11 @@ namespace Fithub_DL
       }
     }
 
-    public IEnumerable<Coach> GetCoachesByClassID(int classID)
+    public IEnumerable<Coach> GetCoachesByClassID(string connection, int classID)
     {
       try
       {
-        using(SqlConnection sqlConnection=new SqlConnection(connectionString))
+        using(SqlConnection sqlConnection=new SqlConnection(connection))
         {
           sqlConnection.Open();
           var sqlSP = "dbo.uspReadCoachesByClassID";
@@ -94,11 +94,11 @@ namespace Fithub_DL
       }
     }
 
-    public Rating GetCoachRatingByUser(int coachID, int userID)
+    public Rating GetCoachRatingByUser(string connection, int coachID, int userID)
     {
       try
       {
-        using (SqlConnection sqlConnection = new SqlConnection(connectionString))
+        using (SqlConnection sqlConnection = new SqlConnection(connection))
         {
           sqlConnection.Open();
           var sqlSP = "dbo.uspReadCoachRatingByCoachIDUserID";

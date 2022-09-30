@@ -11,6 +11,7 @@ using Fithub_BL.Interfaces;
 using Fithub_Data.DTO;
 using Google.Apis.Auth;
 using Fithub_Data.DTO.ResponseDTO;
+using Fithub_API.Helper;
 
 namespace Fithub_API.Controllers
 {
@@ -21,12 +22,15 @@ namespace Fithub_API.Controllers
     private readonly JWTHelper _jWTHelper;
     private readonly IQueryUser _queryUser;
     private readonly IUpdateUser _updateUser;
-    public AuthController(JWTHelper jWTHelper,IQueryUser queryUser,IUpdateUser updateUser)
+        private readonly IFithubConfigHelper _fithubConfigHelper;
+
+        public AuthController(JWTHelper jWTHelper,IQueryUser queryUser,IUpdateUser updateUser,IFithubConfigHelper fithubConfigHelper)
     {
       _jWTHelper = jWTHelper??throw new ArgumentNullException(nameof(jWTHelper));
       _queryUser = queryUser ?? throw new ArgumentNullException(nameof(queryUser));
       _updateUser = updateUser ?? throw new ArgumentNullException(nameof(updateUser));
-    }
+            this._fithubConfigHelper = fithubConfigHelper;
+        }
 
 
     [Route("login")]
@@ -40,7 +44,7 @@ namespace Fithub_API.Controllers
       {
 
         
-        var user = _queryUser.QueryUserByEmail(requestDTO.Email);
+        var user = _queryUser.QueryUserByEmail(_fithubConfigHelper.FithubConnectionString, requestDTO.Email);
 
         if(user == null)
         {
@@ -76,7 +80,7 @@ namespace Fithub_API.Controllers
         return BadRequest("Email is not supplied");
       try
       {
-        int userId=_queryUser.QueryUserIdByEmail(email);
+        int userId=_queryUser.QueryUserIdByEmail(_fithubConfigHelper.FithubConnectionString, email);
         if (userId > 0)
           return Ok(Convert.ToInt32(userId));
         else
@@ -98,7 +102,7 @@ namespace Fithub_API.Controllers
         return BadRequest("Information was not supplied");
       try
       {
-        return Ok( _updateUser.ResetUserPassword(resetPasswordDto.userId, resetPasswordDto.password));
+        return Ok( _updateUser.ResetUserPassword(_fithubConfigHelper.FithubConnectionString, resetPasswordDto.userId, resetPasswordDto.password));
       }
       catch (Exception e)
       {
@@ -132,15 +136,16 @@ namespace Fithub_API.Controllers
     }
         [HttpPost]
         [Route("registerUser")]
-        public IActionResult RegisterUser(User user)
+        public IActionResult RegisterUser([FromBody]User user)
         {
             if (user == null)
                 return BadRequest("User not supplied");
 
             try
             {
-                int result = _updateUser.RegisterUser(user);
-                return Ok(result);
+                int result = _updateUser.RegisterUser(_fithubConfigHelper.FithubConnectionString, user);
+                if (result >= 0) return Ok(new { success = true });
+                else return BadRequest("there was some problem");
             }
             catch (Exception e)
             {
@@ -148,6 +153,8 @@ namespace Fithub_API.Controllers
                 return StatusCode((int)HttpStatusCode.InternalServerError, "Something bad happened - " + e.Message);
             }
         }
+
+        
 
   }
 }

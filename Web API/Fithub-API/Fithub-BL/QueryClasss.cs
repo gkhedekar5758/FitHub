@@ -16,9 +16,9 @@ namespace Fithub_BL
     {
       _readClass = readClass ?? throw new ArgumentNullException(nameof(readClass));
     }
-    public IEnumerable<Class> QueryClasses()
+    public IEnumerable<Class> QueryClasses(string connection)
     {
-      return _readClass.ReadClasses();
+      return _readClass.ReadClasses(connection);
     }
   }
 }

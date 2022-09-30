@@ -17,14 +17,14 @@ namespace Fithub_BL
         {
             _writeCoach = writeCoach?? throw new ArgumentNullException(nameof(writeCoach));
         }
-        public int AddCoachRating(Rating rating)
+        public int AddCoachRating(string connection, Rating rating)
         {
-            return _writeCoach.AddCoachRatingByUser(rating);
+            return _writeCoach.AddCoachRatingByUser(connection, rating);
         }
 
-        public int UpdateCoachRating(int CoachID, int UserID, Rating rating)
+        public int UpdateCoachRating(string connection, int CoachID, int UserID, Rating rating)
         {
-            return _writeCoach.UpdateCoachRatingByUser(CoachID, UserID, rating);
+            return _writeCoach.UpdateCoachRatingByUser(connection, CoachID, UserID, rating);
         }
     }
 }
