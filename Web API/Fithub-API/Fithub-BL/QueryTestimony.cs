@@ -1,10 +1,6 @@
 using Fithub_BL.Interfaces;
 using Fithub_DL.Interfaces;
 using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 
 namespace Fithub_BL
 {
@@ -14,11 +10,11 @@ namespace Fithub_BL
 
         public QueryTestimony(IReadTestimony readTestimony)
         {
-            _readTestimony = readTestimony?? throw new ArgumentNullException(nameof(readTestimony));
+            _readTestimony = readTestimony ?? throw new ArgumentNullException(nameof(readTestimony));
         }
-        public string QueryTestimonyByUser(string connection,int UserID)
+        public string QueryTestimonyByUser(string connection, int UserID)
         {
-            return _readTestimony.ReadTestimonyByUser(connection,UserID);
+            return _readTestimony.ReadTestimonyByUser(connection, UserID);
         }
     }
 }

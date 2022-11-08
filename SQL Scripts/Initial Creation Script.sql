@@ -96,8 +96,8 @@ UserInfoID INT PRIMARY KEY IDENTITY(1,1),
 [Height] int not null,
 [Weight] int not null,
 BMI int,
-MobileNo int,
-EmergencyMobileNo int not null,
+MobileNo varchar(10),
+EmergencyMobileNo varchar(10) not null,
 [UserID] int FOREIGN KEY REFERENCES [dbo].[User](UserID)
 )
 --============================

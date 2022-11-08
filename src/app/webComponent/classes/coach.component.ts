@@ -29,7 +29,7 @@ export class CoachComponent implements OnInit {
     private coachService: CoachService,
     private authService: AuthService,
     private testimonyService: TestimonyService
-  ) {}
+  ) { }
 
   ngOnInit(): void {
     this.currentLoggedUser = this.authService.getCurrentLoggedInUser();
@@ -57,6 +57,7 @@ export class CoachComponent implements OnInit {
     });
     //#endregion
   }
+
   changeRating = (value) => {
     this.coachRating = value;
     console.log(this.coachRating);
@@ -70,6 +71,12 @@ export class CoachComponent implements OnInit {
       //User did change the rating from nothing to something
       this.coachService.addCoachRatingByUser(rating).subscribe(
         () => {
+          this.coachService.getCoachRatingByUserID(
+            this.coachID,
+            this.currentLoggedUser.userID
+          ).subscribe((res)=>{
+            this.ratingResponse=res;
+          })
           alert('Rating added succesfully');
         },
         (error) => console.log(error)

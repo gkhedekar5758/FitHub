@@ -4,46 +4,57 @@
       <h2 class="label-mat p-2 text-center">Sign In</h2>
       <form #formLogin="ngForm" class="p-3" (ngSubmit)="Login(formLogin)" novalidate>
         <div class="form-group">
-          <em class="float-right" *ngIf="formLogin.controls.email?.invalid && formLogin.controls.email?.touched && formLogin.controls.email?.errors.required"
+          <em class="float-right"
+            *ngIf="formLogin.controls.email?.invalid && formLogin.controls.email?.touched && formLogin.controls.email?.errors.required"
             style="color: red;">*Required</em>
-            <em class="float-right" *ngIf="formLogin.controls.email?.invalid && formLogin.controls.email?.touched && formLogin.controls.email?.errors.pattern"
+          <em class="float-right"
+            *ngIf="formLogin.controls.email?.invalid && formLogin.controls.email?.touched && formLogin.controls.email?.errors.pattern"
             style="color: red;">*Enter a valid Email</em>
           <label for="email" class="label-mat">Email address</label>
-          <input type="email" class="form-control" name="email" id="email"  ngModel [(ngModel)]="email" pattern="[^ @]*@[^ @]*"
-            placeholder="ex: someone@example.com"  required>
+          <input type="email" class="form-control" name="email" id="email" ngModel [(ngModel)]="email"
+            pattern="[^ @]*@[^ @]*" placeholder="ex: someone@example.com" required>
 
         </div>
         <div class="form-group">
-          <em class="float-right" *ngIf="formLogin.controls.password?.invalid && formLogin.controls.password?.touched && formLogin.controls.password?.errors.required"
+          <em class="float-right"
+            *ngIf="formLogin.controls.password?.invalid && formLogin.controls.password?.touched && formLogin.controls.password?.errors.required"
             style="color: red;">*Required</em>
-            <em class="float-right" *ngIf="formLogin.controls.password?.invalid && formLogin.controls.password?.touched && formLogin.controls.password?.errors.minlength"
+          <em class="float-right"
+            *ngIf="formLogin.controls.password?.invalid && formLogin.controls.password?.touched && formLogin.controls.password?.errors.minlength"
             style="color: red;">*Password needs to minimum 3 characters and maximum 8 characters</em>
           <label for="password" class="label-mat">Password</label>
-          <input type="password" class="form-control" id="password" name="password" placeholder="Password" ngModel [(ngModel)]="password" minlength="3" maxlength="10" required >
+          <input type="password" class="form-control" id="password" name="password" placeholder="Password" ngModel
+            [(ngModel)]="password" minlength="3" maxlength="10" required>
         </div>
 
-        <button type="submit" class="btn btn-primary">Submit</button>
 
+        <button type="submit" class="btn btn-primary">Submit</button>
+        <a class="label-mat" routerLink="/members/forgotPassword" routerLinkActive="router-link-active">Forgot your Password?</a>
         <div *ngIf="isErrored" class="alert alert-danger mt-3">
-        <div [innerHTML]="errorMessage"></div>
+          <div [innerHTML]="errorMessage"></div>
 
         </div>
 
       </form>
-<!-- <pre>{{formLogin.value|json}}
+      <!-- <pre>{{formLogin.value|json}}
   {{formLogin.controls.email?.invalid}}
   {{formLogin.controls.email?.touched}}
 </pre> -->
 
       <h4 class="label-mat p-2 text-center">OR</h4>
+      
 
-      <div class="p-3">
-        <a class="label-mat text-decoration-none font-weight-bolder"
-        id="googleLogin" role="button" style="text-transform:none; font-size: 1.2rem;" (click)="LoginExternalGoogle()">
+      <div class="p-3 text-center">
+        <a class="label-mat text-decoration-none font-weight-bolder" id="googleLogin" role="button"
+          style="text-transform:none; font-size: 1.2rem;" (click)="LoginExternalGoogle()">
 
           <img src="https://img.icons8.com/color/48/000000/google-logo.png" />
           Login with Google
         </a>
+      </div>
+
+      <div class="m-5">
+        <h6 class="label-mat">Need an Account? <a style="color: #caced1" routerLink="/members/register">Sign Up</a></h6>
       </div>
     </div>
   </div>

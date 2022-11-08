@@ -1,11 +1,7 @@
 using Fithub_Data.Models;
 using Fithub_DL.Interfaces;
 using System;
-using System.Collections.Generic;
 using System.Data.SqlClient;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 
 namespace Fithub_DL
 {

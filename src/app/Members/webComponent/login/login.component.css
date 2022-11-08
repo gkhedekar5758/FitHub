@@ -23,6 +23,10 @@
   margin-left: auto;
 }
 
+a.label-mat{
+  text-decoration: none;
+  margin-left: 10%;
+}
 #googleLogin:hover{
   color:  #caced1
 }
