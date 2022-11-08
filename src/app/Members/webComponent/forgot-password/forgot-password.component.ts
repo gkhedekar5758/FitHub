@@ -32,7 +32,8 @@ export class ForgotPasswordComponent implements OnInit {
     let user:AuthRequestDTO={
       email:formValue.form.controls.email.value,
       password:null,
-      clientURL:null
+      clientURL:null,
+      clientRegURL:'http://localhost:4200/members/Register'
     }
     this.authService.getUserIdByEmail(user)
     .subscribe(response => {
@@ -42,9 +43,9 @@ export class ForgotPasswordComponent implements OnInit {
     },
     error=>{
       this.isErrored=true;
-      this.errorMessage=error.error.errorMessage;
+      this.errorMessage=error;//.error.errorMessage;
     }
-    )
+    );
   }
 
   ReSetUserPassword(formValue:NgForm){
@@ -64,7 +65,7 @@ export class ForgotPasswordComponent implements OnInit {
     error=>{
       //console.log(error);
       this.isErrored=true;
-      this.errorMessage=error.error.errorMessage;
+      this.errorMessage=error;//.error.errorMessage;
     }
   }
 

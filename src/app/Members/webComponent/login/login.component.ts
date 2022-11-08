@@ -27,7 +27,7 @@ _returnURL:string;
 
   ngOnInit(): void {
     //console.log("init fired");
-    this._returnURL= this.activatedRoute.snapshot.queryParams['returnUrl']||'/';
+    this._returnURL= this.activatedRoute.snapshot.queryParams['returnUrl']||'members/userhome'||'/';
 
   }
   public Login=(formValue:NgForm)=>{
@@ -35,7 +35,8 @@ _returnURL:string;
     const user:AuthRequestDTO={
       email:formValue.form.controls.email.value,
       password:formValue.form.controls.password.value,
-      clientURL:"http://localhost:4200/members/forgotPassword"
+      clientURL:"/members/forgotPassword",
+      clientRegURL:'/members/register'
     }
     this.authService.login(user)
       .subscribe( response => {
@@ -49,10 +50,11 @@ _returnURL:string;
       error=>{
 
         this.isErrored=true;
-        this.errorMessage=error.error.errorMessage;
-        if(error.error.errorMessage === undefined){
-          this.errorMessage="Something bad happen, Try again later !!"
-        }
+        console.log( error);
+        this.errorMessage=error;
+        // if(error.error.errorMessage === undefined){
+        //   this.errorMessage="Something bad happen, Try again later !!"
+        // }
         //console.log( error.error.errorMessage);
       });
      formValue.resetForm();

@@ -1,0 +1,179 @@
+<div class="container-fluid img-background">
+  <div class="limited">
+    <div class="container white-transparent mb-3">
+      <h2 class="label-mat p-2 text-center">Sign Up</h2>
+      <div style="color: red;">{{registrationForm.value | json}}
+      <!-- {{mobileNo?.errors|json}} -->
+      <!-- </div> -->
+      <form [formGroup]="registrationForm" class="p-3" (ngSubmit)="Register(registrationForm.value)" [fHFieldMatcher]="['password', 'confirmPassword']">
+        <div class="form-row">
+          <div class="form-group col-md-6">
+            <em class="float-right" *ngIf="
+                firstName.touched &&
+                firstName.invalid &&
+                firstName.errors.required
+              " style="color: red">*Required</em>
+            <label class="label-mat" for="firstName"> First Name</label>
+            <input formControlName="firstName" type="text" class="form-control" />
+          </div>
+          <div class="form-group col-md-6">
+            <em class="float-right" *ngIf="
+                lastName.touched && lastName.invalid && lastName.errors.required
+              " style="color: red">*Required</em>
+            <label class="label-mat" for="lastName"> Last Name</label>
+            <input formControlName="lastName" type="text" class="form-control" />
+          </div>
+        </div>
+
+        <!-- height weight and BMI mobile# -->
+        <div formGroupName="userInfo">
+          <div class="form-row">
+            <div class="form-group col-md-6">
+              <em class="float-right" *ngIf="
+                  mobileNo.touched &&
+                  mobileNo.invalid &&
+                  mobileNo.errors.maxlength
+                " style="color: red">*Maximum 10 digit required</em>
+              <label class="label-mat" for="mobileNo"> Mobile #</label>
+              <input formControlName="mobileNo" type="text" class="form-control" />
+            </div>
+            <div class="form-group col-md-6">
+              <em class="float-right" *ngIf="
+                  emMobileNo.touched &&
+                  emMobileNo.invalid &&
+                  emMobileNo.errors.maxlength
+                " style="color: red">*Maximum 10 digit required</em>
+              <em class="float-right" *ngIf="
+                  emMobileNo.touched &&
+                  emMobileNo.invalid &&
+                  emMobileNo.errors.required
+                " style="color: red">*Required</em>
+              <label class="label-mat" for="emergencyMobileNo">
+                Emergency Mobile #</label>
+              <input formControlName="emergencyMobileNo" type="text" class="form-control" />
+              <small class="label-mat">We will use this only during emergencies.</small>
+            </div>
+          </div>
+          <div class="form-row">
+            <div class="form-group col-md-6">
+              <em class="float-right" *ngIf="height.touched && height.invalid && height.errors.min"
+                style="color: red">*Minimum height can be 20 cms</em>
+              <em class="float-right" *ngIf="height.touched && height.invalid && height.errors.max"
+                style="color: red">*Maximum height can be 245 cms</em>
+              <em class="float-right" *ngIf="
+                  height.touched && height.invalid && height.errors.required
+                " style="color: red">*Required</em>
+              <label class="label-mat" for="height"> Height </label>
+              <input formControlName="height" type="number" class="form-control" min="20" max="245" />
+              <small class="label-mat">Centimeter</small>
+            </div>
+            <div class="form-group col-md-6">
+              <em class="float-right" *ngIf="weight.touched && weight.invalid && weight.errors.min"
+                style="color: red">*Minimum weight can be 20 kgs</em>
+              <em class="float-right" *ngIf="weight.touched && weight.invalid && weight.errors.max"
+                style="color: red">*Maximum weight can be 2 kgs</em>
+              <em class="float-right" *ngIf="
+                  weight.touched && weight.invalid && weight.errors.required
+                " style="color: red">*Required</em>
+              <label class="label-mat" for="weight">Weight </label>
+              <input formControlName="weight" type="number" class="form-control" min="20" max="200"
+                (blur)="calculateBMI(height.value, weight.value)" />
+              <small class="label-mat">Kilogram</small>
+            </div>
+          </div>
+          <div class="form-row">
+            <div class="form-group col-md-6">
+              <label class="label-mat" for="BMI"> BMI</label>
+              <input formControlName="BMI" type="text" class="form-control" readonly />
+            </div>
+            <div class="btn-margin col-md-6">
+              <button class="btn btn-info" data-toggle="modal" data-target="#exampleModalCenter"
+                [disabled]="!this.registrationForm.get('userInfo.BMI').value">
+                What my BMI tell me?
+              </button>
+            </div>
+
+          </div>
+        </div>
+        <h5 class="label-mat">Login Information :</h5>
+
+        <div class="form-group">
+          <em class="float-right" *ngIf="email.touched && email.invalid && email.errors.required"
+            style="color: red">*Required</em>
+          <em class="float-right" *ngIf="email.touched && email.invalid && email.errors.email" style="color: red">*A
+            valid email is required</em>
+          <label class="label-mat" for="email"> Email</label>
+          <input formControlName="email" type="email" class="form-control" />
+        </div>
+        <div class="form-group">
+          <em class="float-right" *ngIf="
+              password.touched && password.invalid && password.errors.required
+            " style="color: red">*Required</em>
+          <em class="float-right" *ngIf="
+              password.touched &&
+              password.invalid &&
+              (password.errors.minlength || password.errors.maxlength)
+            " style="color: red">*Password needs to be minimum 3 characters and maximum 8 characters
+            long</em>
+          <label class="label-mat" for="password"> Password</label>
+          <input formControlName="password" type="password" class="form-control" />
+        </div>
+        <div class="form-group">
+          <em class="float-right" *ngIf="
+              confirmPassword.touched &&
+              confirmPassword.invalid &&
+              confirmPassword.errors.required
+            " style="color: red">*Required</em>
+          <em class="float-right" *ngIf="
+              confirmPassword.touched &&
+              confirmPassword.invalid &&
+              (confirmPassword.errors.minlength ||
+                confirmPassword.errors.maxlength)
+            " style="color: red">*Confirm Password needs to be minimum 3 characters and maximum 8
+            characters long</em>
+          <em class="float-right" *ngIf="
+              confirmPassword.touched &&
+              confirmPassword.invalid &&
+              confirmPassword.errors.fHFieldMatcher
+            " style="color: red">*Passwords do not match</em>
+          <label class="label-mat" for="confirmPassword">
+            Confirm Password</label>
+          <input formControlName="confirmPassword" type="password" class="form-control" />
+        </div>
+
+        <button class="btn btn-primary" [disabled]="registrationForm.invalid">
+          Submit
+        </button>
+      </form>
+
+      <div class="m-5">
+        <h6 class="label-mat">Already have an Account? <a style="color: #caced1" routerLink="/members/login">Sign In</a></h6>
+      </div>
+    </div>
+  </div>
+</div>
+
+
+<!-- Modal -->
+<div class="modal fade" id="exampleModalCenter" tabindex="-1" role="dialog" aria-labelledby="exampleModalCenterTitle"
+  aria-hidden="true">
+  <div class="modal-dialog modal-dialog-centered" role="document">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h5 class="modal-title" id="exampleModalCenterTitle">BMI classes</h5>
+        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+          <span aria-hidden="true">&times;</span>
+        </button>
+      </div>
+      <div class="modal-body">
+        <img src="assets/images/BMI-Widget-Chart.jpeg" alt="BMI chart" class="img-fluid" />
+      </div>
+      <div class="modal-footer">
+        <button type="button" class="btn btn-secondary" data-dismiss="modal">
+          Close
+        </button>
+      </div>
+    </div>
+  </div>
+</div>
+<!-- Modal dialogue -->

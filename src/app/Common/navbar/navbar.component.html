@@ -19,7 +19,7 @@
         <a class="nav-link" [routerLink]="['/massage']">Massage Therapy</a>
       </li>
       <li class="nav-item">
-        <a class="nav-link" href="#">Contact Us</a>
+        <a class="nav-link" [routerLink]="['/contact']">Contact Us</a>
       </li>
       <li class="nav-item" *ngIf="this.authService.isUserAuthenticated()">
         <a href=""   (click)="logout()" class="nav-link">Logout</a>

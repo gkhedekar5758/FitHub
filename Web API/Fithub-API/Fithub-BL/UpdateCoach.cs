@@ -2,10 +2,6 @@ using Fithub_BL.Interfaces;
 using Fithub_Data.Models;
 using Fithub_DL.Interfaces;
 using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 
 namespace Fithub_BL
 {
@@ -15,16 +11,16 @@ namespace Fithub_BL
 
         public UpdateCoach(IWriteCoach writeCoach)
         {
-            _writeCoach = writeCoach?? throw new ArgumentNullException(nameof(writeCoach));
+            _writeCoach = writeCoach ?? throw new ArgumentNullException(nameof(writeCoach));
         }
-        public int AddCoachRating(Rating rating)
+        public int AddCoachRating(string connection, Rating rating)
         {
-            return _writeCoach.AddCoachRatingByUser(rating);
+            return _writeCoach.AddCoachRatingByUser(connection, rating);
         }
 
-        public int UpdateCoachRating(int CoachID, int UserID, Rating rating)
+        public int UpdateCoachRating(string connection, int CoachID, int UserID, Rating rating)
         {
-            return _writeCoach.UpdateCoachRatingByUser(CoachID, UserID, rating);
+            return _writeCoach.UpdateCoachRatingByUser(connection, CoachID, UserID, rating);
         }
     }
 }

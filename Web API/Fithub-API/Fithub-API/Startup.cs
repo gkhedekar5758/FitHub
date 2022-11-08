@@ -1,19 +1,14 @@
-using Microsoft.AspNetCore.Builder;
-using Microsoft.AspNetCore.Hosting;
-using Microsoft.AspNetCore.Mvc;
-using Microsoft.Extensions.Configuration;
-using Microsoft.Extensions.DependencyInjection;
-using Microsoft.Extensions.Hosting;
-using Microsoft.Extensions.Logging;
-using Microsoft.OpenApi.Models;
 using Fithub_API.Extensions;
+using Fithub_API.Helper;
 using Fithub_API.JWTFeature;
 using Fithub_BL;
 using Fithub_DL;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Threading.Tasks;
+using Microsoft.AspNetCore.Builder;
+using Microsoft.AspNetCore.Hosting;
+using Microsoft.Extensions.Configuration;
+using Microsoft.Extensions.DependencyInjection;
+using Microsoft.Extensions.Hosting;
+using Microsoft.OpenApi.Models;
 
 namespace Fithub_API
 {
@@ -34,6 +29,7 @@ namespace Fithub_API
             services.ConfigureCORS();
             services.AddControllers();
             services.AddScoped<JWTHelper>();
+            services.AddSingleton<IFithubConfigHelper, FithubConfigHelper>();
             services.AddSwaggerGen(c =>
             {
                 c.SwaggerDoc("v1", new OpenApiInfo { Title = "Fithub_API", Version = "v1" });

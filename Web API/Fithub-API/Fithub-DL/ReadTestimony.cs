@@ -1,22 +1,18 @@
 using Fithub_DL.Interfaces;
 using System;
-using System.Collections.Generic;
 using System.Data.SqlClient;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 
 namespace Fithub_DL
 {
     public class ReadTestimony : IReadTestimony
     {
         const string connectionString = "server=g708915-w101;database=Fithub;Trusted_Connection=true";
-        public string ReadTestimonyByUser(int UserID)
+        public string ReadTestimonyByUser(string connection, int UserID)
         {
             try
             {
 
-                using (SqlConnection sqlConnection = new SqlConnection(connectionString))
+                using (SqlConnection sqlConnection = new SqlConnection(connection))
                 {
                     sqlConnection.Open();
                     var sqlSP = "dbo.uspReadUserTestimony";
