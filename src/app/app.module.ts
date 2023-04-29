@@ -18,6 +18,9 @@ import { CoachComponent } from './webComponent/classes/coach.component';
 import { RatingComponent } from './Common/rating/rating.component';
 import { ContactusComponent } from './webComponent/contactus/contactus.component';
 import { FitHubHttpInterceptorInterceptor } from './Common/Interceptors/fit-hub-http-interceptor.interceptor';
+import {MatCardModule} from '@angular/material/card';
+import {MatButtonModule} from '@angular/material/button'
+import { SharedComponentModule } from './Common/shared-component.module';
 
 
 
@@ -36,7 +39,7 @@ export function getJWTToken() {
     ClassDetailComponent,
     MassageComponent,
     CoachComponent,
-    RatingComponent,
+    //RatingComponent,
     ContactusComponent,
     //FieldMatcherDirective
   ],
@@ -45,6 +48,8 @@ export function getJWTToken() {
     AppRoutingModule,
     FormsModule,
     ReactiveFormsModule,
+    //MatCardModule,
+    //MatButtonModule,
     BrowserAnimationsModule,
     HttpClientModule,
     JwtModule.forRoot({
@@ -54,7 +59,8 @@ export function getJWTToken() {
         disallowedRoutes: []
       }
     }),
-    SocialLoginModule
+    SocialLoginModule,
+    SharedComponentModule
 
   ],
   providers: [

@@ -7,13 +7,17 @@ import { ForgotPasswordComponent } from './webComponent/forgot-password/forgot-p
 import { FieldMatcherDirective } from '../Common/Directives/field-matcher.directive';
 import { RegistrationComponent } from './registration/registration.component';
 import { UserHomeComponent } from './webComponent/user-home/user-home.component';
+import {MatCardModule} from '@angular/material/card';
+import {MatButtonModule} from '@angular/material/button'
+import {DragDropModule} from '@angular/cdk/drag-drop';
 import { AuthGuard } from '../Common/Guards/auth.guard';
+import { SharedComponentModule } from '../Common/shared-component.module';
 
 const userRoot: Routes = [
   { path: 'login', component: LoginComponent },
   { path: 'forgotPassword', component: ForgotPasswordComponent },
   { path: 'register', component: RegistrationComponent },
-  {path:'userhome',component:UserHomeComponent}//,canActivate:[AuthGuard]}
+  {path:'userhome',component:UserHomeComponent,canActivate:[AuthGuard]}
 ];
 
 @NgModule({
@@ -23,18 +27,23 @@ const userRoot: Routes = [
     FieldMatcherDirective,
     RegistrationComponent,
     UserHomeComponent,
+    //RatingComponent
+    
   ],
   imports: [
     CommonModule,
     RouterModule.forChild(userRoot),
-
+    // MatCardModule,
+    // MatButtonModule,
+    // DragDropModule,
     FormsModule,
     ReactiveFormsModule,
+    SharedComponentModule,
     //SocialLoginModule
   ],
   providers: [],
   exports: [
-    //SocialLoginModule
+    //RatingComponent
   ],
 })
 

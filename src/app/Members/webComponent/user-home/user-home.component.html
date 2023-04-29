@@ -1,13 +1,305 @@
 <div class="limited">
     <div class="container">
+        <!-- User dynamic information -->
         <div class="row">
             <div class="rounded-container col">
                 <div class="box">
-                    <div>Name : <h5>Gaurang Khedekar</h5></div>
-                    <div>Height : <h5>174 CM</h5></div>
-                    <div>Weight :<h5>82 KG</h5></div>
-                    <div>BMI :<h5>32 </h5></div>
+                    <div>Name : <h5>Gaurang Khedekar</h5>
+                    </div>
+                    <div>Height : <h5>174 CM</h5>
+                    </div>
+                    <div>Weight :<h5>82 KG</h5>
+                    </div>
+                    <div>BMI :<h5>32 </h5>
+                    </div>
                 </div>
+            </div>
+
+        </div>
+        <div class="row mb-2 mt-2">
+            <div class="col d-flex align-items-stretch">
+                <div class="box">
+                    <mat-card>
+                        <mat-card-title class="h5">1 Month</mat-card-title>
+                        <mat-card-subtitle>Gym Membership</mat-card-subtitle>
+                        <mat-card-content>
+                            <p>1500</p>
+
+                        </mat-card-content>
+                        <mat-card-actions>
+                            <button mat-button>ADD</button>
+
+                        </mat-card-actions>
+                    </mat-card>
+                </div>
+            </div>
+            <div class="col d-flex align-items-stretch">
+                <div class="box">
+                    <mat-card>
+                        <mat-card-title class="h5">3 Month</mat-card-title>
+                        <mat-card-subtitle>Gym Membership</mat-card-subtitle>
+                        <mat-card-content>
+                            <p>3000</p>
+
+                        </mat-card-content>
+                        <mat-card-actions>
+                            <button mat-button>ADD</button>
+
+                        </mat-card-actions>
+                    </mat-card>
+                </div>
+            </div>
+            <div class="col d-flex align-items-stretch">
+                <div class="box">
+                    <mat-card>
+                        <mat-card-title class="h5">6 Month</mat-card-title>
+                        <mat-card-subtitle>Gym Membership</mat-card-subtitle>
+                        <mat-card-content>
+                            <p>4500</p>
+
+                        </mat-card-content>
+                        <mat-card-actions>
+                            <button mat-button>ADD</button>
+
+                        </mat-card-actions>
+                    </mat-card>
+                </div>
+            </div>
+            <div class="col d-flex align-items-stretch">
+                <div class="box">
+                    <mat-card>
+                        <mat-card-title class="h6">1 Year + 2 months</mat-card-title>
+                        <mat-card-subtitle>Gym Membership</mat-card-subtitle>
+                        <mat-card-content>
+                            <p>7000</p>
+
+                        </mat-card-content>
+                        <mat-card-actions>
+                            <button mat-button>ADD</button>
+
+                        </mat-card-actions>
+                    </mat-card>
+                </div>
+            </div>
+            <div class="col d-flex align-items-stretch">
+                <div class="box">
+                    <mat-card>
+                        <mat-card-title class="h6">2 year + 6 months</mat-card-title>
+                        <mat-card-subtitle>Gym Membership</mat-card-subtitle>
+                        <mat-card-content>
+                            <p>10000</p>
+
+                        </mat-card-content>
+                        <mat-card-actions>
+                            <button mat-button>ADD</button>
+
+                        </mat-card-actions>
+                    </mat-card>
+                </div>
+            </div>
+        </div>
+        <div class="row ">
+            <div class="col-lg-8 col-sm-12 ">
+                <div class="col-md-12 rounded-container p-2">
+                    <div class="row">
+                        <div class="col-md-6">
+                            <div class="drag-container">
+                                <h4 class="text-center">Availabe Classes</h4>
+                                <div class="example-list" cdkDropList #availableClassesRef="cdkDropList"
+                                    [cdkDropListData]="availableClasses" [cdkDropListConnectedTo]="[enrolledClassesRef]"
+                                    (cdkDropListDropped)="drop($event)">
+                                    <div class="example-box" *ngFor="let item of availableClasses" cdkDrag
+                                        title="Drag classes you want to enroll and drop them in enrolled classes section">
+                                        {{item.name}}</div>
+                                </div>
+                            </div>
+                        </div>
+
+                        <div class="col-md-6">
+                            <div class="drag-container">
+                                <h4 class="text-center">Enrolled Classes</h4>
+                                <div class="example-list" cdkDropList #enrolledClassesRef="cdkDropList"
+                                    [cdkDropListData]="enrolledClasses" [cdkDropListConnectedTo]="availableClassesRef"
+                                    (cdkDropListDropped)="drop($event)">
+                                    <div class="example-box" *ngFor="let item of enrolledClasses" cdkDrag>{{item.name}}
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                </div>
+            </div>
+            <div class="col-lg-4 col-sm-12 ">
+                <div class="col-md-12 rounded-container p-2">hello
+
+
+                </div>
+            </div>
+        </div>
+        <div class="row">
+            <div class="col rounded-container mt-4 p-3">
+                <!-- <div class="row" style="overflow-x:scroll ; ">
+                    <div class="col-lg-3">
+                        <div class=" d-flex align-items-stretch">
+                            <div>
+                                <img src='assets\images\coach\150.png'
+                                    class="img-fluid rounded-circle  d-block ml-auto mr-auto" /><br>
+                                <div style="text-align:center;"> KHEDEKAR GAURANG </div>
+                                <span>
+                                    <FH-rating style="height: 100px ;" [starrating]="ratingResponse?.ratingValue"
+                                        (rated)="changeRating($event)"></FH-rating>
+                                </span>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-lg-3">
+                        <div class=" d-flex align-items-stretch">
+                            <div>
+                                <img src='assets\images\coach\150.png'
+                                    class="img-fluid rounded-circle  d-block ml-auto mr-auto" /><br>
+                                <div style="text-align:center;"> KHEDEKAR GAURANG </div>
+                                <span>
+                                    <FH-rating style="height: 100px ;" [starrating]="ratingResponse?.ratingValue"
+                                        (rated)="changeRating($event)"></FH-rating>
+                                </span>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-lg-3">
+                        <div class=" d-flex align-items-stretch">
+                            <div>
+                                <img src='assets\images\coach\150.png'
+                                    class="img-fluid rounded-circle  d-block ml-auto mr-auto" /><br>
+                                <div style="text-align:center;"> KHEDEKAR GAURANG </div>
+                                <span>
+                                    <FH-rating style="height: 100px ;" [starrating]="ratingResponse?.ratingValue"
+                                        (rated)="changeRating($event)"></FH-rating>
+                                </span>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-lg-3">
+                        <div class=" d-flex align-items-stretch">
+                            <div>
+                                <img src='assets\images\coach\150.png'
+                                    class="img-fluid rounded-circle  d-block ml-auto mr-auto" /><br>
+                                <div style="text-align:center;"> KHEDEKAR GAURANG </div>
+                                <span>
+                                    <FH-rating style="height: 100px ;" [starrating]="ratingResponse?.ratingValue"
+                                        (rated)="changeRating($event)"></FH-rating>
+                                </span>
+                            </div>
+                        </div>
+                    </div>
+                    
+                </div> -->
+
+                <!-- working up side -->
+                <div class="gridflow" style="overflow-x:scroll ; ">
+                    <div class=" d-flex align-items-stretch">
+                        <div>
+                            <img src='assets\images\coach\150.png'
+                                class="img-fluid rounded-circle  d-block ml-auto mr-auto" /><br>
+                            <div style="text-align:center;"> KHEDEKAR GAURANG </div>
+                            <span>
+                                <FH-rating style="height: 100px ;" [starrating]="ratingResponse?.ratingValue"
+                                    (rated)="changeRating($event)"></FH-rating>
+                            </span>
+                        </div>
+                    </div>
+                    <div class=" d-flex align-items-stretch">
+                        <div>
+                            <img src='assets\images\coach\150.png'
+                                class="img-fluid rounded-circle  d-block ml-auto mr-auto" /><br>
+                            <div style="text-align:center;"> KHEDEKAR GAURANG </div>
+                            <span>
+                                <FH-rating style="height: 100px ;" [starrating]="ratingResponse?.ratingValue"
+                                    (rated)="changeRating($event)"></FH-rating>
+                            </span>
+                        </div>
+                    </div>
+                    <div class=" d-flex align-items-stretch">
+                        <div>
+                            <img src='assets\images\coach\150.png'
+                                class="img-fluid rounded-circle  d-block ml-auto mr-auto" /><br>
+                            <div style="text-align:center;"> KHEDEKAR GAURANG </div>
+                            <span>
+                                <FH-rating style="height: 100px ;" [starrating]="ratingResponse?.ratingValue"
+                                    (rated)="changeRating($event)"></FH-rating>
+                            </span>
+                        </div>
+                    </div>
+                    <div class=" d-flex align-items-stretch">
+                        <div>
+                            <img src='assets\images\coach\150.png'
+                                class="img-fluid rounded-circle  d-block ml-auto mr-auto" /><br>
+                            <div style="text-align:center;"> KHEDEKAR GAURANG </div>
+                            <span>
+                                <FH-rating style="height: 100px ;" [starrating]="ratingResponse?.ratingValue"
+                                    (rated)="changeRating($event)"></FH-rating>
+                            </span>
+                        </div>
+                    </div>
+                    <div class=" d-flex align-items-stretch">
+                        <div>
+                            <img src='assets\images\coach\150.png'
+                                class="img-fluid rounded-circle  d-block ml-auto mr-auto" /><br>
+                            <div style="text-align:center;"> KHEDEKAR GAURANG </div>
+                            <span>
+                                <FH-rating style="height: 100px ;" [starrating]="ratingResponse?.ratingValue"
+                                    (rated)="changeRating($event)"></FH-rating>
+                            </span>
+                        </div>
+                    </div>
+                    <div class=" d-flex align-items-stretch">
+                        <div>
+                            <img src='assets\images\coach\150.png'
+                                class="img-fluid rounded-circle  d-block ml-auto mr-auto" /><br>
+                            <div style="text-align:center;"> KHEDEKAR GAURANG </div>
+                            <span>
+                                <FH-rating style="height: 100px ;" [starrating]="ratingResponse?.ratingValue"
+                                    (rated)="changeRating($event)"></FH-rating>
+                            </span>
+                        </div>
+                    </div>
+                    <div class=" d-flex align-items-stretch">
+                        <div>
+                            <img src='assets\images\coach\150.png'
+                                class="img-fluid rounded-circle  d-block ml-auto mr-auto" /><br>
+                            <div style="text-align:center;"> KHEDEKAR GAURANG </div>
+                            <span>
+                                <FH-rating style="height: 100px ;" [starrating]="ratingResponse?.ratingValue"
+                                    (rated)="changeRating($event)"></FH-rating>
+                            </span>
+                        </div>
+                    </div>
+                    <div class=" d-flex align-items-stretch">
+                        <div>
+                            <img src='assets\images\coach\150.png'
+                                class="img-fluid rounded-circle  d-block ml-auto mr-auto" /><br>
+                            <div style="text-align:center;"> KHEDEKAR GAURANG </div>
+                            <span>
+                                <FH-rating style="height: 100px ;" [starrating]="ratingResponse?.ratingValue"
+                                    (rated)="changeRating($event)"></FH-rating>
+                            </span>
+                        </div>
+                    </div>
+                    <!-- <div class=" d-flex align-items-stretch">
+                        <div>
+                            <img src='assets\images\coach\150.png'
+                                class="img-fluid rounded-circle  d-block ml-auto mr-auto" /><br>
+                            <div style="text-align:center;"> KHEDEKAR GAURANG </div>
+                            <span>
+                                <FH-rating style="height: 100px ;" [starrating]="ratingResponse?.ratingValue"
+                                    (rated)="changeRating($event)"></FH-rating>
+                            </span>
+                        </div>
+                    </div> -->
+
+
+                </div>
+
             </div>
         </div>
     </div>
