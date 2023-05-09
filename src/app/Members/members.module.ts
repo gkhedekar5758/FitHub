@@ -40,6 +40,7 @@ const userRoot: Routes = [
     ReactiveFormsModule,
     SharedComponentModule,
     //SocialLoginModule
+    
   ],
   providers: [],
   exports: [

@@ -4,6 +4,7 @@ import {RatingComponent} from '../Common/rating/rating.component';
 import { FormsModule } from '@angular/forms';
 import {MatCardModule} from '@angular/material/card';
 import {MatButtonModule} from '@angular/material/button'
+import {MatBadgeModule} from '@angular/material/badge';
 import {DragDropModule} from '@angular/cdk/drag-drop';
 
 
@@ -13,8 +14,8 @@ import {DragDropModule} from '@angular/cdk/drag-drop';
   imports: [
     CommonModule,
     FormsModule,
-    MatCardModule,MatButtonModule,DragDropModule
+    MatCardModule,MatButtonModule,DragDropModule,MatBadgeModule
   ],
-  exports:[RatingComponent,MatCardModule,MatButtonModule,DragDropModule]
+  exports:[RatingComponent,MatCardModule,MatButtonModule,DragDropModule,MatBadgeModule]
 })
 export class SharedComponentModule { }

@@ -88,6 +88,9 @@
   gap: 10px;
   grid-auto-flow: row;
 }
+/* .demo + .demo{
+  margin-top: 16px;
+} */
 
   @media only screen and (min-width: 600px) {
   .col-12{
