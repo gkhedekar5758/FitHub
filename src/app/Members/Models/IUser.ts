@@ -4,4 +4,13 @@ export interface IUser{
   password:string,
   firstName:string,
   lastName:string
+  userInfo:IUserInfo
+}
+
+export interface IUserInfo{
+  height:number,
+  weight:number,
+  mobileNo:string,
+  emergencyMobileNo:string,
+  BMI:number
 }

@@ -10,6 +10,7 @@ import { Rating } from 'src/app/DataModels/rating.model';
 })
 export class UserHomeComponent implements OnInit {
 
+  //user information
   //as of now hard coding these and then we wil get it from DB
   availableClasses: any[] = [
     {name:'Zumba',Price:340},

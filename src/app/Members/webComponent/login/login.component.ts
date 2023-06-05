@@ -42,6 +42,7 @@ _returnURL:string;
       .subscribe( response => {
         let apiResponse=<AuthResponseDTO>response;
         const JWTToken= <any>apiResponse.token;
+        console.log(typeof(apiResponse.user));
 
         localStorage.setItem("JWTToken",JSON.stringify(JWTToken.result));
         localStorage.setItem("User",JSON.stringify(apiResponse.user));

@@ -115,7 +115,7 @@ BEGIN
             ,LastName,
             ExternalLoginProvider,ExternalLoginProviderName,
 			ExternalProviderKey,IsExternalProvider,IsActive,
-			USR.Name,USR.NormalisedName
+			USR.Name,USR.NormalisedName,USERINFO.Height,USERINFO.Weight,USERINFO.BMI
 			FROM [dbo].[User] US INNER JOIN [dbo].[UserRoles] USR ON US.RoleID=USR.RoleID
 			WHERE US.Email = @EmailID
 END

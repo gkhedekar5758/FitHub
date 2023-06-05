@@ -33,6 +33,7 @@ export class CoachComponent implements OnInit {
 
   ngOnInit(): void {
     this.currentLoggedUser = this.authService.getCurrentLoggedInUser();
+    console.log(this.currentLoggedUser.userInfo.weight);
     this.route.params.forEach((param) => {
       this.coachID = param[`id`];
     });

@@ -36,13 +36,18 @@ namespace Fithub_DL
                         if (result.Read())
                         {
                             returUser = new User();
-                            var userRolea = new UserRole();
-                            userRolea.Name = result["Name"].ToString();
-                            userRolea.NormalisedName = result["NormalisedName"].ToString();
+                            var userRole = new UserRole()
+                            {
+                                Name = result["Name"].ToString(),
+                                NormalisedName = result["NormalisedName"].ToString()
+                            };
+
                             var userinfo = new UserInfo()
-                            { Height = Convert.ToInt32(result["Height"]),
+                            {
+                                Height = Convert.ToInt32(result["Height"]),
                                 Weight = Convert.ToInt32(result["Weight"]),
-                                BMI = Convert.ToInt32(result["BMI"]) };
+                                BMI = Convert.ToInt32(result["BMI"])
+                            };
 
                             returUser.UserID = Convert.ToInt32(result["UserID"]);
                             returUser.Email = result["Email"].ToString();
@@ -55,7 +60,7 @@ namespace Fithub_DL
                             returUser.ExternalProviderKey = result["ExternalProviderKey"].ToString();
                             returUser.IsExternalProvider = Convert.ToBoolean(result["IsExternalProvider"]);
                             returUser.IsActive = Convert.ToBoolean(result["IsActive"]);
-                            returUser.Role = userRolea;
+                            returUser.Role = userRole;
                             returUser.UserInfo = userinfo;
                         }
 

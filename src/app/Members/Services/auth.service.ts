@@ -9,6 +9,7 @@ import { ExternalAuthDTO } from '../Models/DTO/ExternalAuthDTO';
 import {RegisterUserDTO} from '../Models/DTO/RegisterUserDTO';
 import {AuthResponseDTO} from '../Models/DTO/ResponseDTO/AuthResponseDTO';
 import {EnvironmentUrlService} from '../../Common/Services/environment.url.service';
+import { IUser } from '../Models/IUser';
 
 
 
@@ -84,7 +85,7 @@ private BASE_URL_Segment: string = 'auth/';
   }
 
   public getCurrentLoggedInUser = () =>{
-    return JSON.parse(localStorage.getItem("User"));
+    return <IUser>JSON.parse(localStorage.getItem("User"));
   }
   public register=(user:RegisterUserDTO)=>{
     return this._http.post(this.generateURL(this._environmentService.URL_Switch)+'registerUser',user,{
