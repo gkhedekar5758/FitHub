@@ -9,7 +9,22 @@
   border-radius: 5px;
   margin-left: 5rem;
 }
+/* username and link */
 
+.unameLogo{
+  color: #e1eaf3;
+  font-size: larger;
+  font-weight: bold;
+}
+.unameLogo > a{
+  text-decoration: none;
+  /* color: black; */
+}
+
+/* .unameLogo > a :hover{
+  color: #2066bd;
+  
+} */
 /* Menu */
 .mnuItem {
   font-size: 1.5rem;

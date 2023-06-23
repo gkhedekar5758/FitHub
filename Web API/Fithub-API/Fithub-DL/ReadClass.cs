@@ -16,7 +16,7 @@ namespace Fithub_DL
                 using (SqlConnection sqlConnection = new SqlConnection(connection))
                 {
                     sqlConnection.Open();
-                    string sqlQuery = "Select ClassID, ClassName,ClassDescription,PhotoURL,classShortDescription from [dbo].[Class]";
+                    string sqlQuery = "Select ClassID, ClassName,ClassDescription,PhotoURL,classShortDescription,PricePerSession from [dbo].[Class]";
                     SqlCommand sqlCommand = new SqlCommand(sqlQuery, sqlConnection);
                     var result = sqlCommand.ExecuteReader();
                     List<Class> classes = new List<Class>();
@@ -31,6 +31,7 @@ namespace Fithub_DL
                             objClass.ClassDescription = result["ClassDescription"].ToString();
                             objClass.ClassShortDescription = result["ClassShortDescription"].ToString();
                             objClass.PhotoURL = result["PhotoURL"].ToString();
+                            objClass.PricePerSession = Convert.ToDecimal(result["PricePerSession"]);
                             classes.Add(objClass);
                         }
                     }

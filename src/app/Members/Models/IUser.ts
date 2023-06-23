@@ -12,5 +12,5 @@ export interface IUserInfo{
   weight:number,
   mobileNo:string,
   emergencyMobileNo:string,
-  BMI:number
+  bmi:number
 }

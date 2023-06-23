@@ -7,5 +7,6 @@ namespace Fithub_Data.Models
         public string ClassDescription { get; set; }
         public string ClassShortDescription { get; set; }
         public string PhotoURL { get; set; }
+        public decimal PricePerSession { get; set; }
     }
 }

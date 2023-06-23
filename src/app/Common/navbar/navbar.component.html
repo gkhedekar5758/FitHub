@@ -41,8 +41,8 @@
     </ul>
 
   </div>
-<div *ngIf="this.authService.isUserAuthenticated()" style="color: #e1eaf3;font-size: larger; font-weight: bold;" >
-Hello {{this.authService.getCurrentLoggedInUser()?.firstName}}
+<div *ngIf="this.authService.isUserAuthenticated()" class="unameLogo" >
+Hello <a class="unameLogo" [routerLink]="['members/userhome']" routerLinkActive="router-link-active"> {{this.authService.getCurrentLoggedInUser()?.firstName}}</a>
 </div>
 </nav>
 

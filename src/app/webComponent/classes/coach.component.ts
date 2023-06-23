@@ -1,9 +1,11 @@
-import { stringify } from '@angular/compiler/src/util';
+import { error, stringify } from '@angular/compiler/src/util';
 import { Component, OnInit } from '@angular/core';
 import { ActivatedRoute } from '@angular/router';
+//import { error } from 'console';
 import { forkJoin } from 'rxjs';
 import { CoachService } from 'src/app/Common/Services/coach.service';
 import { TestimonyService } from 'src/app/Common/Services/testimony.service';
+import { ITestimonyDTO } from 'src/app/DataModels/DTO/ITestimonyDTO';
 import { ICoachClassResponseDTO } from 'src/app/DataModels/DTO/ResponseDTO/ICoachClassResponseDTO';
 import { Rating } from 'src/app/DataModels/rating.model';
 import { IUser } from 'src/app/Members/Models/IUser';
@@ -19,10 +21,11 @@ export class CoachComponent implements OnInit {
   coachID: number;
   currentLoggedUser: IUser;
   ratingResponse: Rating;
-  initialCoachRating: string = '0';
+  initialTestimony: string ;
   coachRating: string = '0';
 
-  //UserTestimony:string="";
+  userTestimonyDTO: ITestimonyDTO;
+  //userTestimony: string;
 
   constructor(
     private route: ActivatedRoute,
@@ -33,7 +36,7 @@ export class CoachComponent implements OnInit {
 
   ngOnInit(): void {
     this.currentLoggedUser = this.authService.getCurrentLoggedInUser();
-    console.log(this.currentLoggedUser.userInfo.weight);
+    console.log(this.currentLoggedUser.userInfo);
     this.route.params.forEach((param) => {
       this.coachID = param[`id`];
     });
@@ -44,19 +47,17 @@ export class CoachComponent implements OnInit {
       this.coachID,
       this.currentLoggedUser.userID
     );
-    //let testiMony$= this.testimonyService.getUserTestimony(this.currentLoggedUser.userID)
+    let testiMony$ = this.testimonyService.getUserTestimony(this.currentLoggedUser.userID)
 
-    forkJoin([coachResponse$, coachRating$]).subscribe((response) => {
+    forkJoin([coachResponse$, coachRating$, testiMony$]).subscribe((response) => {
       //console.log(response);
       this.coachResponse = response[0] as ICoachClassResponseDTO;
       this.ratingResponse = response[1] as Rating;
-      //console.log(typeof( this.coachRating));
-      // if(this.initialCoachRating===null)
-      //   this.initialCoachRating='0';
+      this.userTestimonyDTO = response[2] as ITestimonyDTO;
       //console.log(response);
-      //this.UserTestimony=String(response[2]);
     });
     //#endregion
+    //this.initialTestimony=this.userTestimonyDTO.testimony;
   }
 
   changeRating = (value) => {
@@ -75,8 +76,8 @@ export class CoachComponent implements OnInit {
           this.coachService.getCoachRatingByUserID(
             this.coachID,
             this.currentLoggedUser.userID
-          ).subscribe((res)=>{
-            this.ratingResponse=res;
+          ).subscribe((res) => {
+            this.ratingResponse = res;
           })
           alert('Rating added succesfully');
         },
@@ -98,10 +99,32 @@ export class CoachComponent implements OnInit {
     }
   };
 
-  // SubmitReviewandTestimony = () => {
-  //   //https://cassiomolin.com/2021/07/29/should-http-put-create-a-resource-if-it-does-not-exist/
-  //   //https://stackoverflow.com/questions/56240547/should-http-put-create-a-resource-if-it-does-not-exist
-  //   // the resource identifier is creted by server so i should create the resource with POST
-  //   // and update with PUT
-  // };
+  SubmitTestimony = () => {
+
+    if (this.userTestimonyDTO.testimonyID === 0) {
+      var testimony: ITestimonyDTO = {
+        testimonyID: 0,
+        testimony: this.userTestimonyDTO.testimony,
+        userID: this.currentLoggedUser.userID
+      }
+      this.testimonyService.createUserTestimony(testimony)
+        .subscribe((response: ITestimonyDTO) => {
+          this.userTestimonyDTO = response;
+          alert("testimony added")
+        }, (error) => {
+          console.log(error)
+        })
+    } else if (this.userTestimonyDTO.testimonyID > 0 ) {
+      
+      var testimony: ITestimonyDTO = {
+        testimonyID: this.userTestimonyDTO.testimonyID,
+        testimony: this.userTestimonyDTO.testimony,
+        userID: this.currentLoggedUser.userID
+      }
+      this.testimonyService.modifyTestimony(testimony)
+        .subscribe(() => alert("Updated Succefully")
+          , error => console.log(error))
+    }
+
+  };
 }

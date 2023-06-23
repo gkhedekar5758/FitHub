@@ -4,4 +4,5 @@ export interface IClass{
   classDescription:string
   classShortDescription:string
   photoURL:string
+  pricePerSession:number
 }

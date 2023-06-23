@@ -20,6 +20,7 @@ namespace Fithub_DL
             services.AddScoped<IReadCoach, ReadCoach>();
             services.AddScoped<IReadTestimony, ReadTestimony>();
             services.AddScoped<IWriteCoach, WriteCoach>();
+            services.AddScoped<IWriteTestimony, WriteTestimony>();
         }
     }
 }

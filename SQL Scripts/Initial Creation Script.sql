@@ -47,7 +47,8 @@ ClassID int PRIMARY KEY IDENTITY(1,1),
 ClassName VARCHAR(50) NOT NULL,
 ClassDescription VARCHAR(500),
 ClassShortDescription VARCHAR(100),
-PhotoURL VARCHAR(50)
+PhotoURL VARCHAR(50),
+PricePerSession Money
 )
 
 GO
@@ -117,6 +118,7 @@ BEGIN
 			ExternalProviderKey,IsExternalProvider,IsActive,
 			USR.Name,USR.NormalisedName,USERINFO.Height,USERINFO.Weight,USERINFO.BMI
 			FROM [dbo].[User] US INNER JOIN [dbo].[UserRoles] USR ON US.RoleID=USR.RoleID
+			INNER JOIN [dbo].[UserInfo] USERINFO ON US.UserID=USERINFO.UserID
 			WHERE US.Email = @EmailID
 END
 
@@ -160,22 +162,37 @@ END
 GO
 CREATE PROCEDURE dbo.uspInsertTestimony
 @Testimony VARCHAR(MAX),
-@UserID int
+@UserID int,
+@TestimonyID INT OUTPUT
 AS
 BEGIN
+  DECLARE @OUT TABLE (tableID int)
+
   INSERT INTO [dbo].[Testimony]
-  (Testimony,UserID)
+  (Testimony,UserID,Approved)
+  OUTPUT INSERTED.$IDENTITY INTO @OUT
   VALUES
-  (@Testimony,@UserID)
+  (@Testimony,@UserID,1) --TODO: only admin can approve this, but at this time let's approve it, when admin module is invoked we can change it
+
+  SET @TestimonyID=(SELECT tableID FROM @OUT)
 END
 
-
 GO
+CREATE PROCEDURE dbo.uspModifyTestimony
+@Testimony VARCHAR(MAX),
+@UserID INT,
+@TestimonyID INT
+AS
+BEGIN
+  UPDATE [dbo].[Testimony] SET Testimony=@Testimony WHERE TestimonyID=@TestimonyID AND UserID=@UserID
+END
+GO
+
 CREATE PROCEDURE dbo.uspReadUserTestimony
 @UserID int
 AS
 BEGIN
-  SELECT COALESCE(Testimony,'') FROM [dbo].[Testimony] WHERE UserID=@UserID
+  SELECT  COALESCE(Testimony,'') as Testimony,UserID,TestimonyID FROM [dbo].[Testimony] WHERE UserID=@UserID
 END
 GO
 

@@ -31,13 +31,21 @@
           </tr>
         </table>
       </div>
-      <!-- <div class="col-12">
+      <div class="col-12">
         <div class="form-group">
-        <label for="txtTestimony" class="h5">Write your Testimony :</label>
-        <textarea class="form-control" name="txtTestimony" id="txtTestimony" cols="30" rows="10" placeholder="Enter your Testimony (You are free to keep it blank as well and submit ratings only, but we would love if you say something. :) )" [(ngModel)]="UserTestimony"></textarea>
-        <button class="btn btn-outline-secondary mt-3" onclick="SubmitReviewandTestimony()">Submit your Review and Testimony</button>
+          <form #testimonyForm="ngForm">
+            <label for="txtTestimony" class="h5">Write your Testimony :</label>
+            <textarea class="form-control" name="txtTestimony" id="txtTestimony" name="txtTestimony" required cols="30"
+              rows="10"
+              placeholder="Enter your Testimony (You are free to keep it blank as well and submit ratings only, but we would love if you say something. :) )"
+              [(ngModel)]="userTestimonyDTO.testimony"></textarea>
+            <!-- <div style="color: red;">{{testimonyForm.controls.txtTestimony.dirty}}</div> -->
+            <button class="btn btn-outline-secondary mt-3" (click)="SubmitTestimony()"
+              [disabled]="!userTestimonyDTO.testimony || !testimonyForm.controls.txtTestimony.dirty">Submit
+              Testimony</button>
+          </form>
+        </div>
       </div>
-      </div> -->
       <!-- <div class="col-12 align-items-center justify-content-center"><FH-rating class="d-flex align-items-center justify-content-center"></FH-rating></div> -->
     </div>
   </div>

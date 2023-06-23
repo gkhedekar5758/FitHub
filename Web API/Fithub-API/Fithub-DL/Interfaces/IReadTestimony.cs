@@ -1,7 +1,9 @@
+using Fithub_Data.DTO;
+
 namespace Fithub_DL.Interfaces
 {
     public interface IReadTestimony
     {
-        public string ReadTestimonyByUser(string connection, int UserID);
+        public TestimonyDTO ReadTestimonyByUser(string connection, int UserID);
     }
 }

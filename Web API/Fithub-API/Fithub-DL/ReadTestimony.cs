@@ -1,3 +1,4 @@
+using Fithub_Data.DTO;
 using Fithub_DL.Interfaces;
 using System;
 using System.Data.SqlClient;
@@ -7,7 +8,7 @@ namespace Fithub_DL
     public class ReadTestimony : IReadTestimony
     {
         const string connectionString = "server=g708915-w101;database=Fithub;Trusted_Connection=true";
-        public string ReadTestimonyByUser(string connection, int UserID)
+        public TestimonyDTO ReadTestimonyByUser(string connection, int UserID)
         {
             try
             {
@@ -21,8 +22,22 @@ namespace Fithub_DL
                         CommandType = System.Data.CommandType.StoredProcedure
                     };
                     sqlCommand.Parameters.Add(new SqlParameter("@UserID", UserID));
-                    var result = sqlCommand.ExecuteScalar();
-                    return result == null ? "" : result.ToString();
+                    var result = sqlCommand.ExecuteReader();
+                    TestimonyDTO testimonyDTO = null;
+                   if(result!=null)
+                    {
+                        if(result.Read())
+                        {
+                            testimonyDTO = new TestimonyDTO()
+                            {
+                                Testimony = result["Testimony"].ToString(),
+                                UserID = Convert.ToInt32(result["UserID"]),
+                                TestimonyID = Convert.ToInt32(result["TestimonyID"])
+
+                            };
+                        }
+                    }
+                   return testimonyDTO;
 
                 }
             }

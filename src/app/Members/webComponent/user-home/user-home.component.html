@@ -4,13 +4,13 @@
         <div class="row">
             <div class="rounded-container col">
                 <div class="box">
-                    <div>Name : <h5>Gaurang Khedekar</h5>
+                    <div>Name : <h5>{{loggedInUser.firstName+" " +loggedInUser.lastName}}</h5>
                     </div>
-                    <div>Height : <h5>174 CM</h5>
+                    <div>Height : <h5>{{loggedInUser.userInfo.height}}</h5>
                     </div>
-                    <div>Weight :<h5>82 KG</h5>
+                    <div>Weight :<h5>{{loggedInUser.userInfo.weight}}</h5>
                     </div>
-                    <div>BMI :<h5>32 </h5>
+                    <div>BMI :<h5>{{loggedInUser.userInfo.bmi}}</h5>
                     </div>
                 </div>
             </div>
@@ -111,7 +111,7 @@
                                     (cdkDropListDropped)="drop($event)">
                                     <div class="example-box" *ngFor="let item of availableClasses" cdkDrag
                                         title="Drag classes you want to enroll and drop them in enrolled classes section">
-                                        {{item.name}}</div>
+                                        {{item.className}}</div>
                                 </div>
                             </div>
                         </div>
@@ -122,7 +122,7 @@
                                 <div class="example-list" cdkDropList #enrolledClassesRef="cdkDropList"
                                     [cdkDropListData]="enrolledClasses" [cdkDropListConnectedTo]="availableClassesRef"
                                     (cdkDropListDropped)="drop($event)">
-                                    <div class="example-box" *ngFor="let item of enrolledClasses" cdkDrag>{{item.name}}
+                                    <div class="example-box" *ngFor="let item of enrolledClasses" cdkDrag>{{item.className}}
                                     </div>
                                 </div>
                             </div>

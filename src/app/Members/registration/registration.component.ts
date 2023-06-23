@@ -46,8 +46,8 @@ export class RegistrationComponent implements OnInit {
     email: new FormControl('', [Validators.required, Validators.email]),
 
     userInfo: new FormGroup({
-      mobileNo: new FormControl('', [Validators.maxLength(10)]),
-      emergencyMobileNo: new FormControl('', [Validators.required, Validators.maxLength(10)]),
+      mobileNo: new FormControl('', [Validators.pattern("[0-9]{10}")]),
+      emergencyMobileNo: new FormControl('', [Validators.required, Validators.pattern("[0-9]{10}")]),
       height: new FormControl('', [
         Validators.required,
         Validators.min(20),
