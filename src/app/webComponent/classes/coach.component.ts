@@ -1,8 +1,9 @@
 import { error, stringify } from '@angular/compiler/src/util';
-import { Component, OnInit } from '@angular/core';
+import { AfterViewInit, Component, OnInit } from '@angular/core';
+import { NgForm } from '@angular/forms';
 import { ActivatedRoute } from '@angular/router';
 //import { error } from 'console';
-import { forkJoin } from 'rxjs';
+import { Observable, forkJoin } from 'rxjs';
 import { CoachService } from 'src/app/Common/Services/coach.service';
 import { TestimonyService } from 'src/app/Common/Services/testimony.service';
 import { ITestimonyDTO } from 'src/app/DataModels/DTO/ITestimonyDTO';
@@ -24,7 +25,8 @@ export class CoachComponent implements OnInit {
   initialTestimony: string ;
   coachRating: string = '0';
 
-  userTestimonyDTO: ITestimonyDTO;
+  userTestimonyDTO: ITestimonyDTO=null;
+  datafromServer:boolean=false;
   //userTestimony: string;
 
   constructor(
@@ -34,9 +36,10 @@ export class CoachComponent implements OnInit {
     private testimonyService: TestimonyService
   ) { }
 
+  
   ngOnInit(): void {
     this.currentLoggedUser = this.authService.getCurrentLoggedInUser();
-    console.log(this.currentLoggedUser.userInfo);
+    //console.log(this.currentLoggedUser.userInfo);
     this.route.params.forEach((param) => {
       this.coachID = param[`id`];
     });
@@ -49,41 +52,46 @@ export class CoachComponent implements OnInit {
     );
     let testiMony$ = this.testimonyService.getUserTestimony(this.currentLoggedUser.userID)
 
-    forkJoin([coachResponse$, coachRating$, testiMony$]).subscribe((response) => {
-      //console.log(response);
+    forkJoin([coachResponse$, coachRating$, testiMony$])
+    .subscribe((response) => {
       this.coachResponse = response[0] as ICoachClassResponseDTO;
       this.ratingResponse = response[1] as Rating;
       this.userTestimonyDTO = response[2] as ITestimonyDTO;
-      //console.log(response);
+      console.log(response);
+    },(error)=>console.log(error),
+    ()=>{
+      this.datafromServer=true;
+      //This means that the forkjoin has completed fetching
+      //all the responses now we can show html code
     });
-    //#endregion
-    //this.initialTestimony=this.userTestimonyDTO.testimony;
+
+    //console.log(this.userTestimonyDTO);
   }
 
   changeRating = (value) => {
-    this.coachRating = value;
-    console.log(this.coachRating);
+    this.coachRating = value.Rating;
+    //console.log(value);
     const rating: Rating = {
-      ratingID: this.ratingResponse.ratingID,
+      ratingID: this.ratingResponse.ratingID||0,
       coachID: this.coachID,
       userID: this.currentLoggedUser.userID,
       ratingValue: this.coachRating,
     };
-    if (this.ratingResponse.ratingID === 0) {
+    if (rating.ratingID === 0) {
       //User did change the rating from nothing to something
       this.coachService.addCoachRatingByUser(rating).subscribe(
         () => {
-          this.coachService.getCoachRatingByUserID(
-            this.coachID,
-            this.currentLoggedUser.userID
-          ).subscribe((res) => {
-            this.ratingResponse = res;
-          })
+          // this.coachService.getCoachRatingByUserID(
+          //   this.coachID,
+          //   this.currentLoggedUser.userID
+          // ).subscribe((res) => {
+          //   this.ratingResponse = res;
+          // })
           alert('Rating added succesfully');
         },
         (error) => console.log(error)
       );
-    } else if (this.ratingResponse.ratingID > 0) {
+    } else if (rating.ratingID > 0) {
       this.coachService
         .updateCoachRatingByUser(
           this.coachID,
@@ -99,14 +107,15 @@ export class CoachComponent implements OnInit {
     }
   };
 
-  SubmitTestimony = () => {
-
-    if (this.userTestimonyDTO.testimonyID === 0) {
-      var testimony: ITestimonyDTO = {
-        testimonyID: 0,
-        testimony: this.userTestimonyDTO.testimony,
-        userID: this.currentLoggedUser.userID
-      }
+  SubmitTestimony = (value:NgForm) => {
+    var testimony: ITestimonyDTO = {
+      testimonyID: this.userTestimonyDTO.testimonyID,
+      testimony: value.form.controls.txtTestimony.value ,
+      userID: this.currentLoggedUser.userID
+    }
+    if (testimony.testimonyID === undefined ) {
+      //creating testimony
+      
       this.testimonyService.createUserTestimony(testimony)
         .subscribe((response: ITestimonyDTO) => {
           this.userTestimonyDTO = response;
@@ -114,13 +123,13 @@ export class CoachComponent implements OnInit {
         }, (error) => {
           console.log(error)
         })
-    } else if (this.userTestimonyDTO.testimonyID > 0 ) {
-      
-      var testimony: ITestimonyDTO = {
-        testimonyID: this.userTestimonyDTO.testimonyID,
-        testimony: this.userTestimonyDTO.testimony,
-        userID: this.currentLoggedUser.userID
-      }
+    } else if (testimony.testimonyID > 0 ) {
+      //updating testimony
+      // var testimony: ITestimonyDTO = {
+      //   testimonyID: this.userTestimonyDTO.testimonyID,
+      //   testimony: value.form.controls.txtTestimony.value,
+      //   userID: this.currentLoggedUser.userID
+      // }
       this.testimonyService.modifyTestimony(testimony)
         .subscribe(() => alert("Updated Succefully")
           , error => console.log(error))

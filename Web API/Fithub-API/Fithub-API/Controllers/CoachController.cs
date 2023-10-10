@@ -69,6 +69,8 @@ namespace Fithub_API.Controllers
                 var coach = _queryCoach.QueryCoachByCoachID(_fithubConfigHelper.FithubConnectionString, CoachID);
                 if (coach == null)
                     return NotFound();
+                var rating = _queryCoach.QueryCoachRatingByUserID(_fithubConfigHelper.FithubConnectionString, CoachID, UserID);
+                if (rating == null) return NotFound();
                 else
                     return Ok(_queryCoach.QueryCoachRatingByUserID(_fithubConfigHelper.FithubConnectionString, CoachID, UserID));
             }
@@ -140,6 +142,23 @@ namespace Fithub_API.Controllers
                 throw;
             }
 
+        }
+
+        [HttpGet]
+        [Route("getallcoachratingbyuser/{userID}")]
+        [Authorize(Roles = "VIEWER")]
+        public IActionResult GetAllCoachRatingByUser([FromRoute] int userID)
+        {
+            try
+            {
+                var ratings = _queryCoach.QueryCoachRatingsByUser(_fithubConfigHelper.FithubConnectionString, userID);
+                return Ok(ratings);
+            }
+            catch (Exception exception)
+            {
+                return StatusCode((int)HttpStatusCode.InternalServerError, "Something bad happened - " + exception.Message);
+                throw;
+            }
         }
     }
 }

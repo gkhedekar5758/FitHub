@@ -27,7 +27,7 @@ export class TestimonyService {
       headers:new HttpHeaders({
         "Accept":"application/json"
       })
-    }).pipe(catchError(res=>of(""))); // this means that 404 is sent from API
+    }).pipe(catchError(res=>of({}))); // this means that 404 is sent from API
   };
 
   public createUserTestimony =(testimony:ITestimonyDTO)=>{

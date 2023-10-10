@@ -2,6 +2,7 @@ using Fithub_BL.Interfaces;
 using Fithub_Data.Models;
 using Fithub_DL.Interfaces;
 using System;
+using System.Threading.Tasks;
 
 namespace Fithub_BL
 {
@@ -33,9 +34,9 @@ namespace Fithub_BL
         /// </summary>
         /// <param name="emailID"></param>
         /// <returns>UserID</returns>
-        public User QueryUserByEmail(string connection, string emailID)
+        public async Task<User> QueryUserByEmail(string connection, string emailID)
         {
-            User user = _readUser.ReadUserByEmail(connection, emailID);
+            User user = await _readUser.ReadUserByEmail(connection, emailID);
 
             return user;
         }

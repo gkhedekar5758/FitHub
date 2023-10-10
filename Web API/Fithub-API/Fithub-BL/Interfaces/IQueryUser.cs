@@ -1,4 +1,5 @@
 using Fithub_Data.Models;
+using System.Threading.Tasks;
 
 namespace Fithub_BL.Interfaces
 {
@@ -7,7 +8,7 @@ namespace Fithub_BL.Interfaces
     /// </summary>
     public interface IQueryUser
     {
-        public User QueryUserByEmail(string connection, string emailID);
+        public Task<User> QueryUserByEmail(string connection, string emailID);
         public string CheckUserPassword(string connection, string email);
 
         public int QueryUserIdByEmail(string connection, string email);

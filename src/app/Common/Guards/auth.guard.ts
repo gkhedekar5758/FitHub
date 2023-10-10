@@ -14,7 +14,7 @@ export class AuthGuard implements CanActivate {
   canActivate(
     next: ActivatedRouteSnapshot,
     state: RouterStateSnapshot): Observable<boolean | UrlTree> | Promise<boolean | UrlTree> | boolean | UrlTree {
-      console.log('auth guard fired')
+      //console.log('auth guard fired')
       if(!this.authService.isUserAuthenticated()){
         this.authService.logout();
         alert("You need to be logged in to visit the page.")

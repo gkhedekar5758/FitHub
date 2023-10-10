@@ -75,7 +75,9 @@ public  LoginExternalGoogle=()=> {
       //https://levelup.gitconnected.com/how-to-sign-in-with-google-in-angular-and-use-jwt-based-net-core-api-authentication-rsa-6635719fb86c
     },
     error=>{
+      this.isErrored=true;
       console.log(error);
+      this.errorMessage='Something bad happned, More information : '+error.error;
     })
   }
 
@@ -86,12 +88,14 @@ private  validateExternalAuthentication = (externalAuthDTO:ExternalAuthDTO)=>{
     let apiResponse= <AuthResponseDTO>response;
     const JWTToken=<any>apiResponse.token;
         //console.log(JWTToken.result);
-    localStorage.setItem("JWTToken",JWTToken.result);
+    localStorage.setItem("JWTToken",JSON.stringify(JWTToken.result));
     localStorage.setItem("User",JSON.stringify(apiResponse.user));
-    this.routerService.navigate(['/classes'])
+    this.routerService.navigate([this._returnURL])
   }, error =>{
+    console.log(error);
     this.isErrored=true;
-    this.errorMessage=error.error.errorMessage;
+    //console.log(error);
+    this.errorMessage=error;
     this.authService.externalLogoutGoogle();
   })
   }

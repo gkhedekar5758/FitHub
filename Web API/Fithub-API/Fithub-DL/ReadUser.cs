@@ -2,6 +2,7 @@ using Fithub_Data.Models;
 using Fithub_DL.Interfaces;
 using System;
 using System.Data.SqlClient;
+using System.Threading.Tasks;
 
 namespace Fithub_DL
 {
@@ -15,7 +16,7 @@ namespace Fithub_DL
         /// </summary>
         /// <param name="emailID">email id</param>
         /// <returns>user id of the user</returns>
-        public User ReadUserByEmail(string connection, string emailID)
+        public async Task<User> ReadUserByEmail(string connection, string emailID)
         {
             try
             {
@@ -28,7 +29,7 @@ namespace Fithub_DL
                     SqlCommand sqlCommand = new SqlCommand(sqlSP, sqlConnection);
                     sqlCommand.CommandType = System.Data.CommandType.StoredProcedure;
                     sqlCommand.Parameters.Add(sqlParameter);
-                    var result = sqlCommand.ExecuteReader();
+                    var result = await sqlCommand.ExecuteReaderAsync();
                     User returUser = null;
                     if (result != null)
                     {
@@ -44,9 +45,9 @@ namespace Fithub_DL
 
                             var userinfo = new UserInfo()
                             {
-                                Height = Convert.ToInt32(result["Height"]),
-                                Weight = Convert.ToInt32(result["Weight"]),
-                                BMI = Convert.ToInt32(result["BMI"])
+                                Height = result["Height"] == DBNull.Value ? 0 : (int)result["Height"],
+                                Weight = result["Weight"] == DBNull.Value ? 0 : (int)result["Weight"],
+                                BMI = result["BMI"] == DBNull.Value ? 0 : (int)result["BMI"]
                             };
 
                             returUser.UserID = Convert.ToInt32(result["UserID"]);

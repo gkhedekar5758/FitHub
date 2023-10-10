@@ -39,16 +39,16 @@ namespace Fithub_DL
                 using (SqlConnection sqlConnection = new SqlConnection(connection))
                 {
                     sqlConnection.Open();
-                    List<SqlParameter> sqlParameters = new List<SqlParameter>();
+                    List<SqlParameter> sqlParameters = new();
 
                     string sp = "dbo.uspUserInfoInsert";
 
                     SqlCommand sqlCommand = new SqlCommand(sp, sqlConnection) { CommandType = System.Data.CommandType.StoredProcedure };
-                    sqlCommand.Parameters.Add(new SqlParameter("@weight", userInfo.Weight));
-                    sqlCommand.Parameters.Add(new SqlParameter("@height", userInfo.Height));
-                    sqlCommand.Parameters.Add(new SqlParameter("@BMI", userInfo.BMI));
-                    sqlCommand.Parameters.Add(new SqlParameter("@mobileNo", userInfo.MobileNo));
-                    sqlCommand.Parameters.Add(new SqlParameter("@emergencyNo", userInfo.EmergencyMobileNo));
+                    sqlCommand.Parameters.Add(new SqlParameter("@weight", userInfo?.Weight != null ? userInfo.Weight : DBNull.Value));
+                    sqlCommand.Parameters.Add(new SqlParameter("@height", userInfo?.Height != null ? userInfo.Height : DBNull.Value));
+                    sqlCommand.Parameters.Add(new SqlParameter("@BMI", userInfo?.BMI != null ? userInfo.BMI : DBNull.Value));
+                    sqlCommand.Parameters.Add(new SqlParameter("@mobileNo", userInfo?.MobileNo != null ? userInfo.MobileNo : DBNull.Value));
+                    sqlCommand.Parameters.Add(new SqlParameter("@emergencyNo", userInfo?.EmergencyMobileNo != null ? userInfo.EmergencyMobileNo : DBNull.Value));
                     sqlCommand.Parameters.Add(new SqlParameter("@userID", UserID));
 
 

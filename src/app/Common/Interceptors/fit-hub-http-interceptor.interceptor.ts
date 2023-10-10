@@ -17,7 +17,7 @@ export class FitHubHttpInterceptorInterceptor implements HttpInterceptor {
   constructor(private _authService: AuthService, private _router: Router) { }
 
   intercept(request: HttpRequest<any>, next: HttpHandler): Observable<HttpEvent<any>> {
-    console.log('interceptor fired')
+   // console.log('interceptor fired')
     // if(this._authService.isTokenExpired()){
     //   this._authService.logout();
     //   alert('Token Expired !!');
@@ -37,16 +37,21 @@ export class FitHubHttpInterceptorInterceptor implements HttpInterceptor {
             if (error.status === 404) {
               //alert('The server is not found, please try again later');
               errorMessage = 'The server is not found, please try again later';
+              //console.log(error);
 
             }
-            if (error.status === 400 || error.status === 500) {
+            if (error.status === 500) {
               //alert('There was a technical issue on our side, please try again later');
+
               errorMessage = 'There was a technical issue on our side, please try again later';
+            }
+            if (error.status === 400) {
+              errorMessage = error.error.errorMessage == undefined ? `There was a mistake on your end. Request was not correct` : `There was a mistake on your end. ${error.error.errorMessage}`;
             }
             if (error.status === 401) {
               //alert ('You need to be logged in to see the page')
-              //console.log(error.error.errorMessage);
-              
+              console.log(error.error.errorMessage);
+
               errorMessage = error.error.errorMessage;
               //this._router.navigate(['../members/login']);
             }

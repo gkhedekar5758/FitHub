@@ -33,5 +33,10 @@ namespace Fithub_BL
         {
             return _readCoach.GetCoachRatingByUser(connection, coachID, userID);
         }
+
+        public IEnumerable<CoachRatingResponseDTO> QueryCoachRatingsByUser(string connection, int userID)
+        {
+            return _readCoach.GetAllCoachedRatingByUser(connection, userID);
+        }
     }
 }

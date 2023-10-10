@@ -94,11 +94,11 @@ GO
 CREATE TABLE [dbo].[UserInfo]
 (
 UserInfoID INT PRIMARY KEY IDENTITY(1,1),
-[Height] int not null,
-[Weight] int not null,
+[Height] int null,
+[Weight] int null,
 BMI int,
 MobileNo varchar(10),
-EmergencyMobileNo varchar(10) not null,
+EmergencyMobileNo varchar(10) null,
 [UserID] int FOREIGN KEY REFERENCES [dbo].[User](UserID)
 )
 --============================
@@ -118,7 +118,7 @@ BEGIN
 			ExternalProviderKey,IsExternalProvider,IsActive,
 			USR.Name,USR.NormalisedName,USERINFO.Height,USERINFO.Weight,USERINFO.BMI
 			FROM [dbo].[User] US INNER JOIN [dbo].[UserRoles] USR ON US.RoleID=USR.RoleID
-			INNER JOIN [dbo].[UserInfo] USERINFO ON US.UserID=USERINFO.UserID
+			LEFT JOIN [dbo].[UserInfo] USERINFO ON US.UserID=USERINFO.UserID
 			WHERE US.Email = @EmailID
 END
 
@@ -222,7 +222,7 @@ GO
 
 CREATE PROCEDURE dbo.uspUserInsert
 @email varchar(50),
-@password varchar(50),
+@password varchar(50)=null,
 @firstname varchar(50),
 @lastname varchar(50),
 @externalloginprovider varchar(50)=null,
@@ -258,4 +258,16 @@ GO
 	(Height,Weight,BMI,MobileNo,EmergencyMobileNo,UserID)
 	VALUES 
 	(@height,@weight,@BMI,@mobileNo,@emergencyNo,@userId)
+ END
+
+ GO
+ CREATE PROCEDURE dbo.uspGetAllCoachesRatingByUserID
+ @UserID int
+ AS
+ BEGIN
+  SELECT COA.CoachName AS CoachName,RAT.RatingValue AS RatingValue,COA.PhotoURL AS PhotoURL,
+  RAT.UserID AS UserID,COA.CoachID AS CoachID FROM dbo.Coach COA INNER JOIN dbo.Rating RAT ON COA.CoachID=RAT.CoachID WHERE RAT.UserID=@UserID
+  UNION
+  SELECT CoachName AS CoachName,NULL AS RatingValue,PhotoURL AS PhotoURL,@UserID  AS UserID,CoachID FROM Coach
+  WHERE CoachID NOT IN (SELECT CoachID FROM Rating WHERE UserID=@UserID)
  END

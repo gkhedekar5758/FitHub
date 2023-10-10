@@ -42,7 +42,7 @@ namespace Fithub_API.JWTFeature
 
         private List<Claim> GetRoles(User user)
         {
-            //TODO: implemnent to bring the roles from the User
+
             var claims = new List<Claim>
       {
         new Claim(ClaimTypes.Name,user.Email),
@@ -68,7 +68,7 @@ namespace Fithub_API.JWTFeature
             return new SigningCredentials(secretKey, SecurityAlgorithms.HmacSha256);
         }
 
-        public GoogleJsonWebSignature.Payload VerifyGoogleToken(ExternalAuthDTO externalAuthDTO)
+        public  GoogleJsonWebSignature.Payload VerifyGoogleToken(ExternalAuthDTO externalAuthDTO)
         {
             try
             {
@@ -80,7 +80,7 @@ namespace Fithub_API.JWTFeature
           }
                 };
 
-                var payload = GoogleJsonWebSignature.ValidateAsync(externalAuthDTO.idToken, setting).Result;
+                var payload =  GoogleJsonWebSignature.ValidateAsync(externalAuthDTO.idToken, setting).Result;
                 return payload;
 
             }

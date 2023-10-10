@@ -4,7 +4,9 @@ import { ICoachClassResponseDTO } from 'src/app/DataModels/DTO/ResponseDTO/ICoac
 import { ICoach } from 'src/app/DataModels/coach.model';
 import { Rating } from 'src/app/DataModels/rating.model';
 import {EnvironmentUrlService} from '../../Common/Services/environment.url.service'
-import { Subject } from 'rxjs';
+import { catchError } from 'rxjs/operators';
+import { of } from 'rxjs';
+import { ICoachRatingResponseDTO } from 'src/app/Members/Models/DTO/ResponseDTO/ICoachRatingResponseDTO';
 
 @Injectable({
   providedIn: 'root',
@@ -37,7 +39,7 @@ export class CoachService {
 
     return this._http.get<Rating>(this.generateURL(this._environmentService.URL_Switch) + `getCoachRatingByUserID`, {
       params: httpParameter,
-    });
+    }).pipe(catchError(res=>of({}))); // 404 was sent from api
   };
 
   public addCoachRatingByUser = (rating:Rating) => {
@@ -52,6 +54,9 @@ export class CoachService {
     })
   }
 
+  public getAllCoachRatingByUser=(userID:number)=>{
+    return this._http.get<ICoachRatingResponseDTO[]>(this.generateURL(this._environmentService.URL_Switch)+'getallcoachratingbyuser/'+userID);
+  }
   private generateURL=(URLswitch:string)=>{
     let api_URL= URLswitch=="DOCKER"? this._environmentService.apiURLDocker:this._environmentService.apiURL;
     return api_URL+this.BASE_URL_Segment;

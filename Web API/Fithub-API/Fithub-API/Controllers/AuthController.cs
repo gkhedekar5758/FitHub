@@ -4,9 +4,11 @@ using Fithub_BL.Interfaces;
 using Fithub_Data.DTO;
 using Fithub_Data.DTO.ResponseDTO;
 using Fithub_Data.Models;
+using Google.Apis.Auth;
 using Microsoft.AspNetCore.Mvc;
 using System;
 using System.Net;
+using System.Threading.Tasks;
 
 namespace Fithub_API.Controllers
 {
@@ -30,20 +32,23 @@ namespace Fithub_API.Controllers
 
         [Route("login")]
         [HttpPost]
-        public IActionResult Login([FromBody] AuthRequestDTO requestDTO)
+        //[ProducesResponseType(StatusCodes.Status200OK, Type= typeof(AuthResponseDTO))]
+        //[ProducesResponseType(StatusCodes.Status400BadRequest)]
+        //[ProducesResponseType(StatusCodes.Status404NotFound)]
+        public async Task<IActionResult> Login([FromBody] AuthRequestDTO requestDTO)
         {
             if (requestDTO == null)
-                return BadRequest("User was not supplied");
+                return BadRequest(new { errorMessage = "User was not supplied" });
 
             try
             {
 
 
-                var user = _queryUser.QueryUserByEmail(_fithubConfigHelper.FithubConnectionString, requestDTO.Email);
+                var user = await _queryUser.QueryUserByEmail(_fithubConfigHelper.FithubConnectionString, requestDTO.Email);
 
                 if (user == null)
                 {
-                    return Unauthorized(new { errorMessage = "No User found with this email, Please register using <a href='" + requestDTO.clientRegURL + "'>Register </a> Link" });
+                    return NotFound(new { errorMessage = "No User found with this email, Please register using <a href='" + requestDTO.clientRegURL + "'>Register </a> Link" });
                 }
 
                 if (requestDTO.Password != user.Password)
@@ -61,7 +66,7 @@ namespace Fithub_API.Controllers
             catch (Exception exception)
             {
 
-                return StatusCode((int)HttpStatusCode.InternalServerError, "Something bad happened - " + exception.Message);
+                return StatusCode((int)HttpStatusCode.InternalServerError, "Server was unable to process your request at this time, Try again later. - " + exception.Message);
             }
 
 
@@ -72,19 +77,19 @@ namespace Fithub_API.Controllers
         public IActionResult GetUserIdByEmail([FromQuery] string email)
         {
             if (email == null)
-                return BadRequest("Email is not supplied");
+                return BadRequest(new { errorMessage = "Email is not supplied" });
             try
             {
                 int userId = _queryUser.QueryUserIdByEmail(_fithubConfigHelper.FithubConnectionString, email);
                 if (userId > 0)
                     return Ok(Convert.ToInt32(userId));
                 else
-                    return Unauthorized(new { errorMessage = "No User found with this email, Please register using <a href='/members/register'>Register </a> Link" });
+                    return NotFound(new { errorMessage = "No User found with this email, Please register using <a href='/members/register'>Register </a> Link" });
             }
             catch (Exception exception)
             {
 
-                return StatusCode((int)HttpStatusCode.InternalServerError, "Something bad happened - " + exception.Message);
+                return StatusCode((int)HttpStatusCode.InternalServerError, "Server was unable to process your request at this time, Try again later. - " + exception.Message);
             }
 
         }
@@ -94,7 +99,7 @@ namespace Fithub_API.Controllers
         public IActionResult ResetUserPassword([FromBody] ResetPasswordDTO resetPasswordDto)
         {
             if (resetPasswordDto == null)
-                return BadRequest("Information was not supplied");
+                return BadRequest(new { errorMessage = "Information was not supplied" });
             try
             {
                 return Ok(_updateUser.ResetUserPassword(_fithubConfigHelper.FithubConnectionString, resetPasswordDto.userId, resetPasswordDto.password));
@@ -102,54 +107,87 @@ namespace Fithub_API.Controllers
             catch (Exception e)
             {
 
-                return StatusCode((int)HttpStatusCode.InternalServerError, "Something bad happened - " + e.Message);
+                return StatusCode((int)HttpStatusCode.InternalServerError, "Server was unable to process your request at this time, Try again later. - " + e.Message);
             }
 
         }
 
         [HttpPost]
         [Route("externalGoogleLogin")]
-        public IActionResult ExternalLogin([FromBody] ExternalAuthDTO externalAuthDTO)
+        public async Task<IActionResult> ExternalLogin([FromBody] ExternalAuthDTO externalAuthDTO)
         {
             if (externalAuthDTO == null)
-                return BadRequest("Information was not supplied");
+                return BadRequest(new { errorMessage = "Information was not supplied" });
 
             try
             {
                 var payload = _jWTHelper.VerifyGoogleToken(externalAuthDTO);
                 if (payload == null)
-                    return BadRequest("Invalid external login");
+                    return BadRequest(new { errorMessage = "Invalid external login" });
 
-                //TODO: make this perfrect. at this point of time I am keeping this as simple
-                var token = _jWTHelper.GenerateToken(new User() { Email = payload.Email });
-                return Ok(new { Token = token });
+                // check if user exists in our DB
+                var user = await _queryUser.QueryUserByEmail(_fithubConfigHelper.FithubConnectionString, payload.Email);
+                if (user == null)
+                {
+
+                    int result = RegisterExternalUserFromExternalInformation(externalAuthDTO, payload, out user);
+                    if (result < 0) return StatusCode((int)HttpStatusCode.InternalServerError, "Server was unable to process your request at this time, Try again later.");
+                }
+
+
+                var token = _jWTHelper.GenerateToken(user);
+                return Ok(new AuthResponseDTO() { Token = token, User = user });
             }
             catch (Exception e)
             {
-                return StatusCode((int)HttpStatusCode.InternalServerError, "Something bad happened - " + e.Message);
+                return StatusCode((int)HttpStatusCode.InternalServerError, "Server was unable to process your request at this time, Try again later. - " + e.Message);
             }
         }
+
+
+
         [HttpPost]
         [Route("registerUser")]
         public IActionResult RegisterUser([FromBody] User user)
         {
             if (user == null)
-                return BadRequest("User not supplied");
+                return BadRequest(new { errorMessage = "User information was not supplied" });
 
             try
             {
                 int result = _updateUser.RegisterUser(_fithubConfigHelper.FithubConnectionString, user);
                 if (result >= 0) return Ok(new { success = true });
-                else return BadRequest("there was some problem");
+                else return StatusCode((int)HttpStatusCode.InternalServerError, "Server was unable to process your request at this time, Try again later.");
             }
             catch (Exception e)
             {
 
-                return StatusCode((int)HttpStatusCode.InternalServerError, "Something bad happened - " + e.Message);
+                return StatusCode((int)HttpStatusCode.InternalServerError, "Server was unable to process your request at this time, Try again later. - " + e.Message);
             }
         }
 
 
+
+        //Private helper Methods
+
+        private int RegisterExternalUserFromExternalInformation(ExternalAuthDTO externalAuthDTO, GoogleJsonWebSignature.Payload payload, out User user)
+        {
+            var userToRegister = new User()
+            {
+                Email = payload.Email,
+                Password = null, //TODO: do something intelligent here
+                FirstName = payload.GivenName,
+                LastName = payload.FamilyName,
+                ExternalLoginProvider = externalAuthDTO.provider,
+                ExternalLoginProviderName = externalAuthDTO.provider,
+                IsExternalProvider = true,
+                ExternalProviderKey = externalAuthDTO.idToken,
+                Role = new UserRole() { Name = "Viewer", NormalisedName = "VIEWER" }
+            };
+            user = userToRegister;
+
+            return _updateUser.RegisterUser(_fithubConfigHelper.FithubConnectionString, userToRegister);
+        }
 
     }
 }

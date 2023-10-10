@@ -21,6 +21,7 @@ import { FitHubHttpInterceptorInterceptor } from './Common/Interceptors/fit-hub-
 import {MatCardModule} from '@angular/material/card';
 import {MatButtonModule} from '@angular/material/button'
 import { SharedComponentModule } from './Common/shared-component.module';
+import { CommonModule } from '@angular/common';
 
 
 
@@ -47,9 +48,8 @@ export function getJWTToken() {
     BrowserModule,
     AppRoutingModule,
     FormsModule,
+    CommonModule,
     ReactiveFormsModule,
-    //MatCardModule,
-    //MatButtonModule,
     BrowserAnimationsModule,
     HttpClientModule,
     JwtModule.forRoot({

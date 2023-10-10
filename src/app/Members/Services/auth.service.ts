@@ -40,16 +40,18 @@ private BASE_URL_Segment: string = 'auth/';
   // if needed in future will create it
   // return true if the jwt token is there and token is NOT expired
   public isUserAuthenticated = (): boolean => {
-    const JWTToken = JSON.parse(localStorage.getItem("JWTToken"));
+  //  console.log(localStorage.getItem("JWTToken"));
+   const JWTToken = JSON.parse(localStorage.getItem("JWTToken"));
+   // let JWTToken = localStorage.getItem("JWTToken");
     //console.log(this._jwtService.decodeToken(JWTToken));
     return JWTToken && !this._jwtService.isTokenExpired(JWTToken);
   }
-  public isTokenExpired=():boolean=>{
-    const JWTToken=JSON.parse(localStorage.getItem("JWTToken"));
-    console.log(this._jwtService.isTokenExpired(JWTToken));
-    if(!JWTToken) return true;
-    return this._jwtService.isTokenExpired(JWTToken);
-  }
+  // public isTokenExpired=():boolean=>{
+  //   const JWTToken=JSON.parse(localStorage.getItem("JWTToken"));
+  //   console.log(this._jwtService.isTokenExpired(JWTToken));
+  //   if(!JWTToken) return true;
+  //   return this._jwtService.isTokenExpired(JWTToken);
+  // }
 
   //logout from the application
   public logout = () => {

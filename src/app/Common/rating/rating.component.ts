@@ -8,21 +8,28 @@ import { Component,  EventEmitter,  Input,  OnInit, Output  } from '@angular/cor
 })
 export class RatingComponent implements OnInit {
 
-  @Input() starrating:string;
-  @Output() rated=new EventEmitter<string>();
+  ngOnInit(): void {
+    this.selectedRating[this.componentID]=this.starrating;
+    //console.log(this.starrating);
+    //console.log(this.selectedRating)
+  }
+
+  @Input() starrating:string='';
+  @Input() componentID:number=0; // this will be the id of the coach or anything else with which this is connected
+  @Output() rated=new EventEmitter<any>();
 
   //starrating='3';
+  selectedRating:{
+    [componentID:string]:string
+  }={};
 
   constructor() { }
 
 
-  ngOnInit(): void {
-    
-
-  }
-
-  onRatingChange = (val)=>{
-    this.rated.emit(val);
+ 
+  onRatingChanges = (componentID:number,rating:string)=>{
+    this.selectedRating[componentID]=rating;
+    this.rated.emit({Rating:this.selectedRating[componentID],ID:componentID});
   }
 
 

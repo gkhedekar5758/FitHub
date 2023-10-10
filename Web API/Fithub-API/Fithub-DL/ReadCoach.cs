@@ -11,6 +11,55 @@ namespace Fithub_DL
     {
         private readonly string connectionString = "server=g708915-w101;database=Fithub;Trusted_Connection=true";
 
+        /// <summary>
+        /// Get the rating of all the coaches by a particular user
+        /// </summary>
+        /// <param name="connection"></param>
+        /// <param name="userID"></param>
+        /// <returns></returns>
+
+        public IEnumerable<CoachRatingResponseDTO> GetAllCoachedRatingByUser(string connection, int userID)
+        {
+            try
+            {
+                using (SqlConnection sqlConnection = new SqlConnection(connection))
+                {
+                    sqlConnection.Open();
+                    var sqlSP = "dbo.uspGetAllCoachesRatingByUserID";
+                    SqlCommand sqlCommand = new SqlCommand(sqlSP, sqlConnection);
+                    sqlCommand.CommandType = System.Data.CommandType.StoredProcedure;
+                    sqlCommand.Parameters.Add(new SqlParameter("@UserID", userID));
+                    var result = sqlCommand.ExecuteReader();
+                    var responses = new List<CoachRatingResponseDTO>();
+                    CoachRatingResponseDTO response = null;
+
+                    if (result != null)
+                    {
+
+                        while (result.Read())
+                        {
+
+                            response = new CoachRatingResponseDTO()
+                            {
+                                CoachName = result["CoachName"].ToString(),
+                                Rating = result["RatingValue"].ToString(),
+                                PhotoURL = result["PhotoURL"].ToString(),
+                                UserID = userID,
+                                CoachID = Convert.ToInt32(result["CoachID"])
+                            };
+                            responses.Add(response);
+                        }
+                    }
+                    return responses;
+                }
+            }
+            catch (Exception e)
+            {
+
+                throw;
+            }
+        }
+
         public CoachClassResponseDTO GetCoachByCoachID(string connection, int coachID)
         {
             try
@@ -31,7 +80,7 @@ namespace Fithub_DL
                         response = new CoachClassResponseDTO();
                         while (result.Read())
                         {
-                           
+
                             Class cl = new Class();
 
                             response.CoachID = Convert.ToInt32(result["CoachID"]);
@@ -111,13 +160,16 @@ namespace Fithub_DL
                     Rating rating = null;
                     if (result != null)
                     {
-                        rating = new Rating();
+
                         while (result.Read())
                         {
-                            rating.RatingID = Convert.ToInt32(result["RatingID"]);
-                            rating.CoachID = Convert.ToInt32(result["CoachID"]);
-                            rating.UserID = Convert.ToInt32(result["UserID"]);
-                            rating.RatingValue = Convert.ToString(result["RatingValue"]);
+                            rating = new Rating
+                            {
+                                RatingID = Convert.ToInt32(result["RatingID"]),
+                                CoachID = Convert.ToInt32(result["CoachID"]),
+                                UserID = Convert.ToInt32(result["UserID"]),
+                                RatingValue = Convert.ToString(result["RatingValue"])
+                            };
 
                         }
 

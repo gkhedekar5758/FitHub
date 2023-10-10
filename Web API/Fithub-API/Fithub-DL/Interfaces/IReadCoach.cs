@@ -9,5 +9,7 @@ namespace Fithub_DL.Interfaces
         public IEnumerable<Coach> GetCoachesByClassID(string connection, int classID);
         public CoachClassResponseDTO GetCoachByCoachID(string connection, int coachID);
         public Rating GetCoachRatingByUser(string connection, int coachID, int userID);
+
+        public IEnumerable<CoachRatingResponseDTO> GetAllCoachedRatingByUser(string connection, int userID);
     }
 }
