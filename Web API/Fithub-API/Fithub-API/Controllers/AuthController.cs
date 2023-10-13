@@ -169,7 +169,7 @@ namespace Fithub_API.Controllers
 
 
         //Private helper Methods
-
+        [NonAction]
         private int RegisterExternalUserFromExternalInformation(ExternalAuthDTO externalAuthDTO, GoogleJsonWebSignature.Payload payload, out User user)
         {
             var userToRegister = new User()

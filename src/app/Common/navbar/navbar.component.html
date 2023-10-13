@@ -43,9 +43,16 @@
   </div>
 <div *ngIf="this.authService.isUserAuthenticated()" class="unameLogo" >
 Hello <a class="unameLogo" [routerLink]="['members/userhome']" routerLinkActive="router-link-active"> {{this.authService.getCurrentLoggedInUser()?.firstName}}</a>
+&nbsp;
+<img
+            src="https://lh3.googleusercontent.com/a/ACg8ocKpvkShtrQrffPwyEYhzM4FzidmGzaTbLJSrTJOkCN7rQ4=s96-c"
+            class="img-fluid rounded-circle" style="height: 3vh; width: 3vh; margin-bottom: 1vh;"
+            alt="coach image"
+          />
 </div>
 </nav>
-
+<!-- /assets/images/coach/150.png -->
+<!-- https://lh3.googleusercontent.com/a/ACg8ocKpvkShtrQrffPwyEYhzM4FzidmGzaTbLJSrTJOkCN7rQ4=s96-c -->
 <!-- ====================================================================
 Wanted to do a modal login window but seem like the login module is separate and the components are not
 exposed to this module so making it as normal component
