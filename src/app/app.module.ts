@@ -5,21 +5,18 @@ import { AppRoutingModule } from './app-routing.module';
 import { AppComponent } from './app.component';
 import { NavbarComponent } from './Common/navbar/navbar.component';
 import { FooterComponent } from './Common/footer/footer.component';
-import { FormsModule, ReactiveFormsModule } from '@angular/forms';
+import { ReactiveFormsModule } from '@angular/forms';
 import { HomeComponent } from './webComponent/home/home.component';
 import { ClassesComponent } from './webComponent/classes/classes.component';
 import { ClassDetailComponent } from './webComponent/classes/class-detail.component';
 import { MassageComponent } from './webComponent/massage/massage.component';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { HttpClientModule, HTTP_INTERCEPTORS } from '@angular/common/http';
-import { JwtHelperService, JwtModule } from '@auth0/angular-jwt';
+import { JwtModule } from '@auth0/angular-jwt';
 import { GoogleLoginProvider, SocialLoginModule, SocialAuthServiceConfig } from 'angularx-social-login';
 import { CoachComponent } from './webComponent/classes/coach.component';
-import { RatingComponent } from './Common/rating/rating.component';
 import { ContactusComponent } from './webComponent/contactus/contactus.component';
 import { FitHubHttpInterceptorInterceptor } from './Common/Interceptors/fit-hub-http-interceptor.interceptor';
-import {MatCardModule} from '@angular/material/card';
-import {MatButtonModule} from '@angular/material/button'
 import { SharedComponentModule } from './Common/shared-component.module';
 import { CommonModule } from '@angular/common';
 
@@ -40,15 +37,11 @@ export function getJWTToken() {
     ClassDetailComponent,
     MassageComponent,
     CoachComponent,
-    //RatingComponent,
     ContactusComponent,
-    //FieldMatcherDirective
   ],
   imports: [
     BrowserModule,
     AppRoutingModule,
-    FormsModule,
-    CommonModule,
     ReactiveFormsModule,
     BrowserAnimationsModule,
     HttpClientModule,

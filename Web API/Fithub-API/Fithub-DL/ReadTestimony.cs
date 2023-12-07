@@ -24,9 +24,9 @@ namespace Fithub_DL
                     sqlCommand.Parameters.Add(new SqlParameter("@UserID", UserID));
                     var result = sqlCommand.ExecuteReader();
                     TestimonyDTO testimonyDTO = null;
-                   if(result!=null)
+                    if (result != null)
                     {
-                        if(result.Read())
+                        if (result.Read())
                         {
                             testimonyDTO = new TestimonyDTO()
                             {
@@ -37,7 +37,7 @@ namespace Fithub_DL
                             };
                         }
                     }
-                   return testimonyDTO;
+                    return testimonyDTO;
 
                 }
             }

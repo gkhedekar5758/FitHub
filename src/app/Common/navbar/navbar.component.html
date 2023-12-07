@@ -45,9 +45,9 @@
 Hello <a class="unameLogo" [routerLink]="['members/userhome']" routerLinkActive="router-link-active"> {{this.authService.getCurrentLoggedInUser()?.firstName}}</a>
 &nbsp;
 <img
-            src="https://lh3.googleusercontent.com/a/ACg8ocKpvkShtrQrffPwyEYhzM4FzidmGzaTbLJSrTJOkCN7rQ4=s96-c"
-            class="img-fluid rounded-circle" style="height: 3vh; width: 3vh; margin-bottom: 1vh;"
-            alt="coach image"
+            src="/assets/images/coach/150.png"
+            class="img-fluid rounded-circle" style="height: 3vh; width: 3vh; margin-bottom: 1vh;cursor: pointer;"
+            alt="coach image" [routerLink]="['members/register']"
           />
 </div>
 </nav>
